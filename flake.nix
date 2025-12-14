@@ -144,6 +144,7 @@
                   };
 
                   shellAliases = {
+                    flake-rebuild = "sudo darwin-rebuild switch --flake ~/nix#maclop";
                     ls = "eza --icons --color=always --group-directories-first";
                     ll = "eza -alF --icons --color=always --group-directories-first";
                     lg = "lazygit";
