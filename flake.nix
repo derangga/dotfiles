@@ -128,6 +128,7 @@
 
                 home.packages = [
                   pkgs.zsh-powerlevel10k
+                  pkgs.postman
                 ];
 
                 programs.zsh = {
@@ -161,6 +162,10 @@
                     # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
                     [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
                   '';
+                };
+
+                programs.vscode = {
+                  enable = true;
                 };
               };
           }
