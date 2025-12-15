@@ -28,6 +28,7 @@
 
           environment.systemPackages = [
             pkgs.android-tools
+            pkgs.btop
             pkgs.colima
             pkgs.docker-compose
             pkgs.eza
@@ -127,7 +128,7 @@
                 home.homeDirectory = "/Users/derangga";
 
                 home.packages = [
-                  pkgs.zsh-powerlevel10k
+                  pkgs.dbeaver-bin
                   pkgs.postman
                 ];
 
@@ -135,14 +136,6 @@
                   enable = true;
                   enableCompletion = true;
                   autosuggestion.enable = true;
-
-                  oh-my-zsh = {
-                    enable = true;
-                    plugins = [
-                      "git"
-                      "fzf"
-                    ];
-                  };
 
                   shellAliases = {
                     flake-rebuild = "sudo darwin-rebuild switch --flake ~/nix#maclop";
@@ -153,15 +146,19 @@
                   };
 
                   initContent = ''
-                    # Add any custom zsh configuration here
                     export EDITOR=nvim
 
-                    # Powerlevel10k theme
-                    source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-
-                    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-                    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+                    eval "$(starship init zsh)"
                   '';
+                };
+
+                programs.starship = {
+                  enable = true;
+                };
+
+                programs.fzf = {
+                  enable = true;
+                  enableZshIntegration = true;
                 };
 
                 programs.vscode = {
