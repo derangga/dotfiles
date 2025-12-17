@@ -20,154 +20,177 @@
       home-manager,
     }:
     let
-      configuration =
-        { pkgs, config, ... }:
-        {
-          system.primaryUser = "derangga";
-          nixpkgs.config.allowUnfree = true;
+      # Helper function to create configurations for different users
+      mkDarwinConfig =
+        { hostname, username }:
+        let
+          configuration =
+            { pkgs, config, ... }:
+            {
+              system.primaryUser = username;
+              nixpkgs.config.allowUnfree = true;
 
-          environment.systemPackages = [
-            pkgs.android-tools
-            pkgs.btop
-            pkgs.colima
-            pkgs.docker-compose
-            pkgs.eza
-            pkgs.fd
-            pkgs.fnm
-            pkgs.ffmpeg
-            pkgs.fzf
-            pkgs.gcc
-            pkgs.gnupg
-            pkgs.go
-            pkgs.git
-            pkgs.lazygit
-            pkgs.lua
-            pkgs.mkalias
-            pkgs.neovim
-            pkgs.nixfmt
-            pkgs.javaPackages.compiler.openjdk17
-            pkgs.ripgrep
-            pkgs.rbenv
-          ];
+              environment.systemPackages = [
+                pkgs.android-tools
+                pkgs.bun
+                pkgs.btop
+                pkgs.colima
+                pkgs.docker
+                pkgs.docker-compose
+                pkgs.eza
+                pkgs.fd
+                pkgs.fnm
+                pkgs.ffmpeg
+                pkgs.gcc
+                pkgs.gnupg
+                pkgs.go
+                pkgs.git
+                pkgs.lazygit
+                pkgs.lua
+                pkgs.mkalias
+                pkgs.neovim
+                pkgs.nixfmt
+                pkgs.javaPackages.compiler.openjdk17
+                pkgs.jq
+                pkgs.pm2
+                pkgs.pyenv
+                pkgs.ripgrep
+                pkgs.rbenv
+              ];
 
-          fonts.packages = [
-            pkgs.nerd-fonts.jetbrains-mono
-          ];
+              fonts.packages = [
+                pkgs.nerd-fonts.jetbrains-mono
+              ];
 
-          # Basic zsh enable (Home Manager will handle the detailed config)
-          programs.zsh.enable = true;
+              programs.zsh.enable = true;
 
-          # Declare the user - required for home manager on nix-darwin
-          users.users.derangga = {
-            name = "derangga";
-            home = "/Users/derangga";
-          };
-
-          homebrew = {
-            enable = true;
-            onActivation.cleanup = "zap";
-          };
-
-          system.activationScripts.applications.text =
-            let
-              env = pkgs.buildEnv {
-                name = "system-applications";
-                paths = config.environment.systemPackages;
-                pathsToLink = [ "/Applications" ];
+              users.users.${username} = {
+                name = username;
+                home = "/Users/${username}";
               };
-            in
-            pkgs.lib.mkForce ''
-              # Set up applications
-              echo "setting up /Applications..." >&2
-              rm -rf /Applications/Nix\ Apps/
-              mkdir -p /Applications/Nix\ Apps/
-              find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-              while read -r src; do
-                app_name=$(basename "$src")
-                echo "copying $src" >&2
-                ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix\ Apps/$app_name"
-              done
-            '';
 
-          # Necessary for using flakes on this system
-          nix.settings.experimental-features = "nix-command flakes";
+              homebrew = {
+                enable = true;
+                onActivation.cleanup = "zap";
+              };
 
-          # Set Git commit hash for darwin-version
-          system.configurationRevision = self.rev or self.dirtyRev or null;
+              system.activationScripts.applications.text =
+                let
+                  env = pkgs.buildEnv {
+                    name = "system-applications";
+                    paths = config.environment.systemPackages;
+                    pathsToLink = [ "/Applications" ];
+                  };
+                in
+                pkgs.lib.mkForce ''
+                  # Set up applications
+                  echo "setting up /Applications..." >&2
+                  rm -rf /Applications/Nix\ Apps/
+                  mkdir -p /Applications/Nix\ Apps/
+                  find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+                  while read -r src; do
+                    app_name=$(basename "$src")
+                    echo "copying $src" >&2
+                    ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix\ Apps/$app_name"
+                  done
+                '';
 
-          # Used for backwards compatibility
-          system.stateVersion = 6;
+              nix.settings.experimental-features = "nix-command flakes";
+              system.configurationRevision = self.rev or self.dirtyRev or null;
+              system.stateVersion = 6;
+              nixpkgs.hostPlatform = "aarch64-darwin";
+            };
+        in
+        nix-darwin.lib.darwinSystem {
+          modules = [
+            configuration
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;
+                user = username;
+                autoMigrate = true;
+              };
+            }
 
-          # The platform the configuration will be used on
-          nixpkgs.hostPlatform = "aarch64-darwin";
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} =
+                { pkgs, ... }:
+                {
+                  home.stateVersion = "25.11";
+                  home.username = username;
+                  home.homeDirectory = "/Users/${username}";
+
+                  home.packages = [
+                    pkgs.dbeaver-bin
+                    pkgs.postman
+                    pkgs.aerospace
+                  ];
+
+                  programs.fzf = {
+                    enable = true;
+                    enableZshIntegration = true;
+                  };
+
+                  programs.starship = {
+                    enable = true;
+                  };
+
+                  programs.vscode = {
+                    enable = true;
+                  };
+
+                  programs.zsh = {
+                    enable = true;
+                    enableCompletion = true;
+                    autosuggestion.enable = true;
+
+                    oh-my-zsh = {
+                      enable = true;
+                      plugins = [
+                        "git"
+                        "fzf"
+                      ];
+                    };
+
+                    shellAliases = {
+                      drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
+                      ls = "eza --icons --color=always --group-directories-first";
+                      ll = "eza -alF --icons --color=always --group-directories-first";
+                      lg = "lazygit";
+                      vim = "nvim";
+                    };
+
+                    initContent = ''
+                      export EDITOR=nvim
+
+                      eval "$(starship init zsh)"
+                    '';
+                  };
+
+                };
+            }
+          ];
         };
     in
     {
-      darwinConfigurations."maclop" = nix-darwin.lib.darwinSystem {
-        modules = [
-          configuration
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              enable = true;
-              enableRosetta = true;
-              user = "derangga";
-              autoMigrate = true;
-            };
-          }
-
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.derangga =
-              { pkgs, ... }:
-              {
-                home.stateVersion = "25.11";
-                home.username = "derangga";
-                home.homeDirectory = "/Users/derangga";
-
-                home.packages = [
-                  pkgs.dbeaver-bin
-                  pkgs.postman
-                ];
-
-                programs.zsh = {
-                  enable = true;
-                  enableCompletion = true;
-                  autosuggestion.enable = true;
-
-                  shellAliases = {
-                    flake-rebuild = "sudo darwin-rebuild switch --flake ~/nix#maclop";
-                    ls = "eza --icons --color=always --group-directories-first";
-                    ll = "eza -alF --icons --color=always --group-directories-first";
-                    lg = "lazygit";
-                    vim = "nvim";
-                  };
-
-                  initContent = ''
-                    export EDITOR=nvim
-
-                    eval "$(starship init zsh)"
-                  '';
-                };
-
-                programs.starship = {
-                  enable = true;
-                };
-
-                programs.fzf = {
-                  enable = true;
-                  enableZshIntegration = true;
-                };
-
-                programs.vscode = {
-                  enable = true;
-                };
-              };
-          }
-        ];
+      # Personal laptop configuration
+      darwinConfigurations."maclop" = mkDarwinConfig {
+        hostname = "maclop";
+        username = "derangga";
       };
+
+      # Work laptop configuration
+      darwinConfigurations."worklop" = mkDarwinConfig {
+        hostname = "worklop";
+        username = "sociolla";
+      };
+
+      # Default package output for personal laptop
       darwinPackages = self.darwinConfigurations."maclop".pkgs;
     };
 }
