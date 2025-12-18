@@ -22,7 +22,11 @@
     let
       # Helper function to create configurations for different users
       mkDarwinConfig =
-        { hostname, username }:
+        {
+          hostname,
+          username,
+          extraHomePackages ? [ ],
+        }:
         let
           configuration =
             { pkgs, config, ... }:
@@ -52,8 +56,7 @@
                 pkgs.nixfmt
                 pkgs.javaPackages.compiler.openjdk17
                 pkgs.jq
-                pkgs.pm2
-                pkgs.pyenv
+                pkgs.pnpm
                 pkgs.ripgrep
                 pkgs.rbenv
               ];
@@ -72,6 +75,12 @@
               homebrew = {
                 enable = true;
                 onActivation.cleanup = "zap";
+                casks = [
+                  # Add casks here
+                  # "sf-symbols"
+                  # "font-sf-mono"
+                  # "font-sf-pro"
+                ];
               };
 
               system.activationScripts.applications.text =
@@ -129,7 +138,8 @@
                     pkgs.dbeaver-bin
                     pkgs.postman
                     pkgs.aerospace
-                  ];
+                  ]
+                  ++ (extraHomePackages pkgs);
 
                   programs.fzf = {
                     enable = true;
@@ -189,6 +199,12 @@
       darwinConfigurations."worklop" = mkDarwinConfig {
         hostname = "worklop";
         username = "sociolla";
+        extraHomePackages = (
+          pkgs: [
+            pkgs.pm2
+            pkgs.pyenv
+          ]
+        );
       };
 
       # Default package output for personal laptop
