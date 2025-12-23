@@ -55,7 +55,6 @@
                 pkgs.neovim
                 pkgs.nixfmt
                 pkgs.javaPackages.compiler.openjdk17
-                pkgs.jq
                 pkgs.pnpm
                 pkgs.ripgrep
                 pkgs.rbenv
@@ -80,6 +79,7 @@
                   # "sf-symbols"
                   # "font-sf-mono"
                   # "font-sf-pro"
+                  "ghostty"
                 ];
               };
 
@@ -148,6 +148,7 @@
 
                   programs.starship = {
                     enable = true;
+                    enableZshIntegration = true;
                   };
 
                   programs.vscode = {
@@ -182,7 +183,6 @@
                       eval "$(fnm env --use-on-cd --shell zsh)"
                     '';
                   };
-
                 };
             }
           ];
@@ -193,6 +193,7 @@
       darwinConfigurations."maclop" = mkDarwinConfig {
         hostname = "maclop";
         username = "derangga";
+        extraHomePackages = (pkgs: [ ]);
       };
 
       # Work laptop configuration
