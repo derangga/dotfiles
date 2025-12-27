@@ -49,7 +49,6 @@
                 pkgs.gnupg
                 pkgs.go
                 pkgs.git
-                pkgs.lazygit
                 pkgs.lua
                 pkgs.mkalias
                 pkgs.neovim
@@ -63,8 +62,6 @@
               fonts.packages = [
                 pkgs.nerd-fonts.jetbrains-mono
               ];
-
-              programs.zsh.enable = true;
 
               users.users.${username} = {
                 name = username;
@@ -130,6 +127,7 @@
               home-manager.users.${username} =
                 { pkgs, ... }:
                 {
+
                   home.stateVersion = "25.11";
                   home.username = username;
                   home.homeDirectory = "/Users/${username}";
@@ -141,7 +139,20 @@
                   ]
                   ++ (extraHomePackages pkgs);
 
+                  programs.btop = {
+                    enable = true;
+                    # settings = {
+                    #   color_theme = "catppuccin_macchiato.theme";
+                    #   theme_background = false;
+                    # };
+                  };
+
                   programs.fzf = {
+                    enable = true;
+                    enableZshIntegration = true;
+                  };
+
+                  programs.lazygit = {
                     enable = true;
                     enableZshIntegration = true;
                   };
@@ -153,6 +164,11 @@
 
                   programs.vscode = {
                     enable = true;
+                  };
+
+                  programs.yazi = {
+                    enable = true;
+                    enableZshIntegration = true;
                   };
 
                   programs.zsh = {
@@ -170,6 +186,7 @@
 
                     shellAliases = {
                       drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
+                      ngc = "nix-collect-garbage -d";
                       ls = "eza --icons --color=always --group-directories-first";
                       ll = "eza -alF --icons --color=always --group-directories-first";
                       lg = "lazygit";
@@ -181,6 +198,14 @@
 
                       eval "$(starship init zsh)"
                       eval "$(fnm env --use-on-cd --shell zsh)"
+
+                      function y() {
+                        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+                      	yazi "$@" --cwd-file="$tmp"
+                      	IFS= read -r -d \'\' cwd < "$tmp"
+                      	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+                      	rm -f -- "$tmp"
+                      }
                     '';
                   };
                 };
