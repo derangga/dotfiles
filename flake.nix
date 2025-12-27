@@ -9,6 +9,7 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =
@@ -18,6 +19,7 @@
       nixpkgs,
       nix-homebrew,
       home-manager,
+      catppuccin,
     }:
     let
       # Helper function to create configurations for different users
@@ -41,7 +43,6 @@
                 pkgs.colima
                 pkgs.docker
                 pkgs.docker-compose
-                pkgs.eza
                 pkgs.fd
                 pkgs.fnm
                 pkgs.ffmpeg
@@ -127,6 +128,9 @@
               home-manager.users.${username} =
                 { pkgs, ... }:
                 {
+                  imports = [
+                    catppuccin.homeModules.catppuccin
+                  ];
 
                   home.stateVersion = "25.11";
                   home.username = username;
@@ -141,20 +145,37 @@
 
                   programs.btop = {
                     enable = true;
-                    # settings = {
-                    #   color_theme = "catppuccin_macchiato.theme";
-                    #   theme_background = false;
-                    # };
+                    settings = {
+                      theme_background = false;
+                    };
+                  };
+                  catppuccin.btop = {
+                    enable = true;
+                    flavor = "macchiato";
+                  };
+
+                  programs.eza = {
+                    enable = true;
+                    enableZshIntegration = true;
+                    icons = "always";
                   };
 
                   programs.fzf = {
                     enable = true;
                     enableZshIntegration = true;
                   };
+                  catppuccin.fzf = {
+                    enable = true;
+                    flavor = "macchiato";
+                  };
 
                   programs.lazygit = {
                     enable = true;
                     enableZshIntegration = true;
+                  };
+                  catppuccin.lazygit = {
+                    enable = true;
+                    flavor = "macchiato";
                   };
 
                   programs.starship = {
@@ -169,6 +190,11 @@
                   programs.yazi = {
                     enable = true;
                     enableZshIntegration = true;
+                    shellWrapperName = "y";
+                  };
+                  catppuccin.yazi = {
+                    enable = true;
+                    flavor = "macchiato";
                   };
 
                   programs.zsh = {
@@ -187,8 +213,6 @@
                     shellAliases = {
                       drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
                       ngc = "nix-collect-garbage -d";
-                      ls = "eza --icons --color=always --group-directories-first";
-                      ll = "eza -alF --icons --color=always --group-directories-first";
                       lg = "lazygit";
                       vim = "nvim";
                     };
@@ -199,13 +223,6 @@
                       eval "$(starship init zsh)"
                       eval "$(fnm env --use-on-cd --shell zsh)"
 
-                      function y() {
-                        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-                      	yazi "$@" --cwd-file="$tmp"
-                      	IFS= read -r -d \'\' cwd < "$tmp"
-                      	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-                      	rm -f -- "$tmp"
-                      }
                     '';
                   };
                 };
