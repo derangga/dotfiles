@@ -41,8 +41,6 @@
                 pkgs.bun
                 pkgs.btop
                 pkgs.colima
-                pkgs.docker
-                pkgs.docker-compose
                 pkgs.fd
                 pkgs.fnm
                 pkgs.ffmpeg
@@ -130,6 +128,7 @@
                 {
                   imports = [
                     catppuccin.homeModules.catppuccin
+                    ./aerospace/config.nix
                   ];
 
                   home.stateVersion = "25.11";
@@ -139,7 +138,6 @@
                   home.packages = [
                     pkgs.dbeaver-bin
                     pkgs.postman
-                    pkgs.aerospace
                   ]
                   ++ (extraHomePackages pkgs);
 
@@ -233,7 +231,11 @@
       darwinConfigurations."maclop" = mkDarwinConfig {
         hostname = "maclop";
         username = "derangga";
-        extraHomePackages = (pkgs: [ ]);
+        extraHomePackages = (
+          pkgs: [
+            pkgs.cloudflared
+          ]
+        );
       };
 
       # Work laptop configuration
