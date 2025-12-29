@@ -139,7 +139,6 @@
 
                   home.packages = [
                     pkgs.dbeaver-bin
-                    pkgs.postman
                   ]
                   ++ (extraHomePackages pkgs);
 
