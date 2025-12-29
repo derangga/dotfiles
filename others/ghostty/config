@@ -1,0 +1,92 @@
+
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /Users/{user name}/Library/Application Support/com.mitchellh.ghostty/config
+#
+# The template does not set any default options, since Ghostty ships
+# with sensible defaults for all options. Users should only need to set
+# options that they want to change from the default.
+#
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = "Hack Nerd"
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+theme = Catppuccin Frappe
+
+# Use option as alt in mac
+macos-option-as-alt = true
+
+# Background Conf
+background-opacity = 0.90
+background-blur = 8
+
+# custom-shader = shaders/animated-gradient-shader.glsl
+# custom-shader = shaders/bettercrt.glsl
+# custom-shader = shaders/bloom.glsl
+# custom-shader = shaders/bloom1.glsl
+# custom-shader = shaders/bloom075.glsl
+# custom-shader = shaders/bloom060.glsl
+# custom-shader = shaders/bloom050.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/bloom025.glsl
+# custom-shader = shaders/bloom050.glsl
+# custom-shader = shaders/bloom060.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/bloom075.glsl
+# custom-shader = shaders/bloom1.glsl
+# custom-shader = shaders/crt.glsl
+# custom-shader = shaders/cubes.glsl
+# custom-shader = shaders/dither.glsl
+# custom-shader = shaders/drunkard.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/fireworks-rockets.glsl
+# custom-shader = shaders/fireworks.glsl
+# custom-shader = shaders/gears-and-belts.glsl
+# custom-shader = shaders/glitchy.glsl
+# custom-shader = shaders/glow-rgbsplit-twitchy.glsl
+# custom-shader = shaders/gradient-background.glsl
+# custom-shader = shaders/inside-the-matrix.glsl
+# custom-shader = shaders/just-snow.glsl
+# custom-shader = shaders/matrix-hallway.glsl
+# custom-shader = shaders/negative.glsl
+# custom-shader = shaders/retro-terminal.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/smoke-and-ghost.glsl
+# custom-shader = shaders/sparks-from-fire.glsl
+# custom-shader = shaders/spotlight.glsl
+# custom-shader = shaders/starfield-colors.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/starfield.glsl
+# custom-shader = shaders/tft.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/underwater.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/water.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_blaze.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_blaze_no_trail.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_smear.glsl
+# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_smear_fade.glsl
