@@ -48,11 +48,11 @@
                 pkgs.gnupg
                 pkgs.go
                 pkgs.git
+                pkgs.jq
+                pkgs.javaPackages.compiler.openjdk17
                 pkgs.lua
                 pkgs.mkalias
-                pkgs.neovim
                 pkgs.nixfmt
-                pkgs.javaPackages.compiler.openjdk17
                 pkgs.pnpm
                 pkgs.ripgrep
                 pkgs.rbenv
@@ -128,7 +128,7 @@
                 {
                   imports = [
                     catppuccin.homeModules.catppuccin
-                    ./aerospace/config.nix
+                    (import ./config { inherit hostname username; })
                   ];
 
                   home.stateVersion = "25.11";
@@ -176,11 +176,6 @@
                     flavor = "macchiato";
                   };
 
-                  programs.starship = {
-                    enable = true;
-                    enableZshIntegration = true;
-                  };
-
                   programs.vscode = {
                     enable = true;
                   };
@@ -193,33 +188,6 @@
                   catppuccin.yazi = {
                     enable = true;
                     flavor = "macchiato";
-                  };
-
-                  programs.zsh = {
-                    enable = true;
-                    enableCompletion = true;
-                    autosuggestion.enable = true;
-
-                    oh-my-zsh = {
-                      enable = true;
-                      plugins = [
-                        "git"
-                        "fzf"
-                      ];
-                    };
-
-                    shellAliases = {
-                      drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
-                      ngc = "nix-collect-garbage -d";
-                      lg = "lazygit";
-                      vim = "nvim";
-                    };
-
-                    initContent = ''
-                      export EDITOR=nvim
-
-                      eval "$(fnm env --use-on-cd --shell zsh)"
-                    '';
                   };
                 };
             }
