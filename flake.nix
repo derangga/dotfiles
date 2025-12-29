@@ -41,6 +41,8 @@
                 pkgs.bun
                 pkgs.btop
                 pkgs.colima
+                pkgs.docker
+                pkgs.docker-compose
                 pkgs.fd
                 pkgs.fnm
                 pkgs.ffmpeg
