@@ -27,7 +27,6 @@
         {
           hostname,
           username,
-          extraHomePackages ? [ ],
         }:
         let
           configuration =
@@ -124,99 +123,33 @@
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
+              home-manager.extraSpecialArgs = { inherit hostname username; };
               home-manager.useUserPackages = true;
               home-manager.users.${username} =
                 { pkgs, ... }:
                 {
                   imports = [
                     catppuccin.homeModules.catppuccin
-                    (import ./config { inherit hostname username; })
+                    ./modules
                   ];
 
                   home.stateVersion = "25.11";
                   home.username = username;
                   home.homeDirectory = "/Users/${username}";
-
-                  home.packages = [
-                    pkgs.dbeaver-bin
-                  ]
-                  ++ (extraHomePackages pkgs);
-
-                  programs.btop = {
-                    enable = true;
-                    settings = {
-                      theme_background = false;
-                    };
-                  };
-                  catppuccin.btop = {
-                    enable = true;
-                    flavor = "macchiato";
-                  };
-
-                  programs.eza = {
-                    enable = true;
-                    enableZshIntegration = true;
-                    icons = "always";
-                  };
-
-                  programs.fzf = {
-                    enable = true;
-                    enableZshIntegration = true;
-                  };
-                  catppuccin.fzf = {
-                    enable = true;
-                    flavor = "macchiato";
-                  };
-
-                  programs.lazygit = {
-                    enable = true;
-                    enableZshIntegration = true;
-                  };
-                  catppuccin.lazygit = {
-                    enable = true;
-                    flavor = "macchiato";
-                  };
-
-                  programs.vscode = {
-                    enable = true;
-                  };
-
-                  programs.yazi = {
-                    enable = true;
-                    enableZshIntegration = true;
-                    shellWrapperName = "y";
-                  };
-                  catppuccin.yazi = {
-                    enable = true;
-                    flavor = "macchiato";
-                  };
                 };
             }
           ];
         };
     in
     {
-      # Personal laptop configuration
       darwinConfigurations."maclop" = mkDarwinConfig {
         hostname = "maclop";
         username = "derangga";
-        extraHomePackages = (
-          pkgs: [
-            pkgs.cloudflared
-          ]
-        );
       };
 
-      # Work laptop configuration
       darwinConfigurations."worklop" = mkDarwinConfig {
         hostname = "worklop";
         username = "sociolla";
-        extraHomePackages = (
-          pkgs: [
-            pkgs.pm2
-            pkgs.pyenv
-          ]
-        );
       };
 
       # Default package output for personal laptop

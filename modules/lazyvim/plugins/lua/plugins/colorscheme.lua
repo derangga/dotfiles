@@ -4,9 +4,12 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
-      flavour = "frappe", -- latte, frappe, macchiato, mocha
+      flavour = "macchiato", -- latte, frappe, macchiato, mocha
       transparent_background = true,
-      -- Add more customization here if needed
+      -- float = {
+      --   transparent = true,
+      --   solid = true,
+      -- },
     },
   },
   {

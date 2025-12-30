@@ -14,7 +14,7 @@ local gitsigns = require("gitsigns")
 map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle git line blame" })
 
 -- Window
-map("n", "<M-h>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-map("n", "<M-l>", "<cmd>vertical resize +2<CR>", { desc = "Increase window width" })
-map("n", "<M-j>", "<cmd>resize +2<CR>", { desc = "Increase window height" })
-map("n", "<M-k>", "<cmd>resize -2<CR>", { desc = "Decrease window height" })
+map("n", "<M-a>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
+map("n", "<M-f>", "<cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+map("n", "<M-s>", "<cmd>resize +2<CR>", { desc = "Increase window height" })
+map("n", "<M-d>", "<cmd>resize -2<CR>", { desc = "Decrease window height" })

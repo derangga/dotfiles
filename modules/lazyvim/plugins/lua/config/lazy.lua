@@ -14,6 +14,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+function ClearRegisters()
+  local regs = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-="*+'
+  for i = 1, #regs do
+    local reg = regs:sub(i, i)
+    vim.fn.setreg(reg, "")
+  end
+end
+vim.api.nvim_create_user_command("ClearRegisters", ClearRegisters, {})
+
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins

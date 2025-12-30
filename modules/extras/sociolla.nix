@@ -1,9 +1,14 @@
 {
+  pkgs,
   hostname,
-  username,
   ...
 }:
 {
+  home.packages = [
+    pkgs.pm2
+    pkgs.pyenv
+  ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -28,6 +33,11 @@
       export EDITOR=nvim
 
       eval "$(fnm env --use-on-cd --shell zsh)"
+
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init --path)"
+      eval "$(pyenv init -)"
     '';
   };
 
