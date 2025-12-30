@@ -130,7 +130,7 @@
                 {
                   imports = [
                     catppuccin.homeModules.catppuccin
-                    (import ./config { inherit hostname username; })
+                    (import ./modules { inherit hostname username; })
                   ];
 
                   home.stateVersion = "25.11";
