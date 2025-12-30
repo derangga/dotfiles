@@ -1,9 +1,14 @@
 {
+  pkgs,
   hostname,
-  username,
   ...
 }:
 {
+  home.packages = [
+    pkgs.pm2
+    pkgs.pyenv
+  ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
