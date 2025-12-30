@@ -66,7 +66,7 @@
         show_always = true;
         style_user = "bg:red fg:crust";
         style_root = "bg:red fg:crust";
-        format = "[ $user]($style)";
+        format = "[ $user ]($style)";
       };
 
       directory = {
