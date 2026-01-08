@@ -1,6 +1,6 @@
-local icons = require("modules.sketchybar.icons")
-local colors = require("modules.sketchybar.colors")
-local settings = require("modules.sketchybar.settings")
+local icons = require("icons")
+local colors = require("colors")
+local settings = require("settings")
 
 -- Choose correct interface here (change to your actual interface if needed)
 local iface = "en0"

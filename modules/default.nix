@@ -9,11 +9,13 @@
     ./aerospace/config.nix
     ./lazyvim/config.nix
     ./starship/config.nix
+    ./sketchybar/config.nix
     ./extras/${username}.nix
   ];
 
-  home.packages = [
-    pkgs.dbeaver-bin
+  home.packages = with pkgs; [
+    dbeaver-bin
+    switchaudio-osx
   ];
 
   programs.bat = {

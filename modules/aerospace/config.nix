@@ -23,7 +23,7 @@
         inner.vertical = 4;
         outer.left = 4;
         outer.bottom = 4;
-        outer.top = 4;
+        outer.top = 8;
         outer.right = 4;
       };
 

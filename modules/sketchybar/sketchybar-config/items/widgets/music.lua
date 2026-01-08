@@ -1,7 +1,7 @@
 -- ~/.config/sketchybar/items/widgets/music.lua
-local colors = require("modules.sketchybar.colors")
-local icons = require("modules.sketchybar.icons")
-local settings = require("modules.sketchybar.settings")
+local colors = require("colors")
+local icons = require("icons")
+local settings = require("settings")
 
 -- --- tuning ---------------------------------------------------------------
 local COVER_SIZE = 26

@@ -1,6 +1,6 @@
 -- ~/.config/sketchybar/items/widgets/weather.lua
-local colors = require("modules.sketchybar.colors")
-local settings = require("modules.sketchybar.settings")
+local colors = require("colors")
+local settings = require("settings")
 
 -- === Compact chip (icon + temp) ===
 local weather = sbar.add("item", "widgets.weather", {

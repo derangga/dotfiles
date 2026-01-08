@@ -35,28 +35,28 @@
               system.primaryUser = username;
               nixpkgs.config.allowUnfree = true;
 
-              environment.systemPackages = [
-                pkgs.android-tools
-                pkgs.bun
-                pkgs.btop
-                pkgs.colima
-                pkgs.docker
-                pkgs.docker-compose
-                pkgs.fd
-                pkgs.fnm
-                pkgs.ffmpeg
-                pkgs.gcc
-                pkgs.gnupg
-                pkgs.go
-                pkgs.git
-                pkgs.jq
-                pkgs.javaPackages.compiler.openjdk17
-                pkgs.lua
-                pkgs.mkalias
-                pkgs.nixfmt
-                pkgs.pnpm
-                pkgs.ripgrep
-                pkgs.rbenv
+              environment.systemPackages = with pkgs; [
+                android-tools
+                bun
+                btop
+                colima
+                docker
+                docker-compose
+                fd
+                fnm
+                ffmpeg
+                gcc
+                gnupg
+                go
+                git
+                jq
+                javaPackages.compiler.openjdk17
+                lua
+                mkalias
+                nixfmt
+                pnpm
+                ripgrep
+                rbenv
               ];
 
               fonts.packages = [
@@ -71,11 +71,17 @@
               homebrew = {
                 enable = true;
                 onActivation.cleanup = "zap";
+                # taps = [
+                #   "FelixKratz/formulae"
+                # ];
+                # brews = [
+                #   "sketchybar"
+                # ];
                 casks = [
                   # Add casks here
-                  # "sf-symbols"
-                  # "font-sf-mono"
-                  # "font-sf-pro"
+                  "sf-symbols"
+                  "font-sf-mono"
+                  "font-sf-pro"
                   "ghostty"
                 ];
               };

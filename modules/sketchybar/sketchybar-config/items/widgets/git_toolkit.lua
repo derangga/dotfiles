@@ -1,6 +1,6 @@
 -- Git Streak Toolkit - Fixed with proper popup pattern
-local colors = require("modules.sketchybar.colors")
-local settings = require("modules.sketchybar.settings")
+local colors = require("colors")
+local settings = require("settings")
 
 local TOOL_PREFIX = "widgets.git"
 local SCAN_SCRIPT = os.getenv("HOME") .. "/.config/sketchybar/helpers/git_toolkit/git_scan.sh"
