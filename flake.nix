@@ -71,12 +71,8 @@
               homebrew = {
                 enable = true;
                 onActivation.cleanup = "zap";
-                # taps = [
-                #   "FelixKratz/formulae"
-                # ];
-                # brews = [
-                #   "sketchybar"
-                # ];
+                taps = [ ];
+                brews = [ ];
                 casks = [
                   # Add casks here
                   "sf-symbols"

@@ -1,7 +1,0 @@
-require("modules.sketchybar.items.apple")
-require("modules.sketchybar.items.menus")
-require("modules.sketchybar.items.aerospace_workspaces")
-require("modules.sketchybar.items.front_app")
-require("modules.sketchybar.items.calendar")
-require("modules.sketchybar.items.widgets.init")
-require("modules.sketchybar.items.media")

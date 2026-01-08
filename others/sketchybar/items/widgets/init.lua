@@ -1,6 +1,0 @@
-require("modules.sketchybar.items.widgets.battery")
-require("modules.sketchybar.items.widgets.volume")
-require("modules.sketchybar.items.widgets.wifi")
-require("modules.sketchybar.items.widgets.cpu")
--- require("items.widgets.git_toolkit")
--- require("items.widgets.music")
