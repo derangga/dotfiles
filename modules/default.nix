@@ -16,6 +16,14 @@
     pkgs.dbeaver-bin
   ];
 
+  programs.bat = {
+    enable = true;
+  };
+  catppuccin.bat = {
+    enable = true;
+    flavor = "macchiato";
+  };
+
   programs.btop = {
     enable = true;
     settings = {
@@ -36,6 +44,9 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+    defaultOptions = [
+      "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+    ];
   };
   catppuccin.fzf = {
     enable = true;
