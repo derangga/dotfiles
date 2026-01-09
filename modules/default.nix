@@ -7,21 +7,19 @@
 {
   imports = [
     ./aerospace/config.nix
+    ./catppuccin/config.nix
     ./lazyvim/config.nix
     ./starship/config.nix
-    ./extras/${username}.nix
+    ./sketchybar/config.nix
+    ./users/${username}.nix
   ];
 
-  home.packages = [
-    pkgs.dbeaver-bin
+  home.packages = with pkgs; [
+    dbeaver-bin
   ];
 
   programs.bat = {
     enable = true;
-  };
-  catppuccin.bat = {
-    enable = true;
-    flavor = "macchiato";
   };
 
   programs.btop = {
@@ -29,10 +27,6 @@
     settings = {
       theme_background = false;
     };
-  };
-  catppuccin.btop = {
-    enable = true;
-    flavor = "macchiato";
   };
 
   programs.eza = {
@@ -48,18 +42,10 @@
       "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
     ];
   };
-  catppuccin.fzf = {
-    enable = true;
-    flavor = "macchiato";
-  };
 
   programs.lazygit = {
     enable = true;
     enableZshIntegration = true;
-  };
-  catppuccin.lazygit = {
-    enable = true;
-    flavor = "macchiato";
   };
 
   programs.vscode = {
@@ -70,9 +56,5 @@
     enable = true;
     enableZshIntegration = true;
     shellWrapperName = "y";
-  };
-  catppuccin.yazi = {
-    enable = true;
-    flavor = "macchiato";
   };
 }

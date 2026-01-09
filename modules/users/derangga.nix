@@ -4,8 +4,8 @@
   ...
 }:
 {
-  home.packages = [
-    pkgs.cloudflared
+  home.packages = with pkgs; [
+    cloudflared
   ];
 
   programs.zsh = {

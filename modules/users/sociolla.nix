@@ -4,9 +4,9 @@
   ...
 }:
 {
-  home.packages = [
-    pkgs.pm2
-    pkgs.pyenv
+  home.packages = with pkgs; [
+    pm2
+    pyenv
   ];
 
   programs.zsh = {

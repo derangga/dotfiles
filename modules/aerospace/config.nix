@@ -23,7 +23,7 @@
         inner.vertical = 4;
         outer.left = 4;
         outer.bottom = 4;
-        outer.top = 4;
+        outer.top = 8;
         outer.right = 4;
       };
 
@@ -31,10 +31,10 @@
         alt-slash = "layout tiles horizontal vertical";
         alt-comma = "layout accordion horizontal vertical";
 
-        alt-h = "focus left";
-        alt-j = "focus down";
-        alt-k = "focus up";
-        alt-l = "focus right";
+        # alt-h = "focus left";
+        # alt-j = "focus down";
+        # alt-k = "focus up";
+        # alt-l = "focus right";
 
         alt-shift-h = "move left";
         alt-shift-j = "move down";
