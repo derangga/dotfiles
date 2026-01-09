@@ -24,93 +24,13 @@
     let
       # Helper function to create configurations for different users
       mkDarwinConfig =
-        {
-          hostname,
-          username,
-        }:
-        let
-          configuration =
-            { pkgs, config, ... }:
-            {
-              system.primaryUser = username;
-              nixpkgs.config.allowUnfree = true;
-
-              environment.systemPackages = with pkgs; [
-                android-tools
-                bun
-                btop
-                colima
-                docker
-                docker-compose
-                fd
-                fnm
-                ffmpeg
-                gcc
-                gnupg
-                go
-                git
-                javaPackages.compiler.openjdk17
-                lua
-                mkalias
-                nixfmt
-                pnpm
-                ripgrep
-                rbenv
-              ];
-
-              fonts.packages = [
-                pkgs.nerd-fonts.jetbrains-mono
-              ];
-
-              users.users.${username} = {
-                name = username;
-                home = "/Users/${username}";
-              };
-
-              homebrew = {
-                enable = true;
-                onActivation.cleanup = "zap";
-                taps = [ ];
-                brews = [ ];
-                casks = [
-                  # Add casks here
-                  "sf-symbols"
-                  "font-sf-mono"
-                  "font-sf-pro"
-                  "ghostty"
-                ];
-              };
-
-              system.activationScripts.applications.text =
-                let
-                  env = pkgs.buildEnv {
-                    name = "system-applications";
-                    paths = config.environment.systemPackages;
-                    pathsToLink = [ "/Applications" ];
-                  };
-                in
-                pkgs.lib.mkForce ''
-                  # Set up applications
-                  echo "setting up /Applications..." >&2
-                  rm -rf /Applications/Nix\ Apps/
-                  mkdir -p /Applications/Nix\ Apps/
-                  find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-                  while read -r src; do
-                    app_name=$(basename "$src")
-                    echo "copying $src" >&2
-                    ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix\ Apps/$app_name"
-                  done
-                '';
-
-              nix.settings.experimental-features = "nix-command flakes";
-              system.configurationRevision = self.rev or self.dirtyRev or null;
-              system.stateVersion = 6;
-              nixpkgs.hostPlatform = "aarch64-darwin";
-            };
-        in
+        { hostname, username }:
         nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit self hostname username; };
+
           modules = [
-            configuration
+            ./darwin/configuration.nix
+
             nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
@@ -124,20 +44,14 @@
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
-              home-manager.extraSpecialArgs = { inherit hostname username; };
               home-manager.useUserPackages = true;
-              home-manager.users.${username} =
-                { pkgs, ... }:
-                {
-                  imports = [
-                    catppuccin.homeModules.catppuccin
-                    ./modules
-                  ];
 
-                  home.stateVersion = "25.11";
-                  home.username = username;
-                  home.homeDirectory = "/Users/${username}";
-                };
+              home-manager.extraSpecialArgs = {
+                inherit hostname username catppuccin;
+                modulesDir = ./modules;
+              };
+
+              home-manager.users.${username} = import ./home/home.nix;
             }
           ];
         };
