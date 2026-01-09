@@ -11,7 +11,7 @@
     ./lazyvim/config.nix
     ./starship/config.nix
     ./sketchybar/config.nix
-    ./users/${username}.nix
+    ./hosts/${username}.nix
   ];
 
   home.packages = with pkgs; [
