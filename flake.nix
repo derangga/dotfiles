@@ -49,7 +49,6 @@
                 gnupg
                 go
                 git
-                jq
                 javaPackages.compiler.openjdk17
                 lua
                 mkalias
