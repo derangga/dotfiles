@@ -1,22 +1,14 @@
 { ... }:
+let
+  config = {
+    enable = true;
+    flavor = "macchiato";
+  };
+in
+
 {
-  catppuccin.bat = {
-    enable = true;
-    flavor = "macchiato";
-  };
-
-  catppuccin.btop = {
-    enable = true;
-    flavor = "macchiato";
-  };
-
-  catppuccin.fzf = {
-    enable = true;
-    flavor = "macchiato";
-  };
-
-  catppuccin.lazygit = {
-    enable = true;
-    flavor = "macchiato";
-  };
+  catppuccin.bat = config;
+  catppuccin.btop = config;
+  catppuccin.fzf = config;
+  catppuccin.lazygit = config;
 }

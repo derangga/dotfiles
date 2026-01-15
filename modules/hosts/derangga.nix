@@ -29,8 +29,6 @@
     };
 
     initContent = ''
-      export EDITOR=nvim
-
       eval "$(fnm env --use-on-cd --shell zsh)"
     '';
   };

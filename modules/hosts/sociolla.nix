@@ -26,12 +26,11 @@
       drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
       ngc = "nix-collect-garbage -d";
       lg = "lazygit";
+      ld = "lazydocker";
       vim = "nvim";
     };
 
     initContent = ''
-      export EDITOR=nvim
-
       eval "$(fnm env --use-on-cd --shell zsh)"
 
       export PYENV_ROOT="$HOME/.pyenv"
