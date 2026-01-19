@@ -53,6 +53,9 @@
     ];
   };
 
+  nix.settings.experimental-features = "nix-command flakes";
+  nixpkgs.hostPlatform = "aarch64-darwin";
+
   system.activationScripts.applications.text =
     let
       env = pkgs.buildEnv {
@@ -71,8 +74,11 @@
       done
     '';
 
-  nix.settings.experimental-features = "nix-command flakes";
+  system.defaults = {
+    dock.autohide = true;
+    controlcenter.Bluetooth = false;
+    NSGlobalDomain._HIHideMenuBar = true;
+  };
   system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;
-  nixpkgs.hostPlatform = "aarch64-darwin";
 }

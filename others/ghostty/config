@@ -42,14 +42,14 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-theme = Catppuccin Frappe
+theme = Catppuccin Macchiato
 
 # Use option as alt in mac
 macos-option-as-alt = true
 
 # Background Conf
-background-opacity = 0.90
-background-blur = 8
+# background-opacity = 0.90
+background-blur = true
 
 # custom-shader = shaders/animated-gradient-shader.glsl
 # custom-shader = shaders/bettercrt.glsl
@@ -58,16 +58,16 @@ background-blur = 8
 # custom-shader = shaders/bloom075.glsl
 # custom-shader = shaders/bloom060.glsl
 # custom-shader = shaders/bloom050.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/bloom025.glsl
+# custom-shader = .config/ghostty/shaders/bloom025.glsl
 # custom-shader = shaders/bloom050.glsl
 # custom-shader = shaders/bloom060.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/bloom075.glsl
+# custom-shader = .config/ghostty/shaders/bloom075.glsl
 # custom-shader = shaders/bloom1.glsl
 # custom-shader = shaders/crt.glsl
 # custom-shader = shaders/cubes.glsl
 # custom-shader = shaders/dither.glsl
 # custom-shader = shaders/drunkard.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/fireworks-rockets.glsl
+# custom-shader = .config/ghostty/shaders/fireworks-rockets.glsl
 # custom-shader = shaders/fireworks.glsl
 # custom-shader = shaders/gears-and-belts.glsl
 # custom-shader = shaders/glitchy.glsl
@@ -78,15 +78,15 @@ background-blur = 8
 # custom-shader = shaders/matrix-hallway.glsl
 # custom-shader = shaders/negative.glsl
 # custom-shader = shaders/retro-terminal.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/smoke-and-ghost.glsl
+# custom-shader = .config/ghostty/shaders/smoke-and-ghost.glsl
 # custom-shader = shaders/sparks-from-fire.glsl
 # custom-shader = shaders/spotlight.glsl
 # custom-shader = shaders/starfield-colors.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/starfield.glsl
+# custom-shader = .config/ghostty/shaders/starfield.glsl
 # custom-shader = shaders/tft.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/underwater.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/water.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_blaze.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_blaze_no_trail.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_smear.glsl
-# custom-shader = /Users/sociolla/.config/ghostty/shaders/cursor_smear_fade.glsl
+# custom-shader = .config/ghostty/shaders/underwater.glsl
+# custom-shader = .config/ghostty/shaders/water.glsl
+# custom-shader = .config/ghostty/shaders/cursor_blaze.glsl
+# custom-shader = .config/ghostty/shaders/cursor_blaze_no_trail.glsl
+# custom-shader = .config/ghostty/shaders/cursor_smear.glsl
+# custom-shader = .config/ghostty/shaders/cursor_smear_fade.glsl
