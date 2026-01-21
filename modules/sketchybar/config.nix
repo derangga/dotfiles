@@ -4,7 +4,7 @@
   programs.sketchybar = {
     enable = true;
     config = {
-      source = ./sketchybar-config;
+      source = ./lua;
       recursive = true;
     };
     configType = "lua";
