@@ -27,7 +27,6 @@
       ngc = "nix-collect-garbage -d";
       lg = "lazygit";
       ld = "lazydocker";
-      vim = "nvim";
     };
 
     initContent = ''

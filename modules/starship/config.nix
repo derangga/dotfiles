@@ -7,7 +7,6 @@
       format = lib.concatStrings [
         "[░▒▓█](red)"
         "$os"
-        "$username"
         "[](bg:peach fg:red)"
         "$directory"
         "[](bg:yellow fg:peach)"
@@ -58,15 +57,8 @@
           CentOS = " ";
           Debian = "󰣚 ";
           Redhat = "󱄛 ";
-          RedHatEnterprise = "󱄛";
+          RedHatEnterprise = "󱄛 ";
         };
-      };
-
-      username = {
-        show_always = true;
-        style_user = "bg:red fg:crust";
-        style_root = "bg:red fg:crust";
-        format = "[ $user ]($style)";
       };
 
       directory = {
@@ -137,7 +129,7 @@
         format = "[[ $symbol( $context) ](fg:crust bg:sapphire)]($style)";
       };
       conda = {
-        symbol = "  ";
+        symbol = " ";
         style = "fg:crust bg:sapphire";
         format = "[$symbol$environment ]($style)";
         ignore_base = false;
