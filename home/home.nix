@@ -15,4 +15,6 @@
   home.username = username;
   home.homeDirectory = "/Users/${username}";
   home.stateVersion = "25.11";
+
+  home.file.".config/ghostty".source = ../others/ghostty;
 }
