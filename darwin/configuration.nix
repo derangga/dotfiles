@@ -17,19 +17,14 @@
     colima
     docker
     docker-compose
-    fd
     fnm
     ffmpeg
-    gcc
     gnupg
     go
     git
     javaPackages.compiler.openjdk17
-    lua
     mkalias
-    nixfmt
     pnpm
-    ripgrep
     rbenv
   ];
 

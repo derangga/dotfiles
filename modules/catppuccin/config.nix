@@ -11,4 +11,9 @@ in
   catppuccin.btop = config;
   catppuccin.fzf = config;
   catppuccin.lazygit = config;
+  catppuccin.yazi = {
+    accent = "blue";
+    enable = true;
+    flavor = "macchiato";
+  };
 }
