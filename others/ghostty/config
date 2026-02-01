@@ -44,11 +44,12 @@
 # resize-overlay-duration = 4s 200ms
 theme = Catppuccin Macchiato
 
-# Use option as alt in mac
+# macos options
 macos-option-as-alt = true
+macos-window-shadow = false
 
 # Background Conf
-# background-opacity = 0.90
+background-opacity = 0.92
 background-blur = true
 
 # custom-shader = shaders/animated-gradient-shader.glsl
