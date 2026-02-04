@@ -16,6 +16,10 @@
 
   home.packages = with pkgs; [
     dbeaver-bin
+
+    # llm tools
+    claude-code
+    # opencode
   ];
 
   programs.bat = {
@@ -56,5 +60,9 @@
     enable = true;
     enableZshIntegration = true;
     shellWrapperName = "y";
+  };
+
+  programs.zellij = {
+    enable = true;
   };
 }
