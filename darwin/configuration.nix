@@ -2,11 +2,17 @@
   pkgs,
   config,
   username,
+  hostname,
   self,
   ...
 }:
 
 {
+  imports = [
+    ./homebrew/default.nix
+    ./homebrew/hosts/${hostname}.nix
+  ];
+
   system.primaryUser = username;
   nixpkgs.config.allowUnfree = true;
 
@@ -35,19 +41,6 @@
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
-  };
-
-  homebrew = {
-    enable = true;
-    onActivation.cleanup = "zap";
-    taps = [ ];
-    brews = [ ];
-    casks = [
-      "sf-symbols"
-      "font-sf-mono"
-      "font-sf-pro"
-      "ghostty"
-    ];
   };
 
   nix.settings.experimental-features = "nix-command flakes";
