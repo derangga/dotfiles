@@ -25,7 +25,16 @@ local servers = {
   jsonls = {},
   marksman = {},
   sqls = {},
-  tailwindcss = {},
+  tailwindcss = {
+    filetypes = {
+      "html",
+      "svelte",
+      "astro",
+      "vue",
+      "javascriptreact",
+      "typescriptreact",
+    },
+  },
   ts_ls = {
     init_options = {
       plugins = {
