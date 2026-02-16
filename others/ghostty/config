@@ -47,6 +47,7 @@ theme = Catppuccin Macchiato
 # macos options
 macos-option-as-alt = true
 macos-window-shadow = false
+macos-titlebar-style = hidden
 
 # Background Conf
 background-opacity = 0.92
