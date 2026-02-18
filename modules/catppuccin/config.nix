@@ -11,6 +11,7 @@ in
   catppuccin.btop = config;
   catppuccin.fzf = config;
   catppuccin.lazygit = config;
+  catppuccin.opencode = config;
   catppuccin.yazi = {
     accent = "blue";
     enable = true;

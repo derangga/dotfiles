@@ -16,10 +16,6 @@
 
   home.packages = with pkgs; [
     dbeaver-bin
-
-    # llm tools
-    claude-code
-    # opencode
   ];
 
   programs.bat = {
@@ -63,6 +59,15 @@
   };
 
   programs.zellij = {
+    enable = true;
+  };
+
+  # llm tools
+  programs.claude-code = {
+    enable = true;
+  };
+
+  programs.opencode = {
     enable = true;
   };
 }
