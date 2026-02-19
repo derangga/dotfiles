@@ -60,7 +60,6 @@
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
     ];
-    terminal = "screen-256color";
   };
 
   programs.vscode = {
