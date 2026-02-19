@@ -29,10 +29,8 @@ in
       set -g status-left ""
 
       set -g status-right "#{E:@catppuccin_status_application}"
-
-      # Clock/datetime in status bar
       set -ag status-right "#{E:@catppuccin_status_session}"
-      set -ag status-right "#{E:@catppuccin_status_date_time}"
+      set -ag status-right "#{E:@catppuccin_status_uptime}"
     '';
   };
   catppuccin.yazi = {
