@@ -48,6 +48,21 @@
     enableZshIntegration = true;
   };
 
+  programs.tmux = {
+    baseIndex = 1;
+    clock24 = true;
+    enable = true;
+    customPaneNavigationAndResize = true;
+    escapeTime = 10;
+    focusEvents = true;
+    keyMode = "vi";
+    mouse = true;
+    plugins = with pkgs.tmuxPlugins; [
+      vim-tmux-navigator
+    ];
+    terminal = "screen-256color";
+  };
+
   programs.vscode = {
     enable = true;
   };
@@ -56,10 +71,6 @@
     enable = true;
     enableZshIntegration = true;
     shellWrapperName = "y";
-  };
-
-  programs.zellij = {
-    enable = true;
   };
 
   # llm tools
