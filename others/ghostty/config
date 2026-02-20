@@ -53,6 +53,9 @@ macos-titlebar-style = hidden
 background-opacity = 0.92
 background-blur = true
 
+# workaround tmux + ghostty shift enter
+keybind = shift+enter=text:\x1b\r
+
 # custom-shader = shaders/animated-gradient-shader.glsl
 # custom-shader = shaders/bettercrt.glsl
 # custom-shader = shaders/bloom.glsl
