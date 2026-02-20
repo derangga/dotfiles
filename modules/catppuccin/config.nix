@@ -27,7 +27,7 @@ in
       # status left look and feel
       set -g status-left-length 100
       set -g status-left ""
-      set -ga status-left "#{?client_prefix,#{#[bg=#{@thm_red},fg=#{@thm_bg},bold]  #S },#{#[fg=#{@thm_green}]  #S }}"
+      set -ga status-left "#{?client_prefix,#{#[bg=#{@thm_blue},fg=#{@thm_bg},bold]  #[none,bg=#{@thm_bg},fg=#{@thm_bg}]#S },#{#[fg=#{@thm_green}]  #S }}"
       set -ga status-left "#[fg=#{@thm_overlay_0},none]│"
       set -ga status-left "#[fg=#{@thm_maroon}]  #{pane_current_command} "
       set -ga status-left "#[fg=#{@thm_overlay_0},none]│"
