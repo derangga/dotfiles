@@ -14,9 +14,7 @@
     ./hosts/${hostname}.nix
   ];
 
-  home.packages = with pkgs; [
-    dbeaver-bin
-  ];
+  home.packages = with pkgs; [ ];
 
   programs.bat = {
     enable = true;
