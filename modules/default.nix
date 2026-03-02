@@ -28,6 +28,7 @@
   };
 
   programs.eza = {
+    colors = "always";
     enable = true;
     enableZshIntegration = true;
     icons = "always";
