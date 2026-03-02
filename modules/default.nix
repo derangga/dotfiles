@@ -14,9 +14,7 @@
     ./hosts/${hostname}.nix
   ];
 
-  home.packages = with pkgs; [
-    dbeaver-bin
-  ];
+  home.packages = with pkgs; [ ];
 
   programs.bat = {
     enable = true;
@@ -30,6 +28,7 @@
   };
 
   programs.eza = {
+    colors = "always";
     enable = true;
     enableZshIntegration = true;
     icons = "always";

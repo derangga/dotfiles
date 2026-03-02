@@ -73,4 +73,5 @@ in
     enable = true;
     flavor = "macchiato";
   };
+  catppuccin.zsh-syntax-highlighting = config;
 }
