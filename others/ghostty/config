@@ -50,7 +50,7 @@ macos-window-shadow = false
 macos-titlebar-style = hidden
 
 # Background Conf
-background-opacity = 0.92
+background-opacity = 0.9
 background-blur = true
 
 # workaround tmux + ghostty shift enter

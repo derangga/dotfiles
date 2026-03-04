@@ -79,4 +79,14 @@
   programs.opencode = {
     enable = true;
   };
+
+  services.jankyborders = {
+    enable = true;
+    settings = {
+      style = "round";
+      width = 6.0;
+      active_color = "0xff7dc4e4";
+      inactive_color = "0xffcad3f5";
+    };
+  };
 }
