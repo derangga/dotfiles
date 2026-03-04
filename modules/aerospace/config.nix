@@ -21,10 +21,10 @@
       gaps = {
         inner.horizontal = 10;
         inner.vertical = 10;
-        outer.left = 4;
-        outer.bottom = 4;
-        outer.top = 8;
-        outer.right = 4;
+        outer.left = 8;
+        outer.bottom = 8;
+        outer.top = 12;
+        outer.right = 8;
       };
 
       mode.main.binding = {
