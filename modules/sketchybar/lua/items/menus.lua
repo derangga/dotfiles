@@ -1,5 +1,6 @@
 local colors = require("colors")
 local settings = require("settings")
+local app_icons = require("helpers.app_icons")
 
 local menu_watcher = sbar.add("item", {
 	drawing = false,
@@ -18,7 +19,10 @@ for i = 1, max_items, 1 do
 		padding_left = settings.paddings,
 		padding_right = settings.paddings,
 		drawing = false,
-		icon = { drawing = false },
+		icon = {
+			drawing = (i == 1),
+			font = "sketchybar-app-font:Regular:16.0",
+		},
 		label = {
 			font = {
 				style = settings.font.style_map[i == 1 and "Heavy" or "Semibold"],
@@ -49,7 +53,13 @@ local function update_menus()
 		local id = 1
 		for menu in string.gmatch(menus, "[^\r\n]+") do
 			if id < max_items then
-				menu_items[id]:set({ label = menu, drawing = true })
+				if id == 1 then
+					local lookup = app_icons[menu]
+					local icon = ((lookup == nil) and app_icons["Default"] or lookup)
+					menu_items[id]:set({ icon = { string = icon, drawing = true }, label = menu, drawing = true })
+				else
+					menu_items[id]:set({ label = menu, drawing = true })
+				end
 			else
 				break
 			end
