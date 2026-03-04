@@ -139,6 +139,7 @@ return {
 	["Goodnotes"] = ":goodnotes:",
 	["Chromium"] = ":google_chrome:",
 	["Google Chrome"] = ":google_chrome:",
+	["Chrome"] = ":google_chrome:",
 	["Google Chrome Canary"] = ":google_chrome:",
 	["Grammarly Editor"] = ":grammarly:",
 	["Granola"] = ":granola:",
