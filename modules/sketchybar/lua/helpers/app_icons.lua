@@ -42,6 +42,7 @@ return {
 	["Calibre"] = ":book:",
 	["Bücher"] = ":book:",
 	["Brave Browser"] = ":brave_browser:",
+	["Brave"] = ":brave_browser:",
 	["Bruno"] = ":bruno:",
 	["BusyCal"] = ":busycal:",
 	["Calculator"] = ":calculator:",
