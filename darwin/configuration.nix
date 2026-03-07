@@ -36,6 +36,7 @@
 
   fonts.packages = [
     pkgs.nerd-fonts.jetbrains-mono
+    pkgs.sketchybar-app-font
   ];
 
   users.users.${username} = {

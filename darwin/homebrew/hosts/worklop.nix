@@ -2,9 +2,7 @@
 {
   homebrew = {
     taps = [ ];
-    brews = [
-      "golang-migrate"
-    ];
+    brews = [ ];
     casks = [ ];
   };
 }
