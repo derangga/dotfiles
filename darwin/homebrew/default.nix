@@ -7,7 +7,9 @@
 
     taps = [ ];
 
-    brews = [ ];
+    brews = [
+      "golang-migrate"
+    ];
 
     casks = [
       "sf-symbols"

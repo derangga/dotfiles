@@ -10,7 +10,11 @@ in
   catppuccin.bat = config;
   catppuccin.btop = config;
   catppuccin.fzf = config;
-  catppuccin.lazygit = config;
+  catppuccin.lazygit = {
+    accent = "blue";
+    enable = true;
+    flavor = "macchiato";
+  };
   catppuccin.opencode = config;
   catppuccin.tmux = {
     enable = true;
