@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   homebrew = {
-    taps = [ ];
-    brews = [ ];
-    casks = [ ];
+    # taps = [ ];
+    # brews = [ ];
+    # casks = [ ];
   };
 }

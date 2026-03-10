@@ -19,7 +19,6 @@
   environment.systemPackages = with pkgs; [
     android-tools
     bun
-    btop
     colima
     docker
     docker-compose

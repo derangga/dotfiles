@@ -10,15 +10,11 @@ in
   catppuccin.bat = config;
   catppuccin.btop = config;
   catppuccin.fzf = config;
-  catppuccin.lazygit = {
+  catppuccin.lazygit = config // {
     accent = "blue";
-    enable = true;
-    flavor = "macchiato";
   };
   catppuccin.opencode = config;
-  catppuccin.tmux = {
-    enable = true;
-    flavor = "macchiato";
+  catppuccin.tmux = config // {
     extraConfig = ''
       set-window-option -g status-position top
 
@@ -72,10 +68,8 @@ in
       set -g window-status-current-style "bg=#{@thm_peach},fg=#{@thm_bg},bold"
     '';
   };
-  catppuccin.yazi = {
+  catppuccin.yazi = config // {
     accent = "blue";
-    enable = true;
-    flavor = "macchiato";
   };
   catppuccin.zsh-syntax-highlighting = config;
 }
