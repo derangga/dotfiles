@@ -31,7 +31,6 @@
       drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
       ngc = "nix-collect-garbage -d";
       lg = "lazygit";
-      ld = "lazydocker";
     };
 
     initContent = ''
