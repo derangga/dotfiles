@@ -42,19 +42,19 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-theme = Catppuccin Macchiato
+# theme = Catppuccin Macchiato
 
 # macos options
-macos-option-as-alt = true
-macos-window-shadow = false
-macos-titlebar-style = hidden
+# macos-option-as-alt = true
+# macos-window-shadow = false
+# macos-titlebar-style = hidden
 
 # Background Conf
-background-opacity = 0.9
-background-blur = true
+# background-opacity = 0.9
+# background-blur = true
 
 # workaround tmux + ghostty shift enter
-keybind = shift+enter=text:\x1b\r
+# keybind = shift+enter=text:\x1b\r
 
 # custom-shader = shaders/animated-gradient-shader.glsl
 # custom-shader = shaders/bettercrt.glsl

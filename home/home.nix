@@ -15,6 +15,4 @@
   home.username = username;
   home.homeDirectory = "/Users/${username}";
   home.stateVersion = "25.11";
-
-  xdg.configFile."ghostty/shaders".source = ../others/ghostty/shaders;
 }
