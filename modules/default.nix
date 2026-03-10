@@ -14,7 +14,30 @@
     ./hosts/${hostname}.nix
   ];
 
-  home.packages = with pkgs; [ ];
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "fzf"
+      ];
+    };
+
+    shellAliases = {
+      drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
+      ngc = "nix-collect-garbage -d";
+      lg = "lazygit";
+      ld = "lazydocker";
+    };
+
+    initContent = ''
+      eval "$(fnm env --use-on-cd --shell zsh)"
+    '';
+  };
 
   programs.bat = {
     enable = true;
@@ -59,6 +82,21 @@
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
     ];
+  };
+
+  programs.ghostty = {
+    enable = true;
+    enableZshIntegration = true;
+    package = null;
+    settings = {
+      theme = "Catppuccin Macchiato";
+      macos-option-as-alt = true;
+      macos-window-shadow = false;
+      macos-titlebar-style = "hidden";
+      background-opacity = 0.9;
+      background-blur = true;
+      keybind = "shift+enter=text:\\x1b\\r";
+    };
   };
 
   programs.vscode = {

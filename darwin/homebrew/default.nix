@@ -5,10 +5,9 @@
     enable = true;
     onActivation.cleanup = "zap";
 
-    taps = [ ];
-
     brews = [
       "golang-migrate"
+      "mole"
     ];
 
     casks = [
