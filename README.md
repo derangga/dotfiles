@@ -1,6 +1,6 @@
 <div align="center">
 
-# Be a cool dev with Nix ❄️
+# My Nix Configs ❄️
 
 </div>
 
