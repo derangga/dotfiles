@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   # General homebrew configuration shared across all hosts
   homebrew = {

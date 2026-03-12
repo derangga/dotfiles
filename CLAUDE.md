@@ -15,7 +15,6 @@ This file provides essential information for agentic coding agents working in th
 - `drb`: Shortcut for `sudo darwin-rebuild switch --flake ~/nix#{hostname}`
 - `ngc`: Shortcut for `nix-collect-garbage -d`
 - `lg`: `lazygit`
-- `ld`: `lazydocker`
 
 ### Nix Formatting
 - **Format Nix files**: `nixfmt file.nix` (nixfmt is included in neovim extra packages)

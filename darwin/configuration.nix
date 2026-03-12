@@ -30,7 +30,6 @@
     javaPackages.compiler.openjdk17
     mkalias
     pnpm
-    rbenv
   ];
 
   fonts.packages = [
