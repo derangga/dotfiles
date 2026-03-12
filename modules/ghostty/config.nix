@@ -16,6 +16,7 @@
       background-opacity = 0.9;
       background-blur = true;
       keybind = "shift+enter=text:\\x1b\\r";
+      scrollbar = "never";
     };
   };
 
