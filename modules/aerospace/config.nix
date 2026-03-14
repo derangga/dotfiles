@@ -18,6 +18,13 @@
       key-mapping.preset = "qwerty";
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
 
+      on-window-detected = [
+        {
+          "if".app-id = "com.mitchellh.ghostty";
+          run = [ "layout tiling" ];
+        }
+      ];
+
       gaps = {
         inner.horizontal = 10;
         inner.vertical = 10;
