@@ -10,6 +10,9 @@ in
   catppuccin.bat = config;
   catppuccin.btop = config;
   catppuccin.fzf = config;
+  catppuccin.gh-dash = config // {
+    accent = "blue";
+  };
   catppuccin.lazygit = config // {
     accent = "blue";
   };

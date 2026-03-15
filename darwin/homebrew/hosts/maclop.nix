@@ -2,7 +2,10 @@
 {
   homebrew = {
     # taps = [ ];
-    # brews = [ ];
+    brews = [
+      "uv"
+      "rtk"
+    ];
     # casks = [ ];
   };
 }
