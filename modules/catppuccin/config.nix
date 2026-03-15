@@ -10,14 +10,15 @@ in
   catppuccin.bat = config;
   catppuccin.btop = config;
   catppuccin.fzf = config;
+  catppuccin.gh-dash = config // {
+    accent = "blue";
+  };
   catppuccin.lazygit = config // {
     accent = "blue";
   };
   catppuccin.opencode = config;
   catppuccin.tmux = config // {
     extraConfig = ''
-      set-window-option -g status-position top
-
       # Configure Catppuccin
       set -g @catppuccin_status_background "none"
       set -g @catppuccin_window_status_style "none"
