@@ -9,6 +9,12 @@
 
 local autocmd = vim.api.nvim_create_autocmd
 
+vim.filetype.add({
+  extension = {
+    mdx = "markdown.mdx",
+  },
+})
+
 -- Show smear cursor effect
 autocmd("BufEnter", {
   callback = function()

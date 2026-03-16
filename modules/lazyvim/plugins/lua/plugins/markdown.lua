@@ -11,7 +11,7 @@ return {
       icons = {},
     },
   },
-  ft = { "markdown", "norg", "rmd", "org", "codecompanion" },
+  ft = { "markdown", "markdown.mdx", "norg", "rmd", "org", "codecompanion" },
   config = function(_, opts)
     require("render-markdown").setup(opts)
     Snacks.toggle({
