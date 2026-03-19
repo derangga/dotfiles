@@ -11,6 +11,7 @@
   imports = [
     ./homebrew/default.nix
     ./homebrew/hosts/${hostname}.nix
+    ./terminal.nix
   ];
 
   system.primaryUser = username;
