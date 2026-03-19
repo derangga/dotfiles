@@ -13,6 +13,7 @@ in
   catppuccin.gh-dash = config // {
     accent = "blue";
   };
+  catppuccin.kitty = config;
   catppuccin.lazygit = config // {
     accent = "blue";
   };

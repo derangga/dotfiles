@@ -9,6 +9,7 @@
     ./aerospace/config.nix
     ./catppuccin/config.nix
     ./ghostty/config.nix
+    ./kitty/config.nix
     ./lazyvim/config.nix
     ./starship/config.nix
     ./sketchybar/config.nix

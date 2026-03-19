@@ -15,6 +15,7 @@
       "font-sf-mono"
       "font-sf-pro"
       "ghostty"
+      "kitty"
     ];
   };
 }
