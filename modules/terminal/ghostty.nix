@@ -1,6 +1,5 @@
-{ ... }:
-
-{
+{ config, lib, ... }:
+lib.mkIf (config.terminal.use == "ghostty") {
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
@@ -14,6 +13,9 @@
       background-blur = true;
       keybind = "shift+enter=text:\\x1b\\r";
       scrollbar = "never";
+      custom-shader = [
+        "shaders/cursor_blaze_no_trail.glsl"
+      ];
     };
   };
 

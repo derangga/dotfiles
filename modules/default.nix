@@ -8,7 +8,7 @@
   imports = [
     ./aerospace/config.nix
     ./catppuccin/config.nix
-    ./ghostty/config.nix
+    ./terminal
     ./lazyvim/config.nix
     ./starship/config.nix
     ./sketchybar/config.nix
