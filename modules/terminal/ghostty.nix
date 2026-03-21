@@ -13,6 +13,9 @@ lib.mkIf (config.terminal.use == "ghostty") {
       background-blur = true;
       keybind = "shift+enter=text:\\x1b\\r";
       scrollbar = "never";
+      custom-shader = [
+        "shaders/cursor_blaze_no_trail.glsl"
+      ];
     };
   };
 
