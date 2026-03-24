@@ -9,7 +9,7 @@
     ./aerospace/config.nix
     ./catppuccin/config.nix
     ./terminal
-    ./lazyvim/config.nix
+    ./nixvim
     ./starship/config.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
