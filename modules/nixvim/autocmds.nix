@@ -2,6 +2,18 @@
 
 {
   programs.nixvim = {
+    autoGroups = {
+      nixvim_checktime = { clear = true; };
+      nixvim_highlight_yank = { clear = true; };
+      nixvim_resize_splits = { clear = true; };
+      nixvim_last_loc = { clear = true; };
+      nixvim_close_with_q = { clear = true; };
+      nixvim_man_unlisted = { clear = true; };
+      nixvim_wrap_spell = { clear = true; };
+      nixvim_json_conceal = { clear = true; };
+      nixvim_auto_create_dir = { clear = true; };
+    };
+
     autoCmd = [
       # Check if we need to reload the file when it changed
       {

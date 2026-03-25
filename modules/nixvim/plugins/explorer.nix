@@ -4,43 +4,47 @@
   programs.nixvim = {
     plugins.neo-tree = {
       enable = true;
-      sources = [
-        "filesystem"
-        "buffers"
-        "git_status"
-      ];
-      filesystem = {
-        bindToCwd = false;
-        followCurrentFile.enabled = true;
-        useLibuvFileWatcher = true;
-      };
-      window.mappings = {
-        l = "open";
-        h = "close_node";
-        "<space>" = "none";
-        P = {
-          command = "toggle_preview";
-          config.use_float = false;
+      settings = {
+        sources = [
+          "filesystem"
+          "buffers"
+          "git_status"
+        ];
+        filesystem = {
+          bind_to_cwd = false;
+          follow_current_file = { enabled = true; };
+          use_libuv_file_watcher = true;
         };
-        Y = {
-          __raw = ''
-            function(state)
-              local node = state.tree:get_node()
-              local path = node:get_id()
-              vim.fn.setreg("+", path, "c")
-            end
-          '';
+        window.mappings = {
+          l = "open";
+          h = "close_node";
+          "<space>" = "none";
+          P = {
+            command = "toggle_preview";
+            config = { use_float = false; };
+          };
+          Y = {
+            __raw = ''
+              function(state)
+                local node = state.tree:get_node()
+                local path = node:get_id()
+                vim.fn.setreg("+", path, "c")
+              end
+            '';
+          };
         };
-      };
-      defaultComponentConfigs = {
-        indent = {
-          withExpanders = true;
-          expanderCollapsed = "";
-          expanderExpanded = "";
-        };
-        gitStatus.symbols = {
-          unstaged = "󰄱";
-          staged = "󰱒";
+        default_component_configs = {
+          indent = {
+            with_expanders = true;
+            expander_collapsed = "";
+            expander_expanded = "";
+          };
+          git_status = {
+            symbols = {
+              unstaged = "󰄱";
+              staged = "󰱒";
+            };
+          };
         };
       };
     };
