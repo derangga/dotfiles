@@ -11,6 +11,7 @@
       fd
       gcc
       lua
+      nil
       nixfmt
       ripgrep
     ];
