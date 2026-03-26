@@ -5,6 +5,7 @@
     extraPlugins = [ pkgs.vimPlugins.snacks-nvim ];
 
     extraConfigLuaPre = ''
+      local notify = vim.notify
       require("snacks").setup({
         bigfile = { enabled = true },
         quickfile = { enabled = true },
@@ -66,6 +67,9 @@
         statuscolumn = { enabled = false },
         toggle = {},
       })
+      -- HACK: restore vim.notify after snacks setup and let noice.nvim take over
+      -- this is needed to have early notifications show up in noice history
+      vim.notify = notify
     '';
   };
 }

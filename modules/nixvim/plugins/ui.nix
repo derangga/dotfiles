@@ -11,6 +11,25 @@
         right_mouse_command.__raw = "function(n) Snacks.bufdelete(n) end";
         diagnostics = "nvim_lsp";
         always_show_bufferline = false;
+        diagnostics_indicator.__raw = ''
+          function(_, _, diag)
+            local icons = { Error = " ", Warn = " ", Info = " ", Hint = "󰝶 " }
+            local ret = (diag.error and icons.Error .. diag.error .. " " or "")
+              .. (diag.warning and icons.Warn .. diag.warning or "")
+            return vim.trim(ret)
+          end
+        '';
+        offsets = [
+          {
+            filetype = "neo-tree";
+            text = "Neo-tree";
+            highlight = "Directory";
+            text_align = "left";
+          }
+          {
+            filetype = "snacks_layout_box";
+          }
+        ];
       };
     };
 
@@ -20,17 +39,90 @@
       { mode = "n"; key = "<leader>br"; action = "<Cmd>BufferLineCloseRight<CR>"; options.desc = "Delete Buffers to the Right"; }
       { mode = "n"; key = "<leader>bl"; action = "<Cmd>BufferLineCloseLeft<CR>"; options.desc = "Delete Buffers to the Left"; }
       { mode = "n"; key = "<leader>bj"; action = "<Cmd>BufferLinePick<CR>"; options.desc = "Pick Buffer"; }
+      { mode = "n"; key = "<S-h>"; action = "<cmd>BufferLineCyclePrev<cr>"; options.desc = "Prev Buffer"; }
+      { mode = "n"; key = "<S-l>"; action = "<cmd>BufferLineCycleNext<cr>"; options.desc = "Next Buffer"; }
+      { mode = "n"; key = "[b"; action = "<cmd>BufferLineCyclePrev<cr>"; options.desc = "Prev Buffer"; }
+      { mode = "n"; key = "]b"; action = "<cmd>BufferLineCycleNext<cr>"; options.desc = "Next Buffer"; }
       { mode = "n"; key = "[B"; action = "<cmd>BufferLineMovePrev<cr>"; options.desc = "Move buffer prev"; }
       { mode = "n"; key = "]B"; action = "<cmd>BufferLineMoveNext<cr>"; options.desc = "Move buffer next"; }
+      # snacks notification keymaps
+      { mode = "n"; key = "<leader>n"; action.__raw = ''
+          function()
+            if Snacks.config.picker and Snacks.config.picker.enabled then
+              Snacks.picker.notifications()
+            else
+              Snacks.notifier.show_history()
+            end
+          end
+        ''; options.desc = "Notification History"; }
+      { mode = "n"; key = "<leader>un"; action.__raw = "function() Snacks.notifier.hide() end"; options.desc = "Dismiss All Notifications"; }
     ];
 
     plugins.lualine = {
       enable = true;
-      settings.options = {
-        section_separators = {
-          left = "";
-          right = "";
+      settings = {
+        options = {
+          theme = "auto";
+          globalstatus = true;
+          disabled_filetypes.statusline = [ "dashboard" "alpha" "ministarter" "snacks_dashboard" ];
         };
+        sections = {
+          lualine_a = [ "mode" ];
+          lualine_b = [ "branch" ];
+          lualine_c = [
+            {
+              __unkeyed-1 = "diagnostics";
+              symbols = {
+                error = " ";
+                warn = " ";
+                info = " ";
+                hint = "󰝶 ";
+              };
+            }
+            { __unkeyed-1 = "filetype"; icon_only = true; separator = ""; padding = { left = 1; right = 0; }; }
+            { __unkeyed-1 = "filename"; path = 1; }
+          ];
+          lualine_x = [
+            {
+              __unkeyed-1.__raw = ''function() return require("noice").api.status.command.get() end'';
+              cond.__raw = ''function() return package.loaded["noice"] and require("noice").api.status.command.has() end'';
+              color.__raw = ''function() return { fg = Snacks.util.color("Statement") } end'';
+            }
+            {
+              __unkeyed-1.__raw = ''function() return require("noice").api.status.mode.get() end'';
+              cond.__raw = ''function() return package.loaded["noice"] and require("noice").api.status.mode.has() end'';
+              color.__raw = ''function() return { fg = Snacks.util.color("Constant") } end'';
+            }
+            {
+              __unkeyed-1.__raw = ''
+                function()
+                  local gitsigns = vim.b.gitsigns_status_dict
+                  if gitsigns then
+                    return {
+                      added = gitsigns.added,
+                      modified = gitsigns.changed,
+                      removed = gitsigns.removed,
+                    }
+                  end
+                end
+              '';
+              __unkeyed-name = "diff";
+              symbols = {
+                added = " ";
+                modified = " ";
+                removed = " ";
+              };
+            }
+          ];
+          lualine_y = [
+            { __unkeyed-1 = "progress"; separator = " "; padding = { left = 1; right = 0; }; }
+            { __unkeyed-1 = "location"; padding = { left = 0; right = 1; }; }
+          ];
+          lualine_z = [
+            { __unkeyed-1.__raw = ''function() return " " .. os.date("%R") end''; }
+          ];
+        };
+        extensions = [ "neo-tree" "lazy" "fzf" ];
       };
     };
 
@@ -93,6 +185,20 @@
     };
 
     extraConfigLua = ''
+      -- bufferline: fix when restoring a session
+      vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {
+        callback = function()
+          vim.schedule(function()
+            pcall(nvim_bufferline)
+          end)
+        end,
+      })
+
+      -- noice: clear messages if loaded during lazy install
+      if vim.o.filetype == "lazy" then
+        vim.cmd([[messages clear]])
+      end
+
       -- which-key keymaps
       vim.keymap.set("n", "<leader>?", function()
         require("which-key").show({ global = false })
@@ -135,8 +241,24 @@
     plugins.mini = {
       enable = true;
       modules = {
-        icons = { };
+        icons = {
+          file = {
+            ".keep" = { glyph = "󰊢"; hl = "MiniIconsGrey"; };
+            "devcontainer.json" = { glyph = ""; hl = "MiniIconsAzure"; };
+          };
+          filetype = {
+            dotenv = { glyph = ""; hl = "MiniIconsYellow"; };
+          };
+        };
       };
     };
+
+    extraConfigLuaPre = ''
+      -- mini.icons: mock nvim-web-devicons so plugins that depend on it still work
+      package.preload["nvim-web-devicons"] = function()
+        require("mini.icons").mock_nvim_web_devicons()
+        return package.loaded["nvim-web-devicons"]
+      end
+    '';
   };
 }
