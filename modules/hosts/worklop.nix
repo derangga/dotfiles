@@ -5,7 +5,6 @@
 {
   home.packages = with pkgs; [
     pm2
-    pyenv
   ];
 
   programs.zsh.initContent = ''
