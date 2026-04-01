@@ -135,6 +135,20 @@ programs.program-name = {
 - Manual testing required for UI components (sketchybar, aerospace)
 - Use `darwin-rebuild check` for syntax validation before deployment
 
+## Serena MCP Usage
+
+Serena is available as an MCP server providing semantic code tools. Prefer Serena's tools over raw file reads for codebase exploration.
+
+### Rules
+- **Always onboard Serena** at the start of a new conversation with `mcp__serena__onboarding` if not yet done
+- **Use `get_symbols_overview`** to explore a file's structure before reading entire files
+- **Use `find_symbol`** to locate specific functions, options, or attributes by name
+- **Use `search_for_pattern`** when symbol names are uncertain or partial
+- **Use `list_dir`** for directory exploration instead of shell `ls`
+- **Read symbol bodies only when necessary** — avoid loading entire files unless no other option exists
+- **Write memories** with `write_memory` when you discover non-obvious project facts worth retaining across sessions
+- Serena memory files live in `.serena/` — do not edit them manually
+
 ## Important Notes
 
 - This is a declarative Nix Darwin system - all changes must be made through Nix

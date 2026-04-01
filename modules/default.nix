@@ -7,6 +7,7 @@
   imports = [
     ./aerospace/config.nix
     ./catppuccin/config.nix
+    ./git/config.nix
     ./terminal
     ./lazyvim/config.nix
     ./starship/config.nix
