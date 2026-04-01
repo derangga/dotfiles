@@ -101,6 +101,14 @@ git clone https://github.com/derangga/dotfiles.git nix
 sudo darwin-rebuild switch --flake ~/nix#foo
 ```
 
+## Agentic Tools (Optional)
+
+If you plan to use agentic coding tools like Claude Code, OpenCode, or similar, you can add [Serena](https://github.com/oraios/serena) as an MCP server for semantic code navigation across this repo.
+
+```
+claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project $(pwd)
+```
+
 ## Resources
 - [Nix store](https://search.nixos.org/packages?channel=25.11&)
 - [Home manager](https://home-manager-options.extranix.com/)

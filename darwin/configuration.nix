@@ -27,9 +27,9 @@
     ffmpeg
     gnupg
     go
-    git
     javaPackages.compiler.openjdk17
     mkalias
+    nixd
     pnpm
   ];
 
