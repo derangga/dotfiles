@@ -13,7 +13,7 @@
         always_show_bufferline = false;
         diagnostics_indicator.__raw = ''
           function(_, _, diag)
-            local icons = { Error = " ", Warn = " ", Info = " ", Hint = "󰝶 " }
+            local icons = { Error = " ", Warn = " ", Info = " ", Hint = " " }
             local ret = (diag.error and icons.Error .. diag.error .. " " or "")
               .. (diag.warning and icons.Warn .. diag.warning or "")
             return vim.trim(ret)
@@ -73,10 +73,10 @@
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
-                error = " ";
-                warn = " ";
-                info = " ";
-                hint = "󰝶 ";
+                error = " ";
+                warn = " ";
+                info = " ";
+                hint = " ";
               };
             }
             { __unkeyed-1 = "filetype"; icon_only = true; separator = ""; padding = { left = 1; right = 0; }; }
@@ -94,7 +94,18 @@
               color.__raw = ''function() return { fg = Snacks.util.color("Constant") } end'';
             }
             {
-              __unkeyed-1.__raw = ''
+              __unkeyed-1.__raw = ''function() return "  " .. require("dap").status() end'';
+              cond.__raw = ''function() return package.loaded["dap"] and require("dap").status() ~= "" end'';
+              color.__raw = ''function() return { fg = Snacks.util.color("Debug") } end'';
+            }
+            {
+              __unkeyed-1 = "diff";
+              symbols = {
+                added = " ";
+                modified = " ";
+                removed = " ";
+              };
+              source.__raw = ''
                 function()
                   local gitsigns = vim.b.gitsigns_status_dict
                   if gitsigns then
@@ -106,12 +117,6 @@
                   end
                 end
               '';
-              __unkeyed-name = "diff";
-              symbols = {
-                added = " ";
-                modified = " ";
-                removed = " ";
-              };
             }
           ];
           lualine_y = [
@@ -119,7 +124,7 @@
             { __unkeyed-1 = "location"; padding = { left = 0; right = 1; }; }
           ];
           lualine_z = [
-            { __unkeyed-1.__raw = ''function() return " " .. os.date("%R") end''; }
+            { __unkeyed-1.__raw = ''function() return " " .. os.date("%R") end''; }
           ];
         };
         extensions = [ "neo-tree" "lazy" "fzf" ];
@@ -128,6 +133,14 @@
 
     plugins.noice = {
       enable = true;
+      luaConfig.pre = ''
+        -- HACK: noice shows messages from before it was enabled,
+        -- but this is not ideal when Lazy is installing plugins,
+        -- so clear the messages in this case.
+        if vim.o.filetype == "lazy" then
+          vim.cmd([[messages clear]])
+        end
+      '';
       settings = {
         lsp.override = {
           "vim.lsp.util.convert_input_to_markdown_lines" = true;
@@ -140,11 +153,19 @@
               event = "msg_show";
               any = [
                 { find = "%d+L, %d+B"; }
+                { find = "%d+ lines, %d+ bytes"; }
                 { find = "; after #%d+"; }
                 { find = "; before #%d+"; }
               ];
             };
             view = "mini";
+          }
+          {
+            filter = {
+              event = "msg_show";
+              find = "line %d+ of %d+";
+            };
+            opts = { skip = true; };
           }
         ];
         presets = {
@@ -193,11 +214,6 @@
           end)
         end,
       })
-
-      -- noice: clear messages if loaded during lazy install
-      if vim.o.filetype == "lazy" then
-        vim.cmd([[messages clear]])
-      end
 
       -- which-key keymaps
       vim.keymap.set("n", "<leader>?", function()
