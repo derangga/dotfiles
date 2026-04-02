@@ -4,12 +4,6 @@
 input=$(cat)
 
 # Extract fields from JSON
-#!/usr/bin/env bash
-# Claude Code status line — inspired by Starship config (catppuccin macchiato)
-
-input=$(cat)
-
-# Extract fields from JSON
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty') # needed for git
 model=$(echo "$input" | jq -r '.model.display_name // empty')
 used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
@@ -39,7 +33,6 @@ if git -C "${cwd:-$(pwd)}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 fi
 
 # ── Context usage ────────────────────────────────────────────────────────────
-# Renders: ctx NNN% [████░░░░░░] (bar is 10 chars wide)
 ctx_info=""
 ctx_color=""
 if [ -n "$used_pct" ]; then
@@ -72,9 +65,6 @@ if [ -n "$rl_5h" ]; then
   fi
 fi
 
-# Time
-time_str=$(date +%H:%M)
-
 # Compose with ANSI colors (dimmed-friendly, no background blocks)
 # Catppuccin Macchiato palette:
 #   peach    #f5a97f  directory
@@ -82,15 +72,12 @@ time_str=$(date +%H:%M)
 #   lavender #b7bdf8  model
 #   green    #a6da95  ctx/session ok
 #   maroon   #ed8796  ctx/session critical
-#   overlay1 #8087a2  time, muted
 C_GIT='\033[38;2;238;212;159m'   # yellow
 C_MODEL='\033[38;2;183;189;248m' # lavender
-C_TIME='\033[38;2;128;135;162m'  # overlay1
 C_RESET='\033[0m'
 
 [ -n "$git_info" ] && printf '%b%s%b' "$C_GIT" "$git_info" "$C_RESET"
 [ -n "$model" ] && printf '%b  %s%b' "$C_MODEL" "$model" "$C_RESET"
 [ -n "$ctx_info" ] && printf '%b%s%b' "$ctx_color" "$ctx_info" "$C_RESET"
 [ -n "$session_info" ] && printf '%b%s%b' "$session_color" "$session_info" "$C_RESET"
-printf '%b  %s%b' "$C_TIME" "$time_str" "$C_RESET"
 printf '\n'
