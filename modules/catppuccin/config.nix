@@ -2,7 +2,7 @@
 let
   cfg = {
     enable = true;
-    flavor = "macchiato";
+    flavor = "macchiato"; # latte, frappe, macchiato, mocha
   };
 in
 
@@ -13,11 +13,13 @@ in
   catppuccin.gh-dash = cfg // {
     accent = "blue";
   };
+  catppuccin.ghostty = cfg;
   catppuccin.kitty = lib.mkIf (config.terminal.use == "kitty") cfg;
   catppuccin.lazygit = cfg // {
     accent = "blue";
   };
   catppuccin.opencode = cfg;
+  catppuccin.starship = cfg;
   catppuccin.tmux = cfg // {
     extraConfig = ''
       # Configure Catppuccin

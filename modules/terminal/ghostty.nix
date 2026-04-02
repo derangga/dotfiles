@@ -5,7 +5,6 @@ lib.mkIf (config.terminal.use == "ghostty") {
     enableZshIntegration = true;
     package = null;
     settings = {
-      theme = "Catppuccin Macchiato";
       macos-option-as-alt = true;
       macos-window-shadow = false;
       macos-titlebar-style = "hidden";
