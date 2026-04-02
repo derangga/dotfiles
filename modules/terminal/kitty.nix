@@ -5,7 +5,6 @@ lib.mkIf (config.terminal.use == "kitty") {
     enableGitIntegration = true;
     font = {
       name = "JetBrainsMono Nerd Font";
-      size = 13;
     };
     settings = {
       macos_option_as_alt = "left";
