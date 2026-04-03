@@ -7,6 +7,7 @@ lib.mkIf (config.terminal.use == "kitty") {
       name = "JetBrainsMono Nerd Font";
     };
     settings = {
+      modify_font = "cell_height 120%";
       macos_option_as_alt = "left";
       hide_window_decorations = "titlebar-only";
       background_opacity = "0.9";
