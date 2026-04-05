@@ -5,7 +5,7 @@
       "kitty"
       "ghostty"
     ];
-    default = "ghostty";
+    default = "kitty";
     description = "Which terminal emulator to use";
   };
 }

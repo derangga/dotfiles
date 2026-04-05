@@ -20,6 +20,15 @@ lib.mkIf (config.terminal.use == "kitty") {
     };
     keybindings = {
       "shift+enter" = "send_text all \\x1b\\r";
+      "cmd+1" = "goto_tab 1";
+      "cmd+2" = "goto_tab 2";
+      "cmd+3" = "goto_tab 3";
+      "cmd+4" = "goto_tab 4";
+      "cmd+5" = "goto_tab 5";
+      "cmd+6" = "goto_tab 6";
+      "cmd+7" = "goto_tab 7";
+      "cmd+8" = "goto_tab 8";
+      "cmd+9" = "goto_tab 9";
     };
   };
 }
