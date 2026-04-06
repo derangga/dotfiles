@@ -33,6 +33,10 @@ lib.mkIf (config.terminal.use == "kitty") {
       "cmd+d" = "launch --location=vsplit --cwd=current";
       "cmd+shift+d" = "launch --location=hsplit --cwd=current";
       "cmd+w" = "close_window";
+      "ctrl+h" = "neighboring_window left";
+      "ctrl+j" = "neighboring_window down";
+      "ctrl+k" = "neighboring_window up";
+      "ctrl+l" = "neighboring_window right";
     };
   };
 }
