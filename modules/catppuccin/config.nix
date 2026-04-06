@@ -18,14 +18,6 @@ in
   catppuccin.lazygit = cfg // {
     accent = "blue";
   };
-
-  # The catppuccin/nix upstream module puts the opencode theme key into programs.opencode.settings,
-  # but OpenCode v1.2.15+ requires TUI settings (like theme) to be in a separate tui.json file — mapped to programs.opencode.tui in home-manager.
-  # workaround
-  # 1. Disabled catppuccin.opencode (so the upstream module stops writing to the wrong place)
-  # 2. Manually set programs.opencode.tui.theme = "catppuccin-macchiato" in modules/default.nix
-  # catppuccin.opencode = cfg;
-
   catppuccin.starship = cfg;
   catppuccin.tmux = cfg // {
     extraConfig = ''
