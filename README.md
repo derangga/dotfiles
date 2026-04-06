@@ -65,11 +65,6 @@ All the following applications are managed via home-manager and will be configur
 | Aerospace | Tiling window manager |
 | Sketchybar | Custom menu bar |
 
-### Host-Specific Packages
-| Host | Package | Description |
-|---|---|---|
-| maclop | cloudflared | Cloudflare Tunnel client |
-| worklop | pm2 | Node.js process manager |
 
 ## Usage
 
