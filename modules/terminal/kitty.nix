@@ -17,6 +17,7 @@ lib.mkIf (config.terminal.use == "kitty") {
       tab_bar_min_tabs = 2;
       active_tab_font_style = "bold";
       inactive_tab_font_style = "normal";
+      enabled_layouts = "splits";
     };
     keybindings = {
       "shift+enter" = "send_text all \\x1b\\r";
@@ -29,6 +30,9 @@ lib.mkIf (config.terminal.use == "kitty") {
       "cmd+7" = "goto_tab 7";
       "cmd+8" = "goto_tab 8";
       "cmd+9" = "goto_tab 9";
+      "cmd+d" = "launch --location=vsplit --cwd=current";
+      "cmd+shift+d" = "launch --location=hsplit --cwd=current";
+      "cmd+w" = "close_window";
     };
   };
 }
