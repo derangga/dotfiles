@@ -64,6 +64,9 @@
 
     opencode = {
       enable = true;
+      tui = {
+        theme = "catppuccin-macchiato";
+      };
     };
 
     tmux = {

@@ -18,7 +18,6 @@ in
   catppuccin.lazygit = cfg // {
     accent = "blue";
   };
-  catppuccin.opencode = cfg;
   catppuccin.starship = cfg;
   catppuccin.tmux = cfg // {
     extraConfig = ''
