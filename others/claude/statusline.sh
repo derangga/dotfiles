@@ -5,6 +5,7 @@ input=$(cat)
 
 # Extract fields from JSON
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty') # needed for git
+folder="/$(basename "${cwd:-$(pwd)}")"
 model=$(echo "$input" | jq -r '.model.display_name // empty')
 used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
@@ -72,12 +73,16 @@ fi
 #   lavender #b7bdf8  model
 #   green    #a6da95  ctx/session ok
 #   maroon   #ed8796  ctx/session critical
+C_DIR='\033[38;2;245;169;127m'   # peach
 C_GIT='\033[38;2;238;212;159m'   # yellow
 C_MODEL='\033[38;2;183;189;248m' # lavender
+C_PIPE='\033[38;2;137;180;250m'  # blue #89b4fa
 C_RESET='\033[0m'
 
+printf '%b%s%b' "$C_DIR" "$folder" "$C_RESET"
 [ -n "$git_info" ] && printf '%b%s%b' "$C_GIT" "$git_info" "$C_RESET"
-[ -n "$model" ] && printf '%b  %s%b' "$C_MODEL" "$model" "$C_RESET"
+printf '%b |%b' "$C_PIPE" "$C_RESET"
+[ -n "$model" ] && printf '%b %s%b' "$C_MODEL" "$model" "$C_RESET"
 [ -n "$ctx_info" ] && printf '%b%s%b' "$ctx_color" "$ctx_info" "$C_RESET"
 [ -n "$session_info" ] && printf '%b%s%b' "$session_color" "$session_info" "$C_RESET"
 printf '\n'
