@@ -4,6 +4,7 @@ return {
     opts = {
       servers = {
         bashls = {},
+        nil_ls = { mason = false },
         clangd = {},
         cssls = {},
         eslint = {
