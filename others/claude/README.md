@@ -15,7 +15,10 @@ chmod +x ~/.claude/statusline.sh
 
 ```json
 {
-  "statusCommand": "~/.claude/statusline.sh"
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  },
 }
 ```
 
