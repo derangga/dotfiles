@@ -8,13 +8,14 @@
     brews = [
       "golang-migrate"
       "mole"
+      "uv"
+      "rtk"
     ];
 
     casks = [
       "sf-symbols"
       "font-sf-mono"
       "font-sf-pro"
-      "ghostty"
     ];
   };
 }

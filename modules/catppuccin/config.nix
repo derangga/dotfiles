@@ -1,23 +1,25 @@
-{ ... }:
+{ config, lib, ... }:
 let
-  config = {
+  cfg = {
     enable = true;
-    flavor = "macchiato";
+    flavor = "macchiato"; # latte, frappe, macchiato, mocha
   };
 in
 
 {
-  catppuccin.bat = config;
-  catppuccin.btop = config;
-  catppuccin.fzf = config;
-  catppuccin.gh-dash = config // {
+  catppuccin.bat = cfg;
+  catppuccin.btop = cfg;
+  catppuccin.fzf = cfg;
+  catppuccin.gh-dash = cfg // {
     accent = "blue";
   };
-  catppuccin.lazygit = config // {
+  catppuccin.ghostty = cfg;
+  catppuccin.kitty = lib.mkIf (config.terminal.use == "kitty") cfg;
+  catppuccin.lazygit = cfg // {
     accent = "blue";
   };
-  catppuccin.opencode = config;
-  catppuccin.tmux = config // {
+  catppuccin.starship = cfg;
+  catppuccin.tmux = cfg // {
     extraConfig = ''
       # Configure Catppuccin
       set -g @catppuccin_status_background "none"
@@ -69,8 +71,10 @@ in
       set -g window-status-current-style "bg=#{@thm_peach},fg=#{@thm_bg},bold"
     '';
   };
-  catppuccin.yazi = config // {
+  catppuccin.yazi = cfg // {
     accent = "blue";
   };
-  catppuccin.zsh-syntax-highlighting = config;
+
+  catppuccin.zsh-syntax-highlighting = cfg;
+
 }

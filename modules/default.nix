@@ -1,120 +1,122 @@
 {
   pkgs,
   hostname,
-  username,
   ...
 }:
 {
   imports = [
     ./aerospace/config.nix
     ./catppuccin/config.nix
-    ./ghostty/config.nix
+    ./git/config.nix
+    ./terminal
     ./lazyvim/config.nix
     ./starship/config.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
   ];
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-
-    oh-my-zsh = {
+  programs = {
+    bat = {
       enable = true;
-      plugins = [
-        "git"
-        "fzf"
+    };
+
+    btop = {
+      enable = true;
+      settings = {
+        theme_background = false;
+      };
+    };
+
+    claude-code = {
+      enable = true;
+    };
+
+    eza = {
+      colors = "always";
+      enable = true;
+      enableZshIntegration = true;
+      icons = "always";
+    };
+
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      fileWidgetOptions = [
+        "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
       ];
     };
 
-    shellAliases = {
-      drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
-      ngc = "nix-collect-garbage -d";
-      lg = "lazygit";
-    };
-
-    initContent = ''
-      eval "$(fnm env --use-on-cd --shell zsh)"
-    '';
-  };
-
-  programs.bat = {
-    enable = true;
-  };
-
-  programs.btop = {
-    enable = true;
-    settings = {
-      theme_background = false;
-    };
-  };
-
-  programs.eza = {
-    colors = "always";
-    enable = true;
-    enableZshIntegration = true;
-    icons = "always";
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-    fileWidgetOptions = [
-      "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
-    ];
-  };
-
-  programs.gh = {
-    enable = true;
-    settings = {
-      git_protocol = "ssh";
-      aliases = {
-        co = "pr checkout";
+    gh = {
+      enable = true;
+      settings = {
+        git_protocol = "ssh";
       };
     };
-  };
 
-  programs.gh-dash = {
-    enable = true;
-  };
+    gh-dash = {
+      enable = true;
+    };
 
-  programs.lazygit = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+    lazygit = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
-  programs.tmux = {
-    baseIndex = 1;
-    clock24 = true;
-    enable = true;
-    customPaneNavigationAndResize = true;
-    escapeTime = 10;
-    focusEvents = true;
-    keyMode = "vi";
-    mouse = true;
-    plugins = with pkgs.tmuxPlugins; [
-      vim-tmux-navigator
-    ];
-  };
+    opencode = {
+      enable = true;
+      tui = {
+        theme = "catppuccin-macchiato";
+      };
+    };
 
-  programs.vscode = {
-    enable = true;
-  };
+    tmux = {
+      baseIndex = 1;
+      clock24 = true;
+      enable = true;
+      customPaneNavigationAndResize = true;
+      escapeTime = 10;
+      focusEvents = true;
+      keyMode = "vi";
+      mouse = true;
+      plugins = with pkgs.tmuxPlugins; [
+        vim-tmux-navigator
+      ];
+    };
 
-  programs.yazi = {
-    enable = true;
-    enableZshIntegration = true;
-    shellWrapperName = "y";
-  };
+    vscode = {
+      enable = true;
+    };
 
-  # llm tools
-  programs.claude-code = {
-    enable = true;
-  };
+    yazi = {
+      enable = true;
+      enableZshIntegration = true;
+      shellWrapperName = "y";
+    };
 
-  programs.opencode = {
-    enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+
+      oh-my-zsh = {
+        enable = true;
+        plugins = [
+          "git"
+          "fzf"
+        ];
+      };
+
+      shellAliases = {
+        drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
+        ngc = "nix-collect-garbage -d";
+        lg = "lazygit";
+      };
+
+      initContent = ''
+        eval "$(fnm env --use-on-cd --shell zsh)"
+      '';
+    };
+
   };
 
   services.jankyborders = {

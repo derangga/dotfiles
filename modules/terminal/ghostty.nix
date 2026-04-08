@@ -1,12 +1,10 @@
-{ ... }:
-
-{
+{ config, lib, ... }:
+lib.mkIf (config.terminal.use == "ghostty") {
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;
     package = null;
     settings = {
-      theme = "Catppuccin Macchiato";
       macos-option-as-alt = true;
       macos-window-shadow = false;
       macos-titlebar-style = "hidden";
@@ -14,6 +12,9 @@
       background-blur = true;
       keybind = "shift+enter=text:\\x1b\\r";
       scrollbar = "never";
+      custom-shader = [
+        "shaders/cursor_blaze_no_trail.glsl"
+      ];
     };
   };
 

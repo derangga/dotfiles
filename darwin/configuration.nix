@@ -11,6 +11,7 @@
   imports = [
     ./homebrew/default.nix
     ./homebrew/hosts/${hostname}.nix
+    ./terminal.nix
   ];
 
   system.primaryUser = username;
@@ -19,6 +20,7 @@
   environment.systemPackages = with pkgs; [
     android-tools
     bun
+    cargo
     colima
     docker
     docker-compose
@@ -26,10 +28,12 @@
     ffmpeg
     gnupg
     go
-    git
     javaPackages.compiler.openjdk17
     mkalias
+    nixd
     pnpm
+    rustc
+    rust-analyzer
   ];
 
   fonts.packages = [
