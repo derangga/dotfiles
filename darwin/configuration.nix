@@ -20,6 +20,7 @@
   environment.systemPackages = with pkgs; [
     android-tools
     bun
+    cargo
     colima
     docker
     docker-compose
@@ -31,6 +32,8 @@
     mkalias
     nixd
     pnpm
+    rustc
+    rust-analyzer
   ];
 
   fonts.packages = [
