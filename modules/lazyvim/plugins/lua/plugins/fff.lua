@@ -5,6 +5,7 @@ return {
   end,
   lazy = false,
   opts = {
+    prompt = "🦉 ",
     layout = {
       prompt_position = "top",
     },
