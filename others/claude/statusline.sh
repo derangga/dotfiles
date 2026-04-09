@@ -11,6 +11,7 @@ used_pct=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
 # Rate limits (Claude.ai subscription — may be absent)
 rl_5h=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')
+rl_resets_at=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
 
 # Git branch and status (skip if not a git repo)
 git_info=""
@@ -51,6 +52,23 @@ if [ -n "$used_pct" ]; then
   fi
 fi
 
+# ── Reset timer ──────────────────────────────────────────────────────────
+reset_info=""
+if [ -n "$rl_resets_at" ]; then
+  now_epoch=$(date +%s)
+  reset_epoch=$(printf "%.0f" "$rl_resets_at")
+  if [ "$reset_epoch" -gt "$now_epoch" ] 2>/dev/null; then
+    diff_sec=$((reset_epoch - now_epoch))
+    diff_hr=$((diff_sec / 3600))
+    diff_min=$(((diff_sec % 3600) / 60))
+    if [ "$diff_hr" -gt 0 ]; then
+      reset_info=" resets: ${diff_hr}hr ${diff_min}min"
+    else
+      reset_info=" resets: ${diff_min}min"
+    fi
+  fi
+fi
+
 # ── Current session usage (Claude.ai subscription) ───────────────────────
 session_info=""
 session_color=""
@@ -81,8 +99,10 @@ C_RESET='\033[0m'
 
 printf '%b%s%b' "$C_DIR" "$folder" "$C_RESET"
 [ -n "$git_info" ] && printf '%b%s%b' "$C_GIT" "$git_info" "$C_RESET"
-printf '%b |%b' "$C_PIPE" "$C_RESET"
-[ -n "$model" ] && printf '%b %s%b' "$C_MODEL" "$model" "$C_RESET"
+printf '\n'
+[ -n "$model" ] && printf '%b%s%b' "$C_MODEL" "$model" "$C_RESET"
 [ -n "$ctx_info" ] && printf '%b%s%b' "$ctx_color" "$ctx_info" "$C_RESET"
 [ -n "$session_info" ] && printf '%b%s%b' "$session_color" "$session_info" "$C_RESET"
+printf '%b |%b' "$C_PIPE" "$C_RESET"
+[ -n "$reset_info" ] && printf '%b%s%b' "$C_MODEL" "$reset_info" "$C_RESET"
 printf '\n'
