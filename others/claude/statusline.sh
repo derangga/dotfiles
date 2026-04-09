@@ -103,6 +103,8 @@ printf '\n'
 [ -n "$model" ] && printf '%b%s%b' "$C_MODEL" "$model" "$C_RESET"
 [ -n "$ctx_info" ] && printf '%b%s%b' "$ctx_color" "$ctx_info" "$C_RESET"
 [ -n "$session_info" ] && printf '%b%s%b' "$session_color" "$session_info" "$C_RESET"
-printf '%b |%b' "$C_PIPE" "$C_RESET"
-[ -n "$reset_info" ] && printf '%b%s%b' "$C_MODEL" "$reset_info" "$C_RESET"
+if [ -n "$reset_info" ]; then
+  printf '%b |%b' "$C_PIPE" "$C_RESET"
+  printf '%b%s%b' "$C_MODEL" "$reset_info" "$C_RESET"
+fi
 printf '\n'
