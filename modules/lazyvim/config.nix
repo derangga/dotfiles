@@ -10,6 +10,7 @@
     extraPackages = with pkgs; [
       fd
       gcc
+      imagemagick
       lua
       nil
       nixfmt
