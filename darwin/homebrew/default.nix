@@ -16,6 +16,7 @@
       "sf-symbols"
       "font-sf-mono"
       "font-sf-pro"
+      "zed"
     ];
   };
 }

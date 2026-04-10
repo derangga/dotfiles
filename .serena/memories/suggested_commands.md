@@ -1,29 +1,19 @@
 # Suggested Commands
 
-## Build & Apply
-```bash
-sudo darwin-rebuild switch --flake ~/nix#{hostname}   # Build and apply (drb alias)
-sudo darwin-rebuild build --flake ~/nix#{hostname}    # Build without switching
-sudo darwin-rebuild check --flake ~/nix#{hostname}    # Syntax/config validation
-```
-
-## Cleanup
-```bash
-nix-collect-garbage -d   # Remove old generations (ngc alias)
-```
+## Nix Darwin
+- `sudo darwin-rebuild switch --flake ~/nix#{hostname}` — apply system config (alias: `drb`)
+- `sudo darwin-rebuild check --flake ~/nix#{hostname}` — validate syntax before applying
+- `sudo darwin-rebuild build --flake ~/nix#{hostname}` — build without switching
+- `nix-collect-garbage -d` — clean up old generations (alias: `ngc`)
 
 ## Formatting
-```bash
-nixfmt file.nix   # Format a Nix file
-```
+- `nixfmt file.nix` — format a Nix file
 
-## Aliases (defined in user config)
-- `drb` → `sudo darwin-rebuild switch --flake ~/nix#{hostname}`
-- `ngc` → `nix-collect-garbage -d`
-- `lg` → `lazygit`
+## Git
+- `git` / `lazygit` (`lg`) — version control
 
-## System Utilities (Darwin/macOS)
-```bash
-git, ls, cd, grep, find   # Standard unix tools
-lazygit (lg)              # Git TUI
-```
+## Workflow
+1. Edit Nix files
+2. `nixfmt` format changed files
+3. `darwin-rebuild check` to validate
+4. `darwin-rebuild switch` to apply
