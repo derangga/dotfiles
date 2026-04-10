@@ -74,7 +74,10 @@ in
   catppuccin.yazi = cfg // {
     accent = "blue";
   };
-
+  catppuccin.zed = cfg // {
+    accent = "blue";
+    icons = cfg;
+  };
   catppuccin.zsh-syntax-highlighting = cfg;
 
 }

@@ -83,14 +83,15 @@
       ];
     };
 
-    vscode = {
-      enable = true;
-    };
-
     yazi = {
       enable = true;
       enableZshIntegration = true;
       shellWrapperName = "y";
+    };
+
+    zed-editor = {
+      enable = true;
+      package = null;
     };
 
     zsh = {
