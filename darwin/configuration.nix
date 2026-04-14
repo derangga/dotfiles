@@ -37,9 +37,10 @@
     uv
   ];
 
-  fonts.packages = [
-    pkgs.nerd-fonts.jetbrains-mono
-    pkgs.sketchybar-app-font
+  fonts.packages = with pkgs; [
+    kode-mono
+    nerd-fonts.jetbrains-mono
+    sketchybar-app-font
   ];
 
   users.users.${username} = {

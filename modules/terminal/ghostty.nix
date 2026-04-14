@@ -5,16 +5,18 @@ lib.mkIf (config.terminal.use == "ghostty") {
     enableZshIntegration = true;
     package = null;
     settings = {
-      macos-option-as-alt = true;
-      macos-window-shadow = false;
-      macos-titlebar-style = "hidden";
       background-opacity = 0.9;
       background-blur = true;
-      keybind = "shift+enter=text:\\x1b\\r";
-      scrollbar = "never";
       custom-shader = [
         "shaders/cursor_blaze_no_trail.glsl"
       ];
+      font-family = "JetBrainsMono Nerd Font Mono";
+      font-feature = "JetBrainsMono Nerd Font Mono";
+      keybind = "shift+enter=text:\\x1b\\r";
+      macos-option-as-alt = true;
+      macos-window-shadow = false;
+      macos-titlebar-style = "hidden";
+      scrollbar = "never";
     };
   };
 
