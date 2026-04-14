@@ -2,9 +2,7 @@
 {
   homebrew = {
     # taps = [ ];
-    brews = [
-      "pyenv"
-    ];
+    # brews = [ ];
     # casks = [ ];
   };
 }

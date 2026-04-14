@@ -10,7 +10,7 @@
     ./git/config.nix
     ./terminal
     ./lazyvim/config.nix
-    ./starship/config.nix
+    ./starship/nosymbol.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
   ];

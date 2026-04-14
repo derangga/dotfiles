@@ -34,6 +34,7 @@
     pnpm
     rustc
     rust-analyzer
+    uv
   ];
 
   fonts.packages = [
