@@ -8,7 +8,6 @@
     brews = [
       "golang-migrate"
       "mole"
-      "uv"
       "rtk"
     ];
 
