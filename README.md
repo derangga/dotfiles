@@ -26,6 +26,46 @@ Nix is a powerful package manager and system configuration tool that takes a uni
 
 By leveraging Nix Darwin for macOS, I get all these benefits while maintaining a native Mac experience.
 
+## What's Inside (Home Manager)
+
+All the following applications are managed via home-manager and will be configured automatically on rebuild.
+
+### Shell & Terminal
+| Application | Description |
+|---|---|
+| Zsh + Oh My Zsh | Shell with git and fzf plugins |
+| Starship | Cross-shell prompt |
+| Kitty | GPU-accelerated terminal |
+| Ghostty | Fast terminal emulator |
+
+### Development Tools
+| Application | Description |
+|---|---|
+| Neovim (LazyVim) | Text editor with LazyVim config |
+| Git | Version control |
+| Lazygit | Terminal UI for Git |
+| Claude Code | Agentic coding tool |
+| OpenCode | AI coding assistant |
+| tmux | Terminal multiplexer |
+
+### CLI Utilities
+| Application | Description |
+|---|---|
+| bat | `cat` clone with syntax highlighting |
+| btop | Resource monitor |
+| eza | Modern `ls` replacement |
+| fzf | Fuzzy finder |
+| yazi | Terminal file manager |
+| gh | GitHub CLI |
+| gh-dash | GitHub dashboard in terminal |
+
+### Desktop & UI
+| Application | Description |
+|---|---|
+| Aerospace | Tiling window manager |
+| Sketchybar | Custom menu bar |
+
+
 ## Usage
 
 ### Get to know Nix
@@ -50,7 +90,9 @@ sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
 git clone https://github.com/derangga/dotfiles.git nix
 ```
 
-3. Add your username and hostname inside `flake.nix`
+### Configuration
+
+1. Add your username and hostname inside `flake.nix`
 ```
 {
   darwinConfigurations."maclop" = mkDarwinConfig {
@@ -66,7 +108,7 @@ git clone https://github.com/derangga/dotfiles.git nix
 }
 ```
 
-4. Add a new file inside `./modules/hosts/{your_username}.nix`
+2. Add a new file inside `./modules/hosts/{your_username}.nix`
 ```
 {
   pkgs,
@@ -96,7 +138,7 @@ git clone https://github.com/derangga/dotfiles.git nix
 }
 ```
 
-5. Now you can build it. Since this is a first time you can't use the alias yet
+3. Now you can build it. Since this is a first time you can't use the alias yet
 ```
 sudo darwin-rebuild switch --flake ~/nix#foo
 ```
@@ -113,4 +155,8 @@ claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena 
 - [Nix store](https://search.nixos.org/packages?channel=25.11&)
 - [Home manager](https://home-manager-options.extranix.com/)
 - [Nix darwin](https://mynixos.com/nix-darwin)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 

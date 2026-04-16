@@ -8,7 +8,6 @@
     brews = [
       "golang-migrate"
       "mole"
-      "uv"
       "rtk"
     ];
 
@@ -16,6 +15,7 @@
       "sf-symbols"
       "font-sf-mono"
       "font-sf-pro"
+      "zed"
     ];
   };
 }

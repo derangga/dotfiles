@@ -18,8 +18,6 @@ in
   catppuccin.lazygit = cfg // {
     accent = "blue";
   };
-  catppuccin.opencode = cfg;
-  catppuccin.starship = cfg;
   catppuccin.tmux = cfg // {
     extraConfig = ''
       # Configure Catppuccin
@@ -75,7 +73,10 @@ in
   catppuccin.yazi = cfg // {
     accent = "blue";
   };
-
+  catppuccin.zed = cfg // {
+    accent = "blue";
+    icons = cfg;
+  };
   catppuccin.zsh-syntax-highlighting = cfg;
 
 }

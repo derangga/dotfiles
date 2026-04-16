@@ -10,7 +10,8 @@
     ./git/config.nix
     ./terminal
     ./nixvim
-    ./starship/config.nix
+    ./lazyvim/config.nix
+    ./starship/nosymbol.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
   ];
@@ -64,6 +65,9 @@
 
     opencode = {
       enable = true;
+      tui = {
+        theme = "catppuccin-macchiato";
+      };
     };
 
     tmux = {
@@ -80,14 +84,15 @@
       ];
     };
 
-    vscode = {
-      enable = true;
-    };
-
     yazi = {
       enable = true;
       enableZshIntegration = true;
       shellWrapperName = "y";
+    };
+
+    zed-editor = {
+      enable = true;
+      package = null;
     };
 
     zsh = {
