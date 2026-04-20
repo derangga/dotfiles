@@ -11,6 +11,17 @@ return {
     },
   },
   keys = {
+    {
+      "<leader>fz",
+      function()
+        require("fff").live_grep({
+          grep = {
+            modes = { "fuzzy", "plain" },
+          },
+        })
+      end,
+      desc = "Live fffuzy grep",
+    },
     -- file finding (override snacks picker)
     {
       "<leader>ff",
