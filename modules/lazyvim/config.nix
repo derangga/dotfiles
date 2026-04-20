@@ -10,7 +10,6 @@
     extraPackages = with pkgs; [
       fd
       gcc
-      imagemagick
       lua
       nil
       nixfmt
@@ -18,6 +17,8 @@
     ];
     viAlias = true;
     vimAlias = true;
+    withPython3 = false;
+    withRuby = false;
   };
 
   xdg.configFile."nvim" = {
