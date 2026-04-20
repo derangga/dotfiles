@@ -13,7 +13,7 @@ in
   catppuccin.gh-dash = cfg // {
     accent = "blue";
   };
-  catppuccin.ghostty = cfg;
+  catppuccin.ghostty = lib.mkIf (config.terminal.use == "ghostty") cfg;
   catppuccin.kitty = lib.mkIf (config.terminal.use == "kitty") cfg;
   catppuccin.lazygit = cfg // {
     accent = "blue";
