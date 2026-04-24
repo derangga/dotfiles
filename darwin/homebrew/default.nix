@@ -5,9 +5,14 @@
     enable = true;
     onActivation.cleanup = "zap";
 
+    taps = [
+      "derangga/formulae"
+    ];
+
     brews = [
       "golang-migrate"
       "mole"
+      "derangga/formulae/phunter"
       "rtk"
     ];
 
