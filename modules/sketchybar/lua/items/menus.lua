@@ -4,7 +4,7 @@ local app_icons = require("helpers.app_icons")
 
 local menu_watcher = sbar.add("item", {
 	drawing = false,
-	updates = true,
+	updates = false,
 })
 local space_menu_swap = sbar.add("item", {
 	drawing = false,
@@ -46,7 +46,6 @@ local menu_padding = sbar.add("item", "menu.padding", {
 })
 
 local function update_menus()
-	sbar.set("front_app", { drawing = false })
 	sbar.exec("$CONFIG_DIR/helpers/menus/bin/menus -l", function(menus)
 		sbar.set("/menu\\..*/", { drawing = false })
 		menu_padding:set({ drawing = true })
@@ -76,13 +75,13 @@ space_menu_swap:subscribe("swap_menus_and_spaces", function()
 		menu_watcher:set({ updates = false })
 		sbar.set("/menu\\..*/", { drawing = false })
 		sbar.set("/space\\..*/", { drawing = true })
+		sbar.set("front_app", { drawing = true })
 	else
 		menu_watcher:set({ updates = true })
 		sbar.set("/space\\..*/", { drawing = false })
+		sbar.set("front_app", { drawing = false })
 		update_menus()
 	end
 end)
-
-update_menus()
 
 return menu_watcher
