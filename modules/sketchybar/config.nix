@@ -9,6 +9,7 @@
     };
     configType = "lua";
     extraPackages = with pkgs; [
+      aerospace
       jq
       switchaudio-osx
     ];

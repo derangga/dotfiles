@@ -28,8 +28,8 @@ for i = 1, 9, 1 do
 
 	spaces[i] = space
 
-	space:subscribe("mouse.clicked", function(env)
-		sbar.exec("/etc/profiles/per-user/sociolla/bin/aerospace workspace " .. i)
+	space:subscribe("mouse.clicked", function()
+		sbar.exec("aerospace workspace " .. i)
 	end)
 end
 
@@ -91,14 +91,14 @@ local spaces_indicator = sbar.add("item", {
 	},
 })
 
-spaces_indicator:subscribe("swap_menus_and_spaces", function(env)
+spaces_indicator:subscribe("swap_menus_and_spaces", function()
 	local currently_on = spaces_indicator:query().icon.value == icons.switch.on
 	spaces_indicator:set({
 		icon = currently_on and icons.switch.off or icons.switch.on,
 	})
 end)
 
-spaces_indicator:subscribe("mouse.entered", function(env)
+spaces_indicator:subscribe("mouse.entered", function()
 	sbar.animate("tanh", 30, function()
 		spaces_indicator:set({
 			background = {
@@ -109,7 +109,7 @@ spaces_indicator:subscribe("mouse.entered", function(env)
 	end)
 end)
 
-spaces_indicator:subscribe("mouse.exited", function(env)
+spaces_indicator:subscribe("mouse.exited", function()
 	sbar.animate("tanh", 30, function()
 		spaces_indicator:set({
 			background = {
@@ -120,7 +120,7 @@ spaces_indicator:subscribe("mouse.exited", function(env)
 	end)
 end)
 
-spaces_indicator:subscribe("mouse.clicked", function(env)
+spaces_indicator:subscribe("mouse.clicked", function()
 	sbar.trigger("swap_menus_and_spaces")
 end)
 
