@@ -9,7 +9,7 @@
     ./catppuccin/config.nix
     ./git/config.nix
     ./terminal
-    ./lazyvim/config.nix
+    ./neovim/config.nix
     ./starship/nosymbol.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
