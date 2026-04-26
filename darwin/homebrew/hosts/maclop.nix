@@ -3,6 +3,6 @@
   homebrew = {
     # taps = [ ];
     # brews = [ ];
-    # casks = [ ];
+    casks = [ "obs" ];
   };
 }
