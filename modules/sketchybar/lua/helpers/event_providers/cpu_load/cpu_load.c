@@ -17,6 +17,11 @@ int main (int argc, char** argv) {
   snprintf(event_message, 512, "--add event '%s'", argv[1]);
   sketchybar(event_message);
 
+  // First call establishes the baseline for delta calculation;
+  // no event is sent so the widget keeps showing ??% until valid data is ready.
+  cpu_update(&cpu);
+  usleep(update_freq * 1000000);
+
   char trigger_message[512];
   for (;;) {
     // Acquire new info
