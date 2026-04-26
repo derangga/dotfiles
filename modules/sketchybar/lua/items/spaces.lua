@@ -7,6 +7,24 @@ sbar.add("event", "aerospace_workspace_change")
 
 local spaces = {}
 
+sbar.add("item", "space.tiling", {
+	icon = {
+		font = { family = settings.font.text },
+		string = icons.tiling,
+		padding_left = 10,
+		padding_right = 10,
+		color = colors.white,
+	},
+	label = { drawing = false },
+	padding_right = 1,
+	padding_left = 1,
+	background = {
+		color = colors.transparent,
+		height = 28,
+		border_width = 0,
+	},
+})
+
 for i = 1, 9, 1 do
 	local space = sbar.add("item", "space." .. i, {
 		icon = {
@@ -20,8 +38,9 @@ for i = 1, 9, 1 do
 		padding_right = 1,
 		padding_left = 1,
 		background = {
-			color = colors.bg1,
-			height = 30,
+			color = colors.transparent,
+			height = 28,
+			border_width = 2,
 			border_color = { alpha = 0 },
 		},
 	})
@@ -36,9 +55,8 @@ end
 -- Single bracket wrapping all spaces
 sbar.add("bracket", { "/space\\..*/" }, {
 	background = {
-		color = colors.transparent,
-		height = 28,
-		border_color = { alpha = 0 },
+		color = colors.bg2,
+		height = 30,
 	},
 })
 
@@ -53,7 +71,7 @@ local function update_spaces(focused_workspace)
 		local selected = (tostring(i) == focused_workspace)
 		spaces[i]:set({
 			icon = { color = selected and colors.black or colors.white },
-			background = { color = selected and colors.white or colors.bg1 },
+			background = { color = selected and colors.white or colors.transparent },
 		})
 	end
 end
@@ -86,6 +104,7 @@ local spaces_indicator = sbar.add("item", {
 		color = colors.white,
 	},
 	background = {
+		height = 30,
 		color = colors.with_alpha(colors.bg1, 0.0),
 		border_color = { alpha = 0 },
 	},
