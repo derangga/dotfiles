@@ -88,24 +88,28 @@ end)
 
 -- Spaces toggle indicator
 local spaces_indicator = sbar.add("item", {
-	padding_left = -3,
+	padding_left = 0,
 	padding_right = 0,
 	icon = {
 		padding_left = 8,
-		padding_right = 9,
+		padding_right = 4,
 		color = colors.white,
 		string = icons.switch.on,
 	},
 	label = {
 		width = 0,
-		padding_left = 0,
+		padding_left = 8,
 		padding_right = 8,
 		string = "Spaces",
 		color = colors.white,
+		font = {
+			family = settings.font.numbers,
+			style = settings.font.style_map["Semibold"],
+		},
 	},
 	background = {
 		height = 30,
-		color = colors.with_alpha(colors.bg1, 0.0),
+		color = colors.with_alpha(colors.bg2, 0.0),
 		border_color = { alpha = 0 },
 	},
 })
@@ -122,6 +126,7 @@ spaces_indicator:subscribe("mouse.entered", function()
 		spaces_indicator:set({
 			background = {
 				color = { alpha = 0.67 },
+				border_color = { alpha = 0.67 },
 			},
 			label = { width = "dynamic" },
 		})
@@ -133,6 +138,7 @@ spaces_indicator:subscribe("mouse.exited", function()
 		spaces_indicator:set({
 			background = {
 				color = { alpha = 0.0 },
+				border_color = { alpha = 0 },
 			},
 			label = { width = 0 },
 		})
