@@ -10,6 +10,7 @@ local icons = {
 		ram = "􀫦",
 		clipboard = "􀉄",
 		nix = "󱄅",
+		tiling = "􀏝",
 
 		switch = {
 			on = "􁏮",
@@ -52,6 +53,8 @@ local icons = {
 		gear = "",
 		cpu = "",
 		ram = "",
+		nix = "",
+		tiling = "",
 		clipboard = "Missing Icon",
 
 		switch = {
