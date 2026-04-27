@@ -10,7 +10,7 @@ local icons = {
 		ram = "􀫦",
 		clipboard = "􀉄",
 		nix = "󱄅",
-		tiling = "􀏝",
+		tiling = "􂨜",
 
 		switch = {
 			on = "􁏮",
