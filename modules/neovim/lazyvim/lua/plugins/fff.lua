@@ -10,40 +10,4 @@ return {
       prompt_position = "top",
     },
   },
-  keys = {
-    {
-      "<leader>fz",
-      function()
-        require("fff").live_grep({
-          grep = {
-            modes = { "fuzzy", "plain" },
-          },
-        })
-      end,
-      desc = "Live fffuzy grep",
-    },
-    -- file finding (override snacks picker)
-    {
-      "<leader>ff",
-      function()
-        require("fff").find_files()
-      end,
-      desc = "Find files (fff)",
-    },
-    {
-      "<leader><space>",
-      function()
-        require("fff").find_files()
-      end,
-      desc = "Find files (fff)",
-    },
-    -- grep (override snacks picker)
-    {
-      "<leader>sg",
-      function()
-        require("fff").live_grep()
-      end,
-      desc = "Live grep (fff)",
-    },
-  },
 }
