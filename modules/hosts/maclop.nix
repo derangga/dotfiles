@@ -4,8 +4,9 @@
 }:
 {
   home.packages = with pkgs; [
-    cloudflared
     openscreen
+    cocoapods
+    flutter
   ];
 
   catppuccin.obs = {
