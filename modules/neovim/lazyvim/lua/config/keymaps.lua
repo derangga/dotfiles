@@ -38,7 +38,7 @@ end, { desc = "Toggle Diff View" })
 map("n", "<leader>gH", "<cmd>DiffviewFileHistory %<cr>", { desc = "File History (current)" })
 
 -- Window
-map("n", "<Esc>b", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width (alt+arrow left)" })
-map("n", "<Esc>f", "<cmd>vertical resize +2<CR>", { desc = "Increase window width (alt+arrow right)" })
-map("n", "<M-Up>", "<cmd>resize +2<CR>", { desc = "Increase window height (alt+arrow up)" })
-map("n", "<M-Down>", "<cmd>resize -2<CR>", { desc = "Decrease window height (alt+arrow down)" })
+map("n", "<Esc>b", "<cmd>vertical resize -1<CR>", { desc = "Decrease window width (alt+arrow left)" })
+map("n", "<Esc>f", "<cmd>vertical resize +1<CR>", { desc = "Increase window width (alt+arrow right)" })
+map("n", "<M-Up>", "<cmd>resize +1<CR>", { desc = "Increase window height (alt+arrow up)" })
+map("n", "<M-Down>", "<cmd>resize -1<CR>", { desc = "Decrease window height (alt+arrow down)" })
