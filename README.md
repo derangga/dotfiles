@@ -4,7 +4,7 @@
 
 </div>
 
-<div align="center"><img src="screenshots/my-setup-preview.png" height="500px"/></div>
+<div align="center"><img src="screenshots/new-setup.png" height="500px"/></div>
 
 ## Motivation
 
