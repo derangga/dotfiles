@@ -75,6 +75,12 @@
       enable = true;
       customPaneNavigationAndResize = true;
       escapeTime = 10;
+      extraConfig = ''
+        # enable extended keys (CSI encoding) for proper modifier support
+        # allows shift+enter, ctrl+shift+<key>, etc. to work correctly in apps
+        set -s extended-keys on
+        set -as terminal-features "xterm*:extkeys"
+      '';
       focusEvents = true;
       keyMode = "vi";
       mouse = true;
@@ -92,6 +98,13 @@
     zed-editor = {
       enable = true;
       package = null;
+    };
+
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      # replacing cd with zoxide
+      options = [ "--cmd cd" ];
     };
 
     zsh = {
