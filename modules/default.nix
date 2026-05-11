@@ -78,6 +78,7 @@
       extraConfig = ''
         # enable extended keys (CSI encoding) for proper modifier support
         # allows shift+enter, ctrl+shift+<key>, etc. to work correctly in apps
+        # also this config fix opencode behavior inside tmux
         set -s extended-keys on
         set -as terminal-features "xterm*:extkeys"
       '';
