@@ -10,6 +10,7 @@
     ./git/config.nix
     ./terminal
     ./neovim/config.nix
+    ./presenterm/config.nix
     ./starship/nosymbol.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
