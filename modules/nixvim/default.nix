@@ -21,7 +21,7 @@
       nixfmt
       ripgrep
       lazygit
-      nodePackages.prettier
+      prettier
       stylua
       shfmt
     ];
