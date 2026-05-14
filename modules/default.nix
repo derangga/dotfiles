@@ -10,6 +10,7 @@
     ./git/config.nix
     ./terminal
     ./neovim/config.nix
+    ./presenterm/config.nix
     ./starship/nosymbol.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
@@ -125,7 +126,9 @@
         drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
         ngc = "nix-collect-garbage -d";
         lg = "lazygit";
-        agc = "brew services start aerogesture";
+        agstart = "brew services start aerogesture";
+        agstop = "brew services stop aerogesture";
+        agrestart = "brew services restart aerogesture";
       };
 
       initContent = ''

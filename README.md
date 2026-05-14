@@ -47,6 +47,7 @@ All the following applications are managed via home-manager and will be configur
 | Claude Code | Agentic coding tool |
 | OpenCode | AI coding assistant |
 | tmux | Terminal multiplexer |
+| Zed | Modern, high-performance code editor |
 
 ### CLI Utilities
 | Application | Description |
@@ -56,14 +57,17 @@ All the following applications are managed via home-manager and will be configur
 | eza | Modern `ls` replacement |
 | fzf | Fuzzy finder |
 | yazi | Terminal file manager |
+| zoxide | Smarter `cd` with frecency-based navigation |
 | gh | GitHub CLI |
 | gh-dash | GitHub dashboard in terminal |
+| presenterm | Terminal slideshow presentation tool |
 
 ### Desktop & UI
 | Application | Description |
 |---|---|
 | Aerospace | Tiling window manager |
 | Sketchybar | Custom menu bar |
+| JankyBorders | Rounded colored borders for focused windows |
 
 
 ## Usage
