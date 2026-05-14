@@ -72,7 +72,5 @@
         username = "sociolla";
       };
 
-      # Default package output for personal laptop
-      darwinPackages = self.darwinConfigurations."maclop".pkgs;
     };
 }

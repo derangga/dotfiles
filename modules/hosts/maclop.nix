@@ -4,8 +4,15 @@
 }:
 {
   home.packages = with pkgs; [
-    cloudflared
+    openscreen
+    cocoapods
+    flutter
   ];
+
+  catppuccin.obs = {
+    enable = true;
+    flavor = "macchiato";
+  };
 
   programs.vscode = {
     enable = true;

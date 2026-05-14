@@ -1,6 +1,3 @@
-## Description
-The configuration is forked from [NoamFav](https://github.com/NoamFav/sketchybar) config with minimal customize
-
 ## Prerequisite
 - Apple SF Symbols, SF Mono, and SF Pro fonts
 - jq

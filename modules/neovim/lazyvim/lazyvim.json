@@ -1,6 +1,7 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.dap.core"
+    "lazyvim.plugins.extras.dap.core",
+    "lazyvim.plugins.extras.util.mini-hipatterns"
   ],
   "install_version": 8,
   "news": {
@@ -8,3 +9,4 @@
   },
   "version": 8
 }
+

@@ -10,7 +10,8 @@
     ./git/config.nix
     ./terminal
     ./nixvim
-    ./lazyvim/config.nix
+    #./neovim/config.nix
+    ./presenterm/config.nix
     ./starship/nosymbol.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
@@ -76,6 +77,13 @@
       enable = true;
       customPaneNavigationAndResize = true;
       escapeTime = 10;
+      extraConfig = ''
+        # enable extended keys (CSI encoding) for proper modifier support
+        # allows shift+enter, ctrl+shift+<key>, etc. to work correctly in apps
+        # also this config fix opencode behavior inside tmux
+        set -s extended-keys on
+        set -as terminal-features "xterm*:extkeys"
+      '';
       focusEvents = true;
       keyMode = "vi";
       mouse = true;
@@ -95,6 +103,13 @@
       package = null;
     };
 
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      # replacing cd with zoxide
+      options = [ "--cmd cd" ];
+    };
+
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -112,6 +127,9 @@
         drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
         ngc = "nix-collect-garbage -d";
         lg = "lazygit";
+        agstart = "brew services start aerogesture";
+        agstop = "brew services stop aerogesture";
+        agrestart = "brew services restart aerogesture";
       };
 
       initContent = ''

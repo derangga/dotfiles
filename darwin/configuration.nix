@@ -18,22 +18,18 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    android-tools
     bun
     cargo
-    colima
-    docker
-    docker-compose
     fnm
     ffmpeg
     gnupg
     go
-    javaPackages.compiler.openjdk17
     mkalias
     nixd
     pnpm
     rustc
     rust-analyzer
+    tree
     uv
   ];
 
