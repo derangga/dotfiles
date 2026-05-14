@@ -36,11 +36,25 @@ return {
         ⠀⠀⠀⠀⢈⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢱⡞⢼⠗⢶⣤⣤⣀⣉⣉⣉⣉⣉⣉⡥⢤⡲⣺⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣧⠀⠀⠀
  ]],
         keys = {
-          { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()"},
+          { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()" },
           { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-          { icon = " ", key = "g", desc = "Find Text", action = ":lua require('fff').live_grep()"},
+          { icon = " ", key = "g", desc = "Find Text", action = ":lua require('fff').live_grep()" },
           { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
         },
+      },
+    },
+    -- source: https://stackoverflow.com/a/79697134
+    scroll = {
+      enabled = true,
+      animate = {
+        duration = { step = 10, total = 100 },
+        easing = "linear",
+      },
+      -- faster animation when repeating scroll after delay
+      animate_repeat = {
+        delay = 50, -- delay in ms before using the repeat animation
+        duration = { step = 3, total = 20 },
+        easing = "linear",
       },
     },
   },
