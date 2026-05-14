@@ -1,3 +1,5 @@
+# Presenterm: terminal-based markdown slideshow tool.
+# Docs: https://mfontanini.github.io/presenterm/introduction.html
 {
   config,
   pkgs,
