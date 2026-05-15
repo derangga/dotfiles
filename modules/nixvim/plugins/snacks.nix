@@ -6,6 +6,7 @@
 
     extraConfigLuaPre = ''
       local notify = vim.notify
+      _G.__nvim_start_time = _G.__nvim_start_time or vim.uv.hrtime()
       require("snacks").setup({
         bigfile = { enabled = true },
         quickfile = { enabled = true },
@@ -16,6 +17,17 @@
             { section = "header" },
             { section = "keys", gap = 1, padding = 1 },
             { section = "recent_files", icon = " ", title = "Recent Files", padding = 1 },
+            function()
+              local ms = (vim.uv.hrtime() - _G.__nvim_start_time) / 1e6
+              return {
+                align = "center",
+                padding = 1,
+                text = {
+                  { "⚡ ", hl = "SnacksDashboardSpecial" },
+                  { string.format("Neovim loaded in %.2fms", ms), hl = "SnacksDashboardFooter" },
+                },
+              }
+            end,
           },
           preset = {
             header = [[
