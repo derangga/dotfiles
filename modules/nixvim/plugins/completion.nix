@@ -30,16 +30,12 @@
             auto_show_delay_ms = 200;
           };
           ghost_text = {
-            enabled = true;
+            enabled = false;
           };
         };
 
         sources = {
           default = [ "lsp" "path" "snippets" "buffer" ];
-        };
-
-        signature = {
-          enabled = true;
         };
 
         cmdline = {

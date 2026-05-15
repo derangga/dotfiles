@@ -83,6 +83,155 @@
 
     plugins.lualine = {
       enable = true;
+      luaConfig.pre = ''
+        vim.g.lualine_laststatus = vim.o.laststatus
+        if vim.fn.argc(-1) > 0 then
+          vim.o.statusline = " "
+        else
+          vim.o.laststatus = 0
+        end
+
+        _G.LualineUtil = {}
+
+        local function get_root()
+          local root = vim.fs.root(0, { ".git", "package.json", "Cargo.toml", "go.mod", "pyproject.toml", "flake.nix" })
+          return vim.fs.normalize(root or vim.uv.cwd())
+        end
+
+        local function get_cwd()
+          return vim.fs.normalize(vim.uv.cwd())
+        end
+
+        local function format_hl(self, text, hl_group)
+          text = text:gsub("%%", "%%%%")
+          if not hl_group or hl_group == "" then
+            return text
+          end
+          self.hl_cache = self.hl_cache or {}
+          local lualine_hl_group = self.hl_cache[hl_group]
+          if not lualine_hl_group then
+            local utils = require("lualine.utils.utils")
+            local gui = vim.tbl_filter(function(x) return x end, {
+              utils.extract_highlight_colors(hl_group, "bold") and "bold",
+              utils.extract_highlight_colors(hl_group, "italic") and "italic",
+            })
+            lualine_hl_group = self:create_hl({
+              fg = utils.extract_highlight_colors(hl_group, "fg"),
+              gui = #gui > 0 and table.concat(gui, ",") or nil,
+            }, "LV_" .. hl_group)
+            self.hl_cache[hl_group] = lualine_hl_group
+          end
+          return self:format_hl(lualine_hl_group) .. text .. self:get_default_hl()
+        end
+
+        function LualineUtil.pretty_path(opts)
+          opts = vim.tbl_extend("force", {
+            relative = "cwd",
+            modified_hl = "MatchParen",
+            directory_hl = "",
+            filename_hl = "Bold",
+            modified_sign = "",
+            readonly_icon = " 󰌾 ",
+            length = 3,
+          }, opts or {})
+
+          return function(self)
+            local path = vim.fn.expand("%:p")
+            if path == "" then return "" end
+
+            path = vim.fs.normalize(path)
+            local root = get_root()
+            local cwd = get_cwd()
+
+            if opts.relative == "cwd" and path:find(cwd, 1, true) == 1 then
+              path = path:sub(#cwd + 2)
+            elseif path:find(root, 1, true) == 1 then
+              path = path:sub(#root + 2)
+            end
+
+            local parts = vim.split(path, "[\\/]")
+            if opts.length ~= 0 and #parts > opts.length then
+              parts = { parts[1], "…", unpack(parts, #parts - opts.length + 2, #parts) }
+            end
+
+            if opts.modified_hl and vim.bo.modified then
+              parts[#parts] = parts[#parts] .. opts.modified_sign
+              parts[#parts] = format_hl(self, parts[#parts], opts.modified_hl)
+            else
+              parts[#parts] = format_hl(self, parts[#parts], opts.filename_hl)
+            end
+
+            local dir = ""
+            if #parts > 1 then
+              dir = table.concat({ unpack(parts, 1, #parts - 1) }, "/")
+              dir = format_hl(self, dir .. "/", opts.directory_hl)
+            end
+
+            local readonly = ""
+            if vim.bo.readonly then
+              readonly = format_hl(self, opts.readonly_icon, opts.modified_hl)
+            end
+            return dir .. parts[#parts] .. readonly
+          end
+        end
+
+        function LualineUtil.root_dir(opts)
+          opts = vim.tbl_extend("force", {
+            cwd = false,
+            subdirectory = true,
+            parent = true,
+            other = true,
+            icon = "󱉭 ",
+            color = function()
+              return { fg = Snacks.util.color("Special") }
+            end,
+          }, opts or {})
+
+          local function get()
+            local cwd = get_cwd()
+            local root = get_root()
+            local name = vim.fs.basename(root)
+            if root == cwd then
+              return opts.cwd and name
+            elseif root:find(cwd, 1, true) == 1 then
+              return opts.subdirectory and name
+            elseif cwd:find(root, 1, true) == 1 then
+              return opts.parent and name
+            else
+              return opts.other and name
+            end
+          end
+
+          return {
+            function() return (opts.icon and opts.icon .. " ") .. get() end,
+            cond = function() return type(get()) == "string" end,
+            color = opts.color,
+          }
+        end
+
+        vim.g.trouble_lualine = true
+        function LualineUtil.trouble_symbols()
+          local ok, trouble = pcall(require, "trouble")
+          if not ok then return { function() return "" end, cond = function() return false end } end
+          local symbols = trouble.statusline({
+            mode = "symbols",
+            groups = {},
+            title = false,
+            filter = { range = true },
+            format = "{kind_icon}{symbol.name:Normal}",
+            hl_group = "lualine_c_normal",
+          })
+          return {
+            symbols.get,
+            cond = function()
+              return vim.b.trouble_lualine ~= false and symbols.has()
+            end,
+          }
+        end
+      '';
+      luaConfig.post = ''
+        vim.o.laststatus = vim.g.lualine_laststatus
+      '';
       settings = {
         options = {
           theme = "auto";
@@ -94,6 +243,7 @@
           lualine_a = [ "mode" ];
           lualine_b = [ "branch" ];
           lualine_c = [
+            { __raw = "LualineUtil.root_dir()"; }
             {
               __unkeyed-1 = "diagnostics";
               symbols = {
@@ -104,9 +254,11 @@
               };
             }
             { __unkeyed-1 = "filetype"; icon_only = true; separator = ""; padding = { left = 1; right = 0; }; }
-            { __unkeyed-1 = "filename"; path = 1; }
+            { __raw = "LualineUtil.pretty_path()"; }
+            { __raw = "LualineUtil.trouble_symbols()"; }
           ];
           lualine_x = [
+            { __raw = "Snacks.profiler.status()"; }
             {
               __unkeyed-1.__raw = ''function() return require("noice").api.status.command.get() end'';
               cond.__raw = ''function() return package.loaded["noice"] and require("noice").api.status.command.has() end'';

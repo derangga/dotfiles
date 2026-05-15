@@ -9,7 +9,25 @@ in
       enable = true;
 
       servers = {
-        lua_ls.enable = true;
+        lua_ls = {
+          enable = true;
+          settings = {
+            Lua = {
+              workspace.checkThirdParty = false;
+              codeLens.enable = true;
+              completion.callSnippet = "Replace";
+              doc.privateName = [ "^_" ];
+              hint = {
+                enable = true;
+                setType = false;
+                paramType = true;
+                paramName = "Disable";
+                semicolon = "Disable";
+                arrayIndex = "Disable";
+              };
+            };
+          };
+        };
         bashls.enable = true;
         clangd.enable = true;
         cssls.enable = true;
@@ -70,12 +88,14 @@ in
     };
 
     plugins.lsp.onAttach = ''
-      local map = function(mode, lhs, rhs, desc)
-        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
+      local map = function(mode, lhs, rhs, desc, extra)
+        local opts = { buffer = bufnr, desc = desc, silent = true }
+        if extra then opts = vim.tbl_extend("force", opts, extra) end
+        vim.keymap.set(mode, lhs, rhs, opts)
       end
 
       map("n", "gd", function() Snacks.picker.lsp_definitions() end, "Goto Definition")
-      map("n", "gr", function() Snacks.picker.lsp_references() end, "References")
+      map("n", "gr", function() Snacks.picker.lsp_references() end, "References", { nowait = true })
       map("n", "gI", function() Snacks.picker.lsp_implementations() end, "Goto Implementation")
       map("n", "gy", function() Snacks.picker.lsp_type_definitions() end, "Goto T[y]pe Definition")
       map("n", "gD", vim.lsp.buf.declaration, "Goto Declaration")
@@ -106,23 +126,47 @@ in
           vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
       end
+
+      -- LSP-driven folding when supported
+      if client:supports_method("textDocument/foldingRange") then
+        vim.wo.foldmethod = "expr"
+        vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+      end
+    '';
+
+    extraConfigLua = ''
+      vim.lsp.config("*", {
+        capabilities = {
+          workspace = {
+            fileOperations = {
+              didRename = true,
+              willRename = true,
+            },
+          },
+        },
+      })
+
+      vim.diagnostic.config({
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN]  = " ",
+            [vim.diagnostic.severity.INFO]  = " ",
+            [vim.diagnostic.severity.HINT]  = " ",
+          },
+        },
+      })
     '';
 
     diagnostics = {
       underline = true;
+      update_in_insert = false;
       virtual_text = {
         spacing = 4;
+        source = "if_many";
         prefix = "●";
       };
       severity_sort = true;
-      signs = {
-        text = {
-          "__rawKey__vim.diagnostic.severity.ERROR" = " ";
-          "__rawKey__vim.diagnostic.severity.WARN" = " ";
-          "__rawKey__vim.diagnostic.severity.HINT" = " ";
-          "__rawKey__vim.diagnostic.severity.INFO" = " ";
-        };
-      };
     };
   };
 }

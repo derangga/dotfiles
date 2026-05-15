@@ -40,7 +40,7 @@
       sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,skiprtp,folds";
       shiftround = true;
       shiftwidth = 2;
-      shortmess = "WIcC";
+      shortmess = "WIcCF";
       showmode = false;
       sidescrolloff = 8;
       signcolumn = "yes";
