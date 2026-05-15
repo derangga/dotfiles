@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, fff-nvim, ... }:
 
 {
   programs.nixvim = {
-    extraPlugins = [ pkgs.vimPlugins.fff-nvim ];
+    extraPlugins = [ fff-nvim.packages.${pkgs.system}.fff-nvim ];
 
     extraConfigLua = ''
       require("fff").setup({
