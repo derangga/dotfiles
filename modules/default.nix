@@ -10,7 +10,6 @@
     ./git/config.nix
     ./terminal
     ./nixvim
-    #./neovim/config.nix
     ./presenterm/config.nix
     ./starship/nosymbol.nix
     ./sketchybar/config.nix
