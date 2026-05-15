@@ -47,9 +47,9 @@
         ⠀⠀⠀⠹⣼⣇⣾⠋⠀⠀⠀⠀⠀⠀⠙⠷⡒⠤⢇⡈⠒⠤⢄⣀⡀⠀⠀⠀⠀⠀⠀⢀⣀⡠⠤⠒⣉⣤⠶⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣷⠀⠀⠀⠀
         ⠀⠀⠀⠀⢈⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢱⡞⢼⠗⢶⣤⣤⣀⣉⣉⣉⣉⣉⣉⡥⢤⡲⣺⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣧⠀⠀⠀]],
             keys = {
-              { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+              { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()" },
               { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-              { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+              { icon = " ", key = "g", desc = "Find Text", action = ":lua require('fff').live_grep()" },
               { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
               { icon = " ", key = "q", desc = "Quit", action = ":qa" },
             },
@@ -59,7 +59,18 @@
         input = { enabled = true },
         notifier = { enabled = true },
         scope = { enabled = true },
-        scroll = { enabled = true },
+        scroll = {
+          enabled = true,
+          animate = {
+            duration = { step = 10, total = 100 },
+            easing = "linear",
+          },
+          animate_repeat = {
+            delay = 50,
+            duration = { step = 3, total = 20 },
+            easing = "linear",
+          },
+        },
         words = { enabled = true },
         picker = { enabled = true },
         explorer = { enabled = true },

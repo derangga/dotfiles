@@ -52,6 +52,28 @@
       };
     };
 
+    plugins.rainbow-delimiters = {
+      enable = true;
+      settings = {
+        strategy = {
+          "".__raw = "require('rainbow-delimiters').strategy.global";
+        };
+        query = {
+          "" = "rainbow-delimiters";
+          lua = "rainbow-blocks";
+        };
+        highlight = [
+          "RainbowDelimiterRed"
+          "RainbowDelimiterYellow"
+          "RainbowDelimiterBlue"
+          "RainbowDelimiterOrange"
+          "RainbowDelimiterGreen"
+          "RainbowDelimiterViolet"
+          "RainbowDelimiterCyan"
+        ];
+      };
+    };
+
     plugins.ts-autotag = {
       enable = true;
       settings = {

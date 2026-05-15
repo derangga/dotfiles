@@ -26,6 +26,7 @@ in
         html.enable = true;
         jsonls.enable = true;
         marksman.enable = true;
+        nixd.enable = true;
         sqls.enable = true;
         tailwindcss.enable = true;
         ts_ls = {
@@ -96,10 +97,12 @@ in
       map("n", "<leader>ss", function() Snacks.picker.lsp_symbols() end, "LSP Symbols")
       map("n", "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, "LSP Workspace Symbols")
 
-      -- Enable inlay hints (exclude vue)
-      if client.supports_method("textDocument/inlayHint") then
+      -- Enable inlay hints (exclude vue and non-file buffers like diffview://)
+      if client:supports_method("textDocument/inlayHint") then
         local filetype = vim.bo[bufnr].filetype
-        if filetype ~= "vue" then
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        local is_file = bufname == "" or bufname:match("^/") or bufname:match("^file://")
+        if filetype ~= "vue" and is_file then
           vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
       end

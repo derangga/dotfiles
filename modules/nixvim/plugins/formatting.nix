@@ -8,6 +8,7 @@
         formatters_by_ft = {
           lua = [ "stylua" ];
           css = [ "prettier" ];
+          go = [ "goimports" "gofumpt" ];
           html = [ "prettier" ];
           javascript = [ "prettier" ];
           javascriptreact = [ "prettier" ];
@@ -22,25 +23,6 @@
           timeout_ms = 3000;
           lsp_format = "fallback";
         };
-      };
-    };
-
-    plugins.lint = {
-      enable = true;
-      lintersByFt = {
-        fish = [ "fish" ];
-      };
-      autoCmd = {
-        event = [
-          "BufWritePost"
-          "BufReadPost"
-          "InsertLeave"
-        ];
-        callback.__raw = ''
-          function()
-            require("lint").try_lint()
-          end
-        '';
       };
     };
 

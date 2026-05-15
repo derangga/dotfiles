@@ -64,6 +64,7 @@
         options = {
           theme = "auto";
           globalstatus = true;
+          section_separators = { left = ""; right = ""; };
           disabled_filetypes.statusline = [ "dashboard" "alpha" "ministarter" "snacks_dashboard" ];
         };
         sections = {
@@ -182,6 +183,8 @@
         preset = "helix";
         spec = [
           { __unkeyed-1 = "<leader><tab>"; group = "tabs"; mode = [ "n" "x" ]; }
+          { __unkeyed-1 = "<leader>a"; group = "ai"; mode = [ "n" "v" ]; }
+          { __unkeyed-1 = "<leader>ao"; group = "opencode"; mode = [ "n" "x" ]; }
           { __unkeyed-1 = "<leader>b"; group = "buffer"; mode = [ "n" "x" ]; }
           { __unkeyed-1 = "<leader>c"; group = "code"; mode = [ "n" "x" ]; }
           { __unkeyed-1 = "<leader>d"; group = "debug"; mode = [ "n" "x" ]; }
