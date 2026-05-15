@@ -53,6 +53,7 @@
         left_trunc_marker = "";
         right_trunc_marker = "";
       };
+      settings.highlights.__raw = ''require("catppuccin.special.bufferline").get_theme()'';
     };
 
     keymaps = [
