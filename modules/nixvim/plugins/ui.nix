@@ -30,6 +30,28 @@
             filetype = "snacks_layout_box";
           }
         ];
+        get_element_icon.__raw = ''
+          function(opts)
+            local ft_icons = {
+              octo = " ",
+              gh = " ",
+              ["markdown.gh"] = " ",
+            }
+            return ft_icons[opts.filetype]
+          end
+        '';
+        style_preset.__raw = "require('bufferline').style_preset.default";
+        themable = true;
+        show_buffer_close_icons = true;
+        show_close_icon = false;
+        separator_style = "thin";
+        indicator = {
+          style = "icon";
+          icon = "▎";
+        };
+        modified_icon = "● ";
+        left_trunc_marker = "";
+        right_trunc_marker = "";
       };
     };
 

@@ -6,11 +6,8 @@
       enable = true;
       settings = {
         keymap = {
-          preset = "default";
-          "<CR>" = [ "accept" "fallback" ];
-          "<Tab>" = [ "select_next" "snippet_forward" "fallback" ];
-          "<S-Tab>" = [ "select_prev" "snippet_backward" "fallback" ];
-          "<C-space>" = [ "show" "show_documentation" "hide_documentation" ];
+          preset = "enter";
+          "<C-y>" = [ "select_and_accept" ];
         };
 
         appearance = {
@@ -49,12 +46,21 @@
           enabled = true;
           keymap = {
             preset = "cmdline";
-            "<Tab>" = [ "show" "accept" ];
-            "<CR>" = [ "accept_and_enter" "fallback" ];
+            "<Right>" = false;
+            "<Left>" = false;
           };
           completion = {
+            list = {
+              selection = {
+                preselect = false;
+              };
+            };
             menu = {
-              auto_show = true;
+              auto_show.__raw = ''
+                function(ctx)
+                  return vim.fn.getcmdtype() == ":"
+                end
+              '';
             };
             ghost_text = {
               enabled = true;
