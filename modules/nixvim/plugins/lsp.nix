@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 let
-  vueLsPath = "${pkgs.vue-language-server}/lib/node_modules/@vue/language-server";
+  vueTsPluginPath = "${pkgs.vue-language-server}/lib/language-tools/packages/language-server";
 in
 {
   programs.nixvim = {
@@ -54,7 +54,7 @@ in
               plugins = lib.mkForce [
                 {
                   name = "@vue/typescript-plugin";
-                  location = vueLsPath;
+                  location = vueTsPluginPath;
                   languages = [
                     "vue"
                     "javascript"
@@ -76,8 +76,8 @@ in
           enable = true;
           extraOptions = {
             init_options = {
-              vue = {
-                hybridMode = false;
+              typescript = {
+                tsdk = "${pkgs.typescript}/lib/node_modules/typescript/lib";
               };
             };
           };
