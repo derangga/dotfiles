@@ -11,6 +11,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+
+    fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
+    fff-nvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -21,6 +27,8 @@
       nix-homebrew,
       home-manager,
       catppuccin,
+      nixvim,
+      fff-nvim,
     }:
     let
       # Helper function to create configurations for different users
@@ -48,7 +56,7 @@
               home-manager.useUserPackages = true;
 
               home-manager.extraSpecialArgs = {
-                inherit hostname username catppuccin;
+                inherit hostname username catppuccin nixvim fff-nvim;
                 modulesDir = ./modules;
               };
 

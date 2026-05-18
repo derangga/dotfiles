@@ -1,12 +1,36 @@
-return {
-  "snacks.nvim",
-  opts = {
-    dashboard = {
-      preset = {
-        pick = function(cmd, opts)
-          return LazyVim.pick(cmd, opts)()
-        end,
-        header = [[
+{ pkgs, ... }:
+
+{
+  programs.nixvim = {
+    extraPlugins = [ pkgs.vimPlugins.snacks-nvim ];
+
+    extraConfigLuaPre = ''
+      local notify = vim.notify
+      _G.__nvim_start_time = _G.__nvim_start_time or vim.uv.hrtime()
+      require("snacks").setup({
+        bigfile = { enabled = true },
+        quickfile = { enabled = true },
+        terminal = { enabled = true },
+        dashboard = {
+          enabled = true,
+          sections = {
+            { section = "header" },
+            { section = "keys", gap = 1, padding = 1 },
+            { section = "recent_files", icon = " ", title = "Recent Files", padding = 1 },
+            function()
+              local ms = (vim.uv.hrtime() - _G.__nvim_start_time) / 1e6
+              return {
+                align = "center",
+                padding = 1,
+                text = {
+                  { "⚡ ", hl = "SnacksDashboardSpecial" },
+                  { string.format("Neovim loaded in %.2fms", ms), hl = "SnacksDashboardFooter" },
+                },
+              }
+            end,
+          },
+          preset = {
+            header = [[
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⠴⠶⠶⠒⠒⠒⠒⠒⠶⠶⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⠶⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⢶⣄⠀⣠⠴⠚⠛⠳⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠛⠉⠛⣶⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠦⣄⠀⠀⠀⠀⠀⠀⠈⠻⡅⠀⠀⠀⠀⠈⢷⡀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -33,29 +57,42 @@ return {
         ⠀⠀⢸⡇⣇⢿⡄⠀⢠⣼⠾⣦⡙⢦⡀⠀⠀⠀⢀⡤⣤⠤⠌⠚⠛⠓⠊⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⢒⣩⡴⠶⠛⠙⢿⣿⢱⡏⠀⠀⠀⠀
         ⠀⠀⠘⣇⣿⠘⢧⣠⡞⠁⠀⠈⠛⢦⣉⠲⠤⣀⡜⢠⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⠒⣩⡴⠞⠉⠀⠀⠀⠀⠀⠀⠹⣿⡀⠀⠀⠀⠀
         ⠀⠀⠀⠹⣼⣇⣾⠋⠀⠀⠀⠀⠀⠀⠙⠷⡒⠤⢇⡈⠒⠤⢄⣀⡀⠀⠀⠀⠀⠀⠀⢀⣀⡠⠤⠒⣉⣤⠶⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣷⠀⠀⠀⠀
-        ⠀⠀⠀⠀⢈⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢱⡞⢼⠗⢶⣤⣤⣀⣉⣉⣉⣉⣉⣉⡥⢤⡲⣺⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣧⠀⠀⠀
- ]],
-        keys = {
-          { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()" },
-          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-          { icon = " ", key = "g", desc = "Find Text", action = ":lua require('fff').live_grep()" },
-          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+        ⠀⠀⠀⠀⢈⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢱⡞⢼⠗⢶⣤⣤⣀⣉⣉⣉⣉⣉⣉⡥⢤⡲⣺⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣧⠀⠀⠀]],
+            keys = {
+              { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()" },
+              { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+              { icon = " ", key = "g", desc = "Find Text", action = ":lua require('fff').live_grep()" },
+              { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+              { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+            },
+          },
         },
-      },
-    },
-    -- source: https://stackoverflow.com/a/79697134
-    scroll = {
-      enabled = true,
-      animate = {
-        duration = { step = 10, total = 100 },
-        easing = "linear",
-      },
-      -- faster animation when repeating scroll after delay
-      animate_repeat = {
-        delay = 50, -- delay in ms before using the repeat animation
-        duration = { step = 3, total = 20 },
-        easing = "linear",
-      },
-    },
-  },
+        indent = { enabled = true },
+        input = { enabled = true },
+        notifier = { enabled = true },
+        scope = { enabled = true },
+        scroll = {
+          enabled = true,
+          animate = {
+            duration = { step = 10, total = 100 },
+            easing = "linear",
+          },
+          animate_repeat = {
+            delay = 50,
+            duration = { step = 3, total = 20 },
+            easing = "linear",
+          },
+        },
+        words = { enabled = true },
+        picker = { enabled = true },
+        explorer = { enabled = true },
+        zen = { enabled = true },
+        statuscolumn = { enabled = false },
+        toggle = {},
+      })
+      -- HACK: restore vim.notify after snacks setup and let noice.nvim take over
+      -- this is needed to have early notifications show up in noice history
+      vim.notify = notify
+    '';
+  };
 }

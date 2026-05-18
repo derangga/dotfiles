@@ -9,7 +9,7 @@
     ./catppuccin/config.nix
     ./git/config.nix
     ./terminal
-    ./neovim/config.nix
+    ./nixvim
     ./presenterm/config.nix
     ./starship/nosymbol.nix
     ./sketchybar/config.nix

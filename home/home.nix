@@ -1,6 +1,7 @@
 {
   pkgs,
   catppuccin,
+  nixvim,
   username,
   modulesDir,
   ...
@@ -9,6 +10,7 @@
 {
   imports = [
     catppuccin.homeModules.catppuccin
+    nixvim.homeModules.nixvim
     modulesDir
   ];
 

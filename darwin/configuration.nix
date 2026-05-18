@@ -25,7 +25,6 @@
     gnupg
     go
     mkalias
-    nixd
     pnpm
     rustc
     rust-analyzer
