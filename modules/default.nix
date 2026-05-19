@@ -8,6 +8,7 @@
     ./aerospace/config.nix
     ./catppuccin/config.nix
     ./git/config.nix
+    ./llm-agents
     ./terminal
     ./nixvim
     ./presenterm/config.nix
@@ -26,10 +27,6 @@
       settings = {
         theme_background = false;
       };
-    };
-
-    claude-code = {
-      enable = true;
     };
 
     eza = {
@@ -61,13 +58,6 @@
     lazygit = {
       enable = true;
       enableZshIntegration = true;
-    };
-
-    opencode = {
-      enable = true;
-      tui = {
-        theme = "catppuccin-macchiato";
-      };
     };
 
     tmux = {
