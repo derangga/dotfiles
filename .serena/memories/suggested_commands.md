@@ -4,34 +4,36 @@
 ```bash
 sudo darwin-rebuild switch --flake ~/nix#maclop   # personal machine
 sudo darwin-rebuild switch --flake ~/nix#worklop  # work machine
-# alias: drb  (picks up hostname automatically via shellAlias)
+# alias: drb  (hostname-aware via shellAlias)
 ```
 
 ## Validate Without Applying
 ```bash
-sudo darwin-rebuild check --flake ~/nix#<hostname>
-sudo darwin-rebuild build --flake ~/nix#<hostname>
+sudo darwin-rebuild check --flake ~/nix#<hostname>   # syntax check, no side effects
+sudo darwin-rebuild build --flake ~/nix#<hostname>   # full build, no switch
 ```
 
 ## Nix Maintenance
 ```bash
-nix-collect-garbage -d   # alias: ngc
-nix flake update         # update all flake inputs
-nix flake lock --update-input <input>  # update single input
+nix-collect-garbage -d     # alias: ngc
+nix flake update           # update all flake inputs
+nix flake lock --update-input <input>   # update single input
 ```
 
 ## Formatting
 ```bash
-nixfmt <file.nix>        # format a single Nix file (nixfmt included in system packages via neovim extras)
+nixfmt <file.nix>   # nixfmt available via nixvim extraPackages
 ```
 
 ## Utilities
 ```bash
-lazygit   # alias: lg
-brew services start aerogesture   # alias: agc
+lazygit              # alias: lg
+brew services start aerogesture   # alias: agstart
+brew services stop aerogesture    # alias: agstop
+brew services restart aerogesture # alias: agrestart
 ```
 
 ## Notes
-- Do NOT run `darwin-rebuild` directly — requires sudo; user must run it themselves.
+- Do NOT run `darwin-rebuild` yourself — requires sudo; instruct user to run it.
 - No unit test framework — successful rebuild IS the test.
-- `darwin-rebuild check` is safe for syntax validation without side effects.
+- Lua files (sketchybar, nixvim) are symlinked at build time; no rebuild needed for their edits if already built.
