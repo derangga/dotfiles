@@ -18,13 +18,15 @@
             { section = "keys", gap = 1, padding = 1 },
             { section = "recent_files", icon = " ", title = "Recent Files", padding = 1 },
             function()
-              local ms = (vim.uv.hrtime() - _G.__nvim_start_time) / 1e6
+              if not _G.__nvim_load_ms then
+                _G.__nvim_load_ms = (vim.uv.hrtime() - _G.__nvim_start_time) / 1e6
+              end
               return {
                 align = "center",
                 padding = 1,
                 text = {
                   { "⚡ ", hl = "SnacksDashboardSpecial" },
-                  { string.format("Neovim loaded in %.2fms", ms), hl = "SnacksDashboardFooter" },
+                  { string.format("Neovim loaded in %.2fms", _G.__nvim_load_ms), hl = "SnacksDashboardFooter" },
                 },
               }
             end,
