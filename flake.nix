@@ -17,6 +17,13 @@
 
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
     fff-nvim.inputs.nixpkgs.follows = "nixpkgs";
+
+    # LLM Tools
+    llm-agents.url = "github:numtide/llm-agents.nix";
+    llm-agents.inputs.nixpkgs.follows = "nixpkgs";
+
+    serena.url = "git+https://github.com/oraios/serena";
+    serena.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -29,6 +36,8 @@
       catppuccin,
       nixvim,
       fff-nvim,
+      llm-agents,
+      serena,
     }:
     let
       # Helper function to create configurations for different users
@@ -56,7 +65,15 @@
               home-manager.useUserPackages = true;
 
               home-manager.extraSpecialArgs = {
-                inherit hostname username catppuccin nixvim fff-nvim;
+                inherit
+                  hostname
+                  username
+                  catppuccin
+                  nixvim
+                  fff-nvim
+                  llm-agents
+                  serena
+                  ;
                 modulesDir = ./modules;
               };
 

@@ -29,7 +29,6 @@
     rustc
     rust-analyzer
     tree
-    uv
   ];
 
   fonts.packages = with pkgs; [

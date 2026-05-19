@@ -5,8 +5,10 @@
 {
   home.packages = with pkgs; [
     openscreen
-    cocoapods
-    flutter
+
+    # flutter installation
+    # cocoapods
+    # flutter
   ];
 
   catppuccin.obs = {

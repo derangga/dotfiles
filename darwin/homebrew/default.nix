@@ -14,7 +14,6 @@
       "mole"
       "derangga/formulae/aerogesture"
       "derangga/formulae/phunter"
-      "rtk"
     ];
 
     casks = [
