@@ -21,15 +21,12 @@
       nixfmt
       nixd
       ripgrep
-      lazygit
       prettier
       stylua
       shfmt
       gofumpt
       gotools
       vscode-js-debug
-      claude-code
-      opencode
     ];
 
     extraConfigLuaPre = ''

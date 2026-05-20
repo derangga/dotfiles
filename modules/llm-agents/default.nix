@@ -30,6 +30,8 @@ in
       rename_workspace = "shift+n";
       close_workspace = "shift+d";
       new_tab = "c";
+      rename_tab = ",";
+      close_tab = "shift+w";
       split_vertical = "v";
       split_horizontal = "-";
       close_pane = "x";
