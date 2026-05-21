@@ -13,7 +13,9 @@ in
 {
   home.packages = [
     llmPkgs.beads
+    llmPkgs.beads-viewer
     llmPkgs.claude-code
+    llmPkgs.gitnexus
     llmPkgs.herdr
     llmPkgs.opencode
     llmPkgs.rtk
