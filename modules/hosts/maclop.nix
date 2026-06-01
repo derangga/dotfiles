@@ -6,6 +6,8 @@
   home.packages = with pkgs; [
     openscreen
 
+    dbeaver-bin
+
     # flutter installation
     # cocoapods
     # flutter

@@ -17,6 +17,10 @@
     ./hosts/${hostname}.nix
   ];
 
+  home.packages = with pkgs; [
+    orbstack
+  ];
+
   programs = {
     bat = {
       enable = true;
