@@ -23,6 +23,17 @@
           timeout_ms = 3000;
           lsp_format = "fallback";
         };
+        # Format on save, respecting the <leader>uf / <leader>uF autoformat toggles.
+        format_on_save = {
+          __raw = ''
+            function(bufnr)
+              if vim.g.autoformat == false or vim.b[bufnr].autoformat == false then
+                return
+              end
+              return { timeout_ms = 3000, lsp_format = "fallback" }
+            end
+          '';
+        };
       };
     };
 

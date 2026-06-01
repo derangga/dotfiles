@@ -174,20 +174,20 @@
         },
       })
 
-      -- Show smear cursor effect
-      vim.api.nvim_create_autocmd("BufEnter", {
-        callback = function()
-          vim.fn.timer_start(70, function()
-            require("smear_cursor").enabled = true
-          end)
-        end,
-      })
-
-      -- Show diagnostics text on cursor hold
+      -- Show diagnostics float on cursor hold, but only on lines that have a
+      -- diagnostic and only in normal mode (avoids opening on clean lines).
       local lspGroup = vim.api.nvim_create_augroup("Lsp", { clear = true })
       vim.api.nvim_create_autocmd("CursorHold", {
-        command = "lua vim.diagnostic.open_float()",
         group = lspGroup,
+        callback = function()
+          if vim.api.nvim_get_mode().mode ~= "n" then
+            return
+          end
+          if #vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 }) == 0 then
+            return
+          end
+          vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+        end,
       })
     '';
   };

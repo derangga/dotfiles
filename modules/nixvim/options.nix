@@ -56,7 +56,7 @@
       timeoutlen = 300;
       undofile = true;
       undolevels = 10000;
-      updatetime = 200;
+      updatetime = 300;
       virtualedit = "block";
       wildmode = "longest:full,full";
       winminwidth = 5;
