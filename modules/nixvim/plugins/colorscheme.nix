@@ -31,7 +31,6 @@
               warnings = [ "underline" ];
             };
           };
-          neotree = true;
           noice = true;
           rainbow_delimiters = true;
           render_markdown = true;

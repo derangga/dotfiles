@@ -21,12 +21,6 @@
         '';
         offsets = [
           {
-            filetype = "neo-tree";
-            text = "Neo-tree";
-            highlight = "Directory";
-            text_align = "left";
-          }
-          {
             filetype = "snacks_layout_box";
           }
         ];
@@ -303,7 +297,7 @@
             { __unkeyed-1.__raw = ''function() return " " .. os.date("%R") end''; }
           ];
         };
-        extensions = [ "neo-tree" "lazy" "fzf" ];
+        extensions = [ "lazy" "fzf" ];
       };
     };
 

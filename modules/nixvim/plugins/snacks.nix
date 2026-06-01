@@ -76,7 +76,7 @@
         scroll = {
           enabled = true,
           animate = {
-            duration = { step = 10, total = 100 },
+            duration = { step = 5, total = 40 },
             easing = "linear",
           },
           animate_repeat = {

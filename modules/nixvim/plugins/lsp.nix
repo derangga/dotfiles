@@ -31,15 +31,7 @@ in
         bashls.enable = true;
         clangd.enable = true;
         cssls.enable = true;
-        eslint = {
-          enable = true;
-          onAttach.function = ''
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              buffer = bufnr,
-              command = "EslintFixAll",
-            })
-          '';
-        };
+        eslint.enable = true;
         gopls.enable = true;
         html.enable = true;
         jsonls.enable = true;
@@ -127,10 +119,13 @@ in
         end
       end
 
-      -- LSP-driven folding when supported
+      -- LSP-driven folding when supported. Skip on very large files, where the
+      -- foldexpr recomputation gets expensive; those fall back to foldmethod=indent.
       if client:supports_method("textDocument/foldingRange") then
-        vim.wo.foldmethod = "expr"
-        vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+        if vim.api.nvim_buf_line_count(bufnr) <= 5000 then
+          vim.wo.foldmethod = "expr"
+          vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+        end
       end
     '';
 
