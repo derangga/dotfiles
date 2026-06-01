@@ -7,6 +7,9 @@ let
 in
 
 {
+  catppuccin.enable = true;
+  catppuccin.autoEnable = false;
+
   catppuccin.bat = cfg;
   catppuccin.btop = cfg;
   catppuccin.fzf = cfg;

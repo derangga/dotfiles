@@ -7,7 +7,6 @@
     openscreen
 
     dbeaver-bin
-    orbstack
 
     # flutter installation
     # cocoapods
