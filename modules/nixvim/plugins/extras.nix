@@ -5,22 +5,12 @@
     plugins.tmux-navigator.enable = true;
 
     extraPlugins = with pkgs.vimPlugins; [
-      smear-cursor-nvim
       render-markdown-nvim
       persistence-nvim
       plenary-nvim
     ];
 
     extraConfigLua = ''
-      -- smear-cursor setup
-      require("smear_cursor").setup({
-        smear_between_buffers = true,
-        smear_between_neighbor_lines = true,
-        scroll_buffer_space = true,
-        legacy_computing_symbols_support = false,
-        smear_insert_mode = true,
-      })
-
       -- render-markdown setup
       require("render-markdown").setup({
         code = {
