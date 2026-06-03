@@ -37,6 +37,11 @@ in
         jsonls.enable = true;
         marksman.enable = true;
         nixd.enable = true;
+        rust_analyzer = {
+          enable = true;
+          installCargo = false;
+          installRustc = false;
+        };
         sqls.enable = true;
         tailwindcss.enable = true;
         ts_ls = {

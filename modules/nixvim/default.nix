@@ -26,6 +26,7 @@
       shfmt
       gofumpt
       gotools
+      rustfmt
       vscode-js-debug
     ];
 
