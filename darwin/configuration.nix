@@ -45,7 +45,9 @@
   nix.settings.experimental-features = "nix-command flakes";
   nix.gc = {
     automatic = true;
-    interval = { Weekday = 0; };
+    interval = {
+      Weekday = 0;
+    };
     options = "--delete-older-than 7d";
   };
   nixpkgs.hostPlatform = "aarch64-darwin";

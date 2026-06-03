@@ -14,6 +14,7 @@
           javascriptreact = [ "prettier" ];
           json = [ "prettier" ];
           nix = [ "nixfmt" ];
+          rust = [ "rustfmt" ];
           typescript = [ "prettier" ];
           typescriptreact = [ "prettier" ];
           vue = [ "prettier" ];
