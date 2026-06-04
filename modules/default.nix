@@ -94,6 +94,18 @@
     zed-editor = {
       enable = true;
       package = null;
+      userSettings = {
+        auto_install_extensions = {
+          html = true;
+          nix = true;
+          tailwind = true;
+          vue = true;
+        };
+        buffer_font_family = "JetBrainsMono Nerd Font Mono";
+        terminal = {
+          font_family = "JetBrainsMono Nerd Font Mono";
+        };
+      };
     };
 
     zoxide = {

@@ -33,24 +33,22 @@ in
       # status left look and feel
       set -g status-left-length 100
       set -g status-left ""
-      set -ga status-left "#{?client_prefix,#{#[bg=#{@thm_blue},fg=#{@thm_bg},bold]  #[none,bg=#{@thm_bg},fg=#{@thm_bg}]#S },#{#[fg=#{@thm_green}]  #S }}"
-      set -ga status-left "#[fg=#{@thm_overlay_0},none]│"
-      set -ga status-left "#[fg=#{@thm_maroon}]  #{pane_current_command} "
-      set -ga status-left "#[fg=#{@thm_overlay_0},none]│"
-      set -ga status-left "#[fg=#{@thm_blue}]  #{=/-32/...:#{s|$USER|~|:#{b:pane_current_path}}} "
-      set -ga status-left "#[fg=#{@thm_overlay_0},none]#{?window_zoomed_flag,│,}"
-      set -ga status-left "#[fg=#{@thm_yellow}]#{?window_zoomed_flag,  zoom ,}"
 
       # status right look and feel
       set -g status-right-length 100
       set -g status-right ""
-      set -ga status-right "#[fg=#{@thm_blue}] 󰔟 #[fg=@thm_blue]#{E:@catppuccin_uptime_text}#[fg=@thm_blue]"
-      set -ga status-right " "
+      set -ga status-right "#[fg=#{@thm_yellow}]#{?window_zoomed_flag,  zoom ,}"
+      set -ga status-right "#[fg=#{@thm_overlay_0},none]#{?window_zoomed_flag,│,}"
+      set -ga status-right "#[fg=#{@thm_maroon}]  #{pane_current_command} "
+      set -ga status-right "#[fg=#{@thm_overlay_0},none]│"
+      set -ga status-right "#[fg=#{@thm_blue}]  #{=/-32/...:#{s|$USER|~|:#{b:pane_current_path}}} "
+      set -ga status-right "#[fg=#{@thm_overlay_0},none]│"
+      set -ga status-right "#{?client_prefix,#{#[bg=#{@thm_blue},fg=#{@thm_bg},bold]  #[none,bg=#{@thm_bg},fg=#{@thm_bg}]#S },#{#[fg=#{@thm_green}]  #S }}"
 
-      # Configure Tmux
+      # Configure Tmux tab
       set -g status-position top
       set -g status-style "bg=#{@thm_bg}"
-      set -g status-justify "absolute-centre"
+      set -g status-justify "left"
 
       # pane border look and feel
       setw -g pane-border-status top
