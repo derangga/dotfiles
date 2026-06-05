@@ -46,7 +46,9 @@
   nix.gc = {
     automatic = true;
     interval = {
-      Weekday = 0;
+      Weekday = 1;
+      Hour = 11;
+      Minute = 0;
     };
     options = "--delete-older-than 7d";
   };
