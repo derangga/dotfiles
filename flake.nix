@@ -29,29 +29,18 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nix-darwin,
-      nixpkgs,
-      nix-homebrew,
-      home-manager,
-      catppuccin,
-      nixvim,
-      fff-nvim,
-      llm-agents,
-      serena,
-    }:
+    inputs@{ self, ... }:
     let
       # Helper function to create configurations for different users
       mkDarwinConfig =
         { hostname, username }:
-        nix-darwin.lib.darwinSystem {
+        inputs.nix-darwin.lib.darwinSystem {
           specialArgs = { inherit self hostname username; };
 
           modules = [
             ./darwin/configuration.nix
 
-            nix-homebrew.darwinModules.nix-homebrew
+            inputs.nix-homebrew.darwinModules.nix-homebrew
             {
               nix-homebrew = {
                 enable = true;
@@ -61,15 +50,14 @@
               };
             }
 
-            home-manager.darwinModules.home-manager
+            inputs.home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
               home-manager.extraSpecialArgs = {
-                inherit
-                  hostname
-                  username
+                inherit hostname username;
+                inherit (inputs)
                   catppuccin
                   nixvim
                   fff-nvim

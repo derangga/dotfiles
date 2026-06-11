@@ -18,7 +18,9 @@
           headlines = true;
           lsp_trouble = true;
           markdown = true;
-          mini = { enabled = true; };
+          mini = {
+            enabled = true;
+          };
           native_lsp = {
             enabled = true;
             inlay_hints = {

@@ -3,7 +3,8 @@
 {
   imports = [
     ./snacks.nix
-    ./colorscheme.nix
+    ./catppuccin.nix
+    # ./tokyonight.nix # enable to switch to Tokyo Night (disable ./catppuccin.nix above)
     ./treesitter.nix
     ./lsp.nix
     ./formatting.nix
