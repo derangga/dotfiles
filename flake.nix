@@ -82,6 +82,5 @@
         hostname = "worklop";
         username = "sociolla";
       };
-
     };
 }

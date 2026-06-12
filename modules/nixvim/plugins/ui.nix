@@ -47,7 +47,15 @@
         left_trunc_marker = "";
         right_trunc_marker = "";
       };
-      settings.highlights.__raw = ''require("catppuccin.special.bufferline").get_theme()'';
+      settings.highlights.__raw = ''
+        (function()
+          local ok, bufferline = pcall(require, "catppuccin.special.bufferline")
+          if ok then
+            return bufferline.get_theme()
+          end
+          return {}
+        end)()
+      '';
     };
 
     keymaps = [
