@@ -2,6 +2,10 @@
 
 A custom status line for Claude Code showing git branch, model, context usage, session usage, and time — styled with Catppuccin Macchiato colors.
 
+## Prerequisite
+
+This configuration require nerd font to render branch icon
+
 ## Setup
 
 **1. Copy the script to `~/.claude/`:**
