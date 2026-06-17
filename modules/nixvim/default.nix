@@ -9,6 +9,7 @@
   ];
 
   programs.nixvim = {
+    nixpkgs.source = pkgs.path;
     enable = true;
     defaultEditor = true;
     viAlias = true;
