@@ -1,17 +1,20 @@
 {
   pkgs,
+  fff-nvim,
   llm-agents,
   serena,
   ...
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
+  fffMcp = fff-nvim.packages.${system}.fff-mcp;
   llmPkgs = llm-agents.packages.${system};
   serenaPkgs = serena.packages.${system};
   herdrToml = pkgs.formats.toml { };
 in
 {
   home.packages = [
+    fffMcp
     llmPkgs.beads
     llmPkgs.beads-viewer
     llmPkgs.claude-code
