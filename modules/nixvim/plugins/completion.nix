@@ -2,12 +2,25 @@
 
 {
   programs.nixvim = {
+    plugins.luasnip = {
+      enable = true;
+      fromVscode = [ { } ]; # loads friendly-snippets via lazy_load (empty set = all)
+    };
+
+    plugins.friendly-snippets.enable = true;
+
     plugins.blink-cmp = {
       enable = true;
       settings = {
         keymap = {
           preset = "enter";
           "<C-y>" = [ "select_and_accept" ];
+          "<Tab>" = [ "snippet_forward" "fallback" ];
+          "<S-Tab>" = [ "snippet_backward" "fallback" ];
+        };
+
+        snippets = {
+          preset = "luasnip";
         };
 
         appearance = {

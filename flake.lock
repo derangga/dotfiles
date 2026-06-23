@@ -121,11 +121,11 @@
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1781806828,
-        "narHash": "sha256-LgLkS/zd8vRo2KvfkFYqGmm2aXhxeBUrXV+WvFstpzI=",
+        "lastModified": 1782095106,
+        "narHash": "sha256-d6giBeVeWohpkLzOUDSya5l9zIciWNWlUCmmJsLUj+I=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "1bb76f6da6872c56ce34df8a2e33e977187be5f9",
+        "rev": "957f222da76f120868defdf9e7204309c3800e5e",
         "type": "github"
       },
       "original": {
@@ -260,11 +260,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1781832694,
-        "narHash": "sha256-bQN6sGvxStEQxvFRt9BK+/dU4eWfuC/FM18aeAKMWfw=",
+        "lastModified": 1782180246,
+        "narHash": "sha256-jDXyzgRtViPSj38evX6dkqMXISulDrx8aTVLTxHQnYI=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "a3d7910f1f050ad9615ee5da0293eee1695bb347",
+        "rev": "d4bdfa7950b2e27b553f8c1fd92f6f44b926f776",
         "type": "github"
       },
       "original": {
@@ -445,11 +445,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1781304002,
-        "narHash": "sha256-aD0Yvec7EXEHGsw09HMUyCJpuq9kDKqgpkPPzohy2FA=",
+        "lastModified": 1781621781,
+        "narHash": "sha256-KIF+P5bBhoYo6MhLUz2HpLD7HCXra3AYUoftdWwEHkw=",
         "ref": "refs/heads/main",
-        "rev": "22c135a881aaf17485e54ef0ccaedeaf51a202c0",
-        "revCount": 2954,
+        "rev": "dd7eb6d72ae179aa940e50cd6276ec5646f306f8",
+        "revCount": 2960,
         "type": "git",
         "url": "https://github.com/oraios/serena"
       },

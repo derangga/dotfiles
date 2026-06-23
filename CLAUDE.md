@@ -25,15 +25,22 @@ This file provides essential information for agentic coding agents working in th
 ```
 nix/
 ├── flake.nix              # Main system configuration entry point
-├── darwin/               # System-level configuration
-├── home/                 # Home-manager configuration
-└── modules/              # Modular configuration components
-    ├── hosts/            # User-specific configurations
-    ├── aerospace/        # Window manager configuration
-    ├── catppuccin/       # Theme configuration
-    ├── lazyvim/          # Neovim configuration
-    ├── sketchybar/       # Menu bar configuration
-    └── starship/         # Shell prompt configuration
+├── darwin/                # System-level configuration
+│   └── homebrew/          # Homebrew integration (per-host)
+├── home/                  # Home-manager configuration
+└── modules/               # Modular configuration components
+    ├── hosts/             # User-specific configurations
+    ├── aerospace/         # Window manager configuration
+    ├── catppuccin/        # Theme configuration
+    ├── git/               # Git configuration
+    ├── llm-agents/        # LLM agent tooling
+    ├── nixvim/            # Neovim configuration (nixvim-based)
+    │   ├── plugins/       # Plugin configurations (completion, lsp, etc.)
+    │   └── docs/          # Neovim docs
+    ├── presenterm/        # Terminal presentation tool
+    ├── sketchybar/        # Menu bar configuration
+    ├── starship/          # Shell prompt configuration
+    └── terminal/          # Terminal configuration
 ```
 
 ## Code Style Guidelines
@@ -123,7 +130,7 @@ programs.program-name = {
 - **nix-homebrew**: Homebrew integration
 
 ### Development Environment
-- **Editor**: Neovim with LazyVim configuration
+- **Editor**: Neovim configured via nixvim (declarative Nix; see `modules/nixvim/`)
 - **Git**: lazygit for interface
 - **Shell**: Zsh with Oh My Zsh
 - **File management**: yazi, eza, fzf
