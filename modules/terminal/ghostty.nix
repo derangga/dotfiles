@@ -19,7 +19,6 @@ lib.mkIf (config.terminal.use == "ghostty") {
       macos-titlebar-style = "hidden";
       scrollbar = "never";
       window-padding-x = 8;
-      window-padding-y = 4;
     };
   };
 
