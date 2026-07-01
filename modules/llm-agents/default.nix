@@ -12,6 +12,7 @@ let
   llmPkgs = llm-agents.packages.${system};
   serenaPkgs = serena.packages.${system};
   herdrToml = pkgs.formats.toml { };
+  hunkToml = pkgs.formats.toml { };
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
 in
 {
@@ -22,6 +23,7 @@ in
     llmPkgs.claude-code
     llmPkgs.gitnexus
     llmPkgs.herdr
+    llmPkgs.hunk
     llmPkgs.opencode
     llmPkgs.rtk
     serenaPkgs.default
@@ -39,6 +41,12 @@ in
         agents = "alt";
       };
     };
+  };
+
+  xdg.configFile."hunk/config.toml".source = hunkToml.generate "hunk-config" {
+    theme = "catppuccin-macchiato";
+    mode = "auto";
+    vcs = "git";
   };
 
   # Claude Code mutates ~/.claude.json at runtime, so it can't be a managed
