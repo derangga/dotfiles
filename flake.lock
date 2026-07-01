@@ -62,11 +62,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778446047,
-        "narHash": "sha256-oQvcadh2BCkrog+SGrG6YffKJrveYpjj3TdQJWaKhaM=",
+        "lastModified": 1782772816,
+        "narHash": "sha256-s9BuFv0mRuZx9C1MF8qPHRdcAK14ONi0A5m6E2wqOoM=",
         "owner": "nix-community",
         "repo": "bun2nix",
-        "rev": "f2bc12af1a6369648aac41041ceeaa0b866599c6",
+        "rev": "5a39d717029e94163ac223aee8d5c9946cafed1c",
         "type": "github"
       },
       "original": {
@@ -82,11 +82,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782117778,
-        "narHash": "sha256-x6vIJpJziw3Hs0JKKDP+AeRPWwqyMDOmK6I26tqbYj4=",
+        "lastModified": 1782648384,
+        "narHash": "sha256-OlHdAqdXasZk1U+Zf9n+ivqHL9kj/UD0DFO4yYTNBYc=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "e98afe2dfd950bda4e6a8ef32bb563ec2f04505a",
+        "rev": "f2c7dd14ecce785c206a39466cbe227ff62e3803",
         "type": "github"
       },
       "original": {
@@ -121,11 +121,11 @@
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1782614704,
-        "narHash": "sha256-2HCOOmGHH/9Pr+8xNhNjaSzaTG8XwJaUoWvNM7+TM0U=",
+        "lastModified": 1782797553,
+        "narHash": "sha256-TLVZktWhoNYNt2K66GAMOKV+fLMo0JsFbOuoueuiQHE=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "a0008b1cde4ce8f29cbdf63b52fde1ab7d0f7f6f",
+        "rev": "e0a9e08a3a6467ebb8d4b2889f1c21c3b36ba3e6",
         "type": "github"
       },
       "original": {
@@ -235,11 +235,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782522538,
-        "narHash": "sha256-CvOaUvJ+mXlxU3m2cPWKcOAhtKETsPUYhq+Xa5ewBp4=",
+        "lastModified": 1782839684,
+        "narHash": "sha256-vzs4SBgPsK4aNzlJR2PpFwtARazXMOxZonQnDz0YHxk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "8d8a6cc50ddc60748791a14ee1163c865ec57635",
+        "rev": "2a37d71bbe69e1522ddabf03a4cea0374958bdbe",
         "type": "github"
       },
       "original": {
@@ -260,11 +260,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1782657158,
-        "narHash": "sha256-Pzu5FP5suwuMTtYZv6+2EsMgsjQ1ORjvBAwyLxpzSpc=",
+        "lastModified": 1782869010,
+        "narHash": "sha256-4OWJdeCsT1AbqYis6GyCjcO+tiJ0G5GTPP9rfl2mMuQ=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "33e396bfa790080cb9d377cb58b3617528aee89b",
+        "rev": "36bc6d09f3b7f9a4c9837bcf2092e3e7bb85f6a6",
         "type": "github"
       },
       "original": {
@@ -314,11 +314,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1780030872,
-        "narHash": "sha256-u6WU/yd/o8iYQrHX3RAwO1hYa3LkoSL+WNQD0rJfJZQ=",
+        "lastModified": 1782760764,
+        "narHash": "sha256-N66fYdUuZ9hpdM7jsQ7CUWtLJduqGDyTGCaLR62CXaQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e9a7635a57597d9754eccebdfc7045e6c8600e6b",
+        "rev": "7a1a64774a5fd0b0cd39ac95d0e170ace8b266a0",
         "type": "github"
       },
       "original": {
@@ -337,11 +337,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1782254890,
-        "narHash": "sha256-kjsEECqhpPnJWqhooXp6tWh2qGQftCPAo2G1GvZtKdw=",
+        "lastModified": 1782864796,
+        "narHash": "sha256-GNLI7Iy11J4fOqSv6LCvxV8TyTTDX3waeaDzF59Q2ig=",
         "owner": "nix-community",
         "repo": "nixvim",
-        "rev": "dbf9550dba8448b03e11d58e5695d6c44a464554",
+        "rev": "cc3b773a7a4f76b9c6c03e3547b059e976159bdf",
         "type": "github"
       },
       "original": {
@@ -445,11 +445,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1782421707,
-        "narHash": "sha256-OQkWGqQnM7krJFFwJ6pwbvZ2wMcUUePmwM72zDEi8E8=",
+        "lastModified": 1782746706,
+        "narHash": "sha256-DHXYWlb8QSqpJ/xowIx15ynLaaO0B4np4DYIWsakY40=",
         "ref": "refs/heads/main",
-        "rev": "1e5fe73ac265f4eb26b61dd3d943309e424831d0",
-        "revCount": 2971,
+        "rev": "103a17072e9b915c9c9980f946902be856695978",
+        "revCount": 3019,
         "type": "git",
         "url": "https://github.com/oraios/serena"
       },
