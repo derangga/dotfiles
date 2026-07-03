@@ -43,7 +43,7 @@
     fzf = {
       enable = true;
       enableZshIntegration = true;
-      fileWidgetOptions = [
+      fileWidget.options = [
         "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
       ];
     };
