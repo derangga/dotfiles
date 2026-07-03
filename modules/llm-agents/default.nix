@@ -45,7 +45,7 @@ in
 
   xdg.configFile."hunk/config.toml".source = hunkToml.generate "hunk-config" {
     theme = "catppuccin-macchiato";
-    mode = "auto";
+    mode = "split";
     vcs = "git";
   };
 

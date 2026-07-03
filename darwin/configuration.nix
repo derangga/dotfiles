@@ -29,7 +29,6 @@
     gnupg
     go
     mkalias
-    pnpm
     rustc
     rust-analyzer
     tree
