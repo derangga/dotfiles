@@ -114,6 +114,11 @@
       enableCompletion = true;
       autosuggestion.enable = true;
 
+      history = {
+        ignoreAllDups = true;
+        saveNoDups = true;
+      };
+
       oh-my-zsh = {
         enable = true;
         plugins = [
