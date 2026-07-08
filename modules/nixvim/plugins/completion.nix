@@ -2,11 +2,8 @@
 
 {
   programs.nixvim = {
-    plugins.luasnip = {
-      enable = true;
-      fromVscode = [ { } ]; # loads friendly-snippets via lazy_load (empty set = all)
-    };
-
+    # friendly-snippets stays on the runtimepath; blink-cmp's native "default"
+    # snippet preset loads it directly (friendly_snippets = true by default).
     plugins.friendly-snippets.enable = true;
 
     plugins.blink-cmp = {
@@ -20,7 +17,7 @@
         };
 
         snippets = {
-          preset = "luasnip";
+          preset = "default";
         };
 
         appearance = {

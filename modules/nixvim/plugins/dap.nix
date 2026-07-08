@@ -5,59 +5,67 @@ let
 in
 {
   programs.nixvim = {
+    # nvim-dap loads on first debug keypress. Its luaConfig.post (below) registers
+    # adapters/configs/listeners and then pulls in dap-ui + dap-virtual-text, so the
+    # session listeners have dapui available regardless of which key was pressed first.
     plugins.dap = {
       enable = true;
+      lazyLoad.settings.keys = [
+        { __unkeyed-1 = "<leader>dB"; __unkeyed-2.__raw = ''function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end''; desc = "Breakpoint Condition"; }
+        { __unkeyed-1 = "<leader>db"; __unkeyed-2.__raw = ''function() require("dap").toggle_breakpoint() end''; desc = "Toggle Breakpoint"; }
+        { __unkeyed-1 = "<leader>dc"; __unkeyed-2.__raw = ''function() require("dap").continue() end''; desc = "Run/Continue"; }
+        { __unkeyed-1 = "<leader>da"; __unkeyed-2.__raw = ''
+            function()
+              require("dap").continue({
+                before = function(config)
+                  local args = type(config.args) == "function" and (config.args() or {}) or config.args or {}
+                  local args_str = type(args) == "table" and table.concat(args, " ") or args
+                  config = vim.deepcopy(config)
+                  config.args = function()
+                    local new_args = vim.fn.expand(vim.fn.input("Run with args: ", args_str))
+                    if config.type and config.type == "java" then
+                      return new_args
+                    end
+                    return require("dap.utils").splitstr(new_args)
+                  end
+                  return config
+                end,
+              })
+            end
+          ''; desc = "Run with Args"; }
+        { __unkeyed-1 = "<leader>dC"; __unkeyed-2.__raw = ''function() require("dap").run_to_cursor() end''; desc = "Run to Cursor"; }
+        { __unkeyed-1 = "<leader>dg"; __unkeyed-2.__raw = ''function() require("dap").goto_() end''; desc = "Go to Line (No Execute)"; }
+        { __unkeyed-1 = "<leader>di"; __unkeyed-2.__raw = ''function() require("dap").step_into() end''; desc = "Step Into"; }
+        { __unkeyed-1 = "<leader>dj"; __unkeyed-2.__raw = ''function() require("dap").down() end''; desc = "Down"; }
+        { __unkeyed-1 = "<leader>dk"; __unkeyed-2.__raw = ''function() require("dap").up() end''; desc = "Up"; }
+        { __unkeyed-1 = "<leader>dl"; __unkeyed-2.__raw = ''function() require("dap").run_last() end''; desc = "Run Last"; }
+        { __unkeyed-1 = "<leader>do"; __unkeyed-2.__raw = ''function() require("dap").step_out() end''; desc = "Step Out"; }
+        { __unkeyed-1 = "<leader>dO"; __unkeyed-2.__raw = ''function() require("dap").step_over() end''; desc = "Step Over"; }
+        { __unkeyed-1 = "<leader>dP"; __unkeyed-2.__raw = ''function() require("dap").pause() end''; desc = "Pause"; }
+        { __unkeyed-1 = "<leader>dr"; __unkeyed-2.__raw = ''function() require("dap").repl.toggle() end''; desc = "Toggle REPL"; }
+        { __unkeyed-1 = "<leader>ds"; __unkeyed-2.__raw = ''function() require("dap").session() end''; desc = "Session"; }
+        { __unkeyed-1 = "<leader>dt"; __unkeyed-2.__raw = ''function() require("dap").terminate() end''; desc = "Terminate"; }
+        { __unkeyed-1 = "<leader>dw"; __unkeyed-2.__raw = ''function() require("dap.ui.widgets").hover() end''; desc = "Widgets"; }
+        { __unkeyed-1 = "<leader>du"; __unkeyed-2.__raw = ''function() require("dapui").toggle({}) end''; desc = "Dap UI"; }
+        { __unkeyed-1 = "<leader>de"; mode = [ "n" "x" ]; __unkeyed-2.__raw = ''function() require("dapui").eval() end''; desc = "Eval"; }
+      ];
     };
 
+    # dap-ui and dap-virtual-text are pulled in by nvim-dap's luaConfig.post.
     plugins.dap-ui = {
       enable = true;
+      lazyLoad.settings.lazy = true;
     };
 
     plugins.dap-virtual-text = {
       enable = true;
+      lazyLoad.settings.lazy = true;
     };
 
-    keymaps = [
-      { mode = "n"; key = "<leader>dB"; action.__raw = ''function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end''; options.desc = "Breakpoint Condition"; }
-      { mode = "n"; key = "<leader>db"; action.__raw = ''function() require("dap").toggle_breakpoint() end''; options.desc = "Toggle Breakpoint"; }
-      { mode = "n"; key = "<leader>dc"; action.__raw = ''function() require("dap").continue() end''; options.desc = "Run/Continue"; }
-      { mode = "n"; key = "<leader>da"; action.__raw = ''
-          function()
-            require("dap").continue({
-              before = function(config)
-                local args = type(config.args) == "function" and (config.args() or {}) or config.args or {}
-                local args_str = type(args) == "table" and table.concat(args, " ") or args
-                config = vim.deepcopy(config)
-                config.args = function()
-                  local new_args = vim.fn.expand(vim.fn.input("Run with args: ", args_str))
-                  if config.type and config.type == "java" then
-                    return new_args
-                  end
-                  return require("dap.utils").splitstr(new_args)
-                end
-                return config
-              end,
-            })
-          end
-        ''; options.desc = "Run with Args"; }
-      { mode = "n"; key = "<leader>dC"; action.__raw = ''function() require("dap").run_to_cursor() end''; options.desc = "Run to Cursor"; }
-      { mode = "n"; key = "<leader>dg"; action.__raw = ''function() require("dap").goto_() end''; options.desc = "Go to Line (No Execute)"; }
-      { mode = "n"; key = "<leader>di"; action.__raw = ''function() require("dap").step_into() end''; options.desc = "Step Into"; }
-      { mode = "n"; key = "<leader>dj"; action.__raw = ''function() require("dap").down() end''; options.desc = "Down"; }
-      { mode = "n"; key = "<leader>dk"; action.__raw = ''function() require("dap").up() end''; options.desc = "Up"; }
-      { mode = "n"; key = "<leader>dl"; action.__raw = ''function() require("dap").run_last() end''; options.desc = "Run Last"; }
-      { mode = "n"; key = "<leader>do"; action.__raw = ''function() require("dap").step_out() end''; options.desc = "Step Out"; }
-      { mode = "n"; key = "<leader>dO"; action.__raw = ''function() require("dap").step_over() end''; options.desc = "Step Over"; }
-      { mode = "n"; key = "<leader>dP"; action.__raw = ''function() require("dap").pause() end''; options.desc = "Pause"; }
-      { mode = "n"; key = "<leader>dr"; action.__raw = ''function() require("dap").repl.toggle() end''; options.desc = "Toggle REPL"; }
-      { mode = "n"; key = "<leader>ds"; action.__raw = ''function() require("dap").session() end''; options.desc = "Session"; }
-      { mode = "n"; key = "<leader>dt"; action.__raw = ''function() require("dap").terminate() end''; options.desc = "Terminate"; }
-      { mode = "n"; key = "<leader>dw"; action.__raw = ''function() require("dap.ui.widgets").hover() end''; options.desc = "Widgets"; }
-      { mode = "n"; key = "<leader>du"; action.__raw = ''function() require("dapui").toggle({}) end''; options.desc = "Dap UI"; }
-      { mode = [ "n" "x" ]; key = "<leader>de"; action.__raw = ''function() require("dapui").eval() end''; options.desc = "Eval"; }
-    ];
+    plugins.dap.luaConfig.post = ''
+      require("lz.n").trigger_load("nvim-dap-ui")
+      require("lz.n").trigger_load("nvim-dap-virtual-text")
 
-    extraConfigLua = ''
       local dap = require("dap")
       local dapui = require("dapui")
 

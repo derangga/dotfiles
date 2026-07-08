@@ -44,8 +44,9 @@ in
   };
 
   xdg.configFile."hunk/config.toml".source = hunkToml.generate "hunk-config" {
+    agent_notes = true;
     theme = "catppuccin-macchiato";
-    mode = "split";
+    mode = "auto";
     vcs = "git";
   };
 

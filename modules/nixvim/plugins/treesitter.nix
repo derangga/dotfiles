@@ -57,7 +57,14 @@
       enable = true;
       settings = {
         strategy = {
-          "".__raw = "require('rainbow-delimiters').strategy.global";
+          "".__raw = ''
+            function(bufnr)
+              if vim.api.nvim_buf_line_count(bufnr) > 5000 then
+                return nil
+              end
+              return require("rainbow-delimiters").strategy.global
+            end
+          '';
         };
         query = {
           "" = "rainbow-delimiters";
