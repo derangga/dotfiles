@@ -12,7 +12,6 @@
 
     opts = {
       autowrite = true;
-      clipboard = "unnamedplus";
       completeopt = "menu,menuone,noselect";
       conceallevel = 2;
       confirm = true;
@@ -62,5 +61,10 @@
       winminwidth = 5;
       wrap = false;
     };
+
+    # Defer clipboard so provider detection doesn't run during startup.
+    extraConfigLua = ''
+      vim.schedule(function() vim.o.clipboard = "unnamedplus" end)
+    '';
   };
 }

@@ -95,10 +95,29 @@
 
         _G.LualineUtil = {}
 
+        -- Cache the project root per buffer: with globalstatus the statusline
+        -- redraws on nearly every cursor move, and vim.fs.root walks the fs.
+        local root_cache = {}
         local function get_root()
-          local root = vim.fs.root(0, { ".git", "package.json", "Cargo.toml", "go.mod", "pyproject.toml", "flake.nix" })
-          return vim.fs.normalize(root or vim.uv.cwd())
+          local buf = vim.api.nvim_get_current_buf()
+          local cached = root_cache[buf]
+          if cached == nil then
+            local root = vim.fs.root(buf, { ".git", "package.json", "Cargo.toml", "go.mod", "pyproject.toml", "flake.nix" })
+            cached = vim.fs.normalize(root or vim.uv.cwd())
+            root_cache[buf] = cached
+          end
+          return cached
         end
+
+        local root_cache_group = vim.api.nvim_create_augroup("lualine_root_cache", { clear = true })
+        vim.api.nvim_create_autocmd({ "DirChanged", "BufFilePost" }, {
+          group = root_cache_group,
+          callback = function() root_cache = {} end,
+        })
+        vim.api.nvim_create_autocmd("BufDelete", {
+          group = root_cache_group,
+          callback = function(ev) root_cache[ev.buf] = nil end,
+        })
 
         local function get_cwd()
           return vim.fs.normalize(vim.uv.cwd())

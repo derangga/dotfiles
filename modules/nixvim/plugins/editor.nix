@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs.nixvim = {
@@ -106,24 +106,34 @@
       settings = { };
     };
 
-    extraPlugins = [ pkgs.vimPlugins.grug-far-nvim ];
+    plugins.grug-far = {
+      enable = true;
+      settings.headerMaxWidth = 80;
+      lazyLoad.settings = {
+        cmd = "GrugFar";
+        keys = [
+          {
+            __unkeyed-1 = "<leader>sr";
+            mode = [ "n" "x" ];
+            __unkeyed-2.__raw = ''
+              function()
+                local grug = require("grug-far")
+                local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+                grug.open({
+                  transient = true,
+                  prefills = {
+                    filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+                  },
+                })
+              end
+            '';
+            desc = "Search and Replace";
+          }
+        ];
+      };
+    };
 
     extraConfigLua = ''
-      -- grug-far setup
-      require("grug-far").setup({ headerMaxWidth = 80 })
-
-      -- grug-far keymap
-      vim.keymap.set({ "n", "x" }, "<leader>sr", function()
-        local grug = require("grug-far")
-        local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
-        grug.open({
-          transient = true,
-          prefills = {
-            filesFilter = ext and ext ~= "" and "*." .. ext or nil,
-          },
-        })
-      end, { desc = "Search and Replace" })
-
       -- trouble keymaps
       vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
       vim.keymap.set("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", { desc = "Buffer Diagnostics (Trouble)" })

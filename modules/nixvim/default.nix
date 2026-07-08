@@ -15,6 +15,9 @@
     viAlias = true;
     vimAlias = true;
 
+    # lz.n powers per-plugin lazy loading (see plugins/*.nix lazyLoad settings).
+    plugins.lz-n.enable = true;
+
     extraPackages = with pkgs; [
       fd
       gcc
