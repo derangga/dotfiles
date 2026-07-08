@@ -122,7 +122,8 @@
       end, { desc = "Git Browse (copy)" })
 
       -- git picker
-      map("n", "<leader>gd", function() Snacks.picker.git_diff() end, { desc = "Git Diff (hunks)" })
+      -- <leader>gd belongs to diffview toggle (git.nix, lz.n key trigger)
+      map("n", "<leader>gD", function() Snacks.picker.git_diff() end, { desc = "Git Diff (hunks)" })
       map("n", "<leader>gs", function() Snacks.picker.git_status() end, { desc = "Git Status" })
 
       -- scratch (Snacks)
