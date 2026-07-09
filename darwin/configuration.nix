@@ -22,15 +22,9 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    bun
-    cargo
-    fnm
     ffmpeg
     gnupg
-    go
     mkalias
-    rustc
-    rust-analyzer
     tree
   ];
 
@@ -46,6 +40,7 @@
   };
 
   nix.settings.experimental-features = "nix-command flakes";
+  nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
     interval = {

@@ -12,10 +12,7 @@
     # flutter
   ];
 
-  catppuccin.obs = {
-    enable = true;
-    flavor = "macchiato";
-  };
+  catppuccin.obs.enable = true;
 
   programs.vscode = {
     enable = true;

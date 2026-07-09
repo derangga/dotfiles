@@ -1,5 +1,5 @@
-{ config, lib, ... }:
-lib.mkIf (config.terminal.use == "kitty") {
+{ terminal, lib, ... }:
+lib.mkIf (terminal == "kitty") {
   programs.kitty = {
     enable = true;
     enableGitIntegration = true;

@@ -1,5 +1,5 @@
-{ config, lib, ... }:
-lib.mkIf (config.terminal.use == "ghostty") {
+{ terminal, lib, ... }:
+lib.mkIf (terminal == "ghostty") {
   programs.ghostty = {
     enable = true;
     enableZshIntegration = true;

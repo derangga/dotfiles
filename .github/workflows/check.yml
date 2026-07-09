@@ -1,0 +1,25 @@
+name: check
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v16
+
+      - name: Check formatting
+        run: git ls-files '*.nix' | xargs nix run nixpkgs#nixfmt -- --check
+
+      - name: Evaluate host configurations
+        run: |
+          for host in maclop worklop; do
+            echo "evaluating $host"
+            nix eval ".#darwinConfigurations.$host.system" --raw
+            echo
+          done

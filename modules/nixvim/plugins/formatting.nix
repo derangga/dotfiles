@@ -8,7 +8,10 @@
         formatters_by_ft = {
           lua = [ "stylua" ];
           css = [ "prettier" ];
-          go = [ "goimports" "gofumpt" ];
+          go = [
+            "goimports"
+            "gofumpt"
+          ];
           html = [ "prettier" ];
           javascript = [ "prettier" ];
           javascriptreact = [ "prettier" ];
@@ -40,7 +43,10 @@
 
     keymaps = [
       {
-        mode = [ "n" "x" ];
+        mode = [
+          "n"
+          "x"
+        ];
         key = "<leader>cF";
         action.__raw = ''
           function()

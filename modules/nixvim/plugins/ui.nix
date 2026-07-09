@@ -59,19 +59,77 @@
     };
 
     keymaps = [
-      { mode = "n"; key = "<leader>bp"; action = "<Cmd>BufferLineTogglePin<CR>"; options.desc = "Toggle Pin"; }
-      { mode = "n"; key = "<leader>bP"; action = "<Cmd>BufferLineGroupClose ungrouped<CR>"; options.desc = "Delete Non-Pinned Buffers"; }
-      { mode = "n"; key = "<leader>br"; action = "<Cmd>BufferLineCloseRight<CR>"; options.desc = "Delete Buffers to the Right"; }
-      { mode = "n"; key = "<leader>bl"; action = "<Cmd>BufferLineCloseLeft<CR>"; options.desc = "Delete Buffers to the Left"; }
-      { mode = "n"; key = "<leader>bj"; action = "<Cmd>BufferLinePick<CR>"; options.desc = "Pick Buffer"; }
-      { mode = "n"; key = "<S-h>"; action = "<cmd>BufferLineCyclePrev<cr>"; options.desc = "Prev Buffer"; }
-      { mode = "n"; key = "<S-l>"; action = "<cmd>BufferLineCycleNext<cr>"; options.desc = "Next Buffer"; }
-      { mode = "n"; key = "[b"; action = "<cmd>BufferLineCyclePrev<cr>"; options.desc = "Prev Buffer"; }
-      { mode = "n"; key = "]b"; action = "<cmd>BufferLineCycleNext<cr>"; options.desc = "Next Buffer"; }
-      { mode = "n"; key = "[B"; action = "<cmd>BufferLineMovePrev<cr>"; options.desc = "Move buffer prev"; }
-      { mode = "n"; key = "]B"; action = "<cmd>BufferLineMoveNext<cr>"; options.desc = "Move buffer next"; }
+      {
+        mode = "n";
+        key = "<leader>bp";
+        action = "<Cmd>BufferLineTogglePin<CR>";
+        options.desc = "Toggle Pin";
+      }
+      {
+        mode = "n";
+        key = "<leader>bP";
+        action = "<Cmd>BufferLineGroupClose ungrouped<CR>";
+        options.desc = "Delete Non-Pinned Buffers";
+      }
+      {
+        mode = "n";
+        key = "<leader>br";
+        action = "<Cmd>BufferLineCloseRight<CR>";
+        options.desc = "Delete Buffers to the Right";
+      }
+      {
+        mode = "n";
+        key = "<leader>bl";
+        action = "<Cmd>BufferLineCloseLeft<CR>";
+        options.desc = "Delete Buffers to the Left";
+      }
+      {
+        mode = "n";
+        key = "<leader>bj";
+        action = "<Cmd>BufferLinePick<CR>";
+        options.desc = "Pick Buffer";
+      }
+      {
+        mode = "n";
+        key = "<S-h>";
+        action = "<cmd>BufferLineCyclePrev<cr>";
+        options.desc = "Prev Buffer";
+      }
+      {
+        mode = "n";
+        key = "<S-l>";
+        action = "<cmd>BufferLineCycleNext<cr>";
+        options.desc = "Next Buffer";
+      }
+      {
+        mode = "n";
+        key = "[b";
+        action = "<cmd>BufferLineCyclePrev<cr>";
+        options.desc = "Prev Buffer";
+      }
+      {
+        mode = "n";
+        key = "]b";
+        action = "<cmd>BufferLineCycleNext<cr>";
+        options.desc = "Next Buffer";
+      }
+      {
+        mode = "n";
+        key = "[B";
+        action = "<cmd>BufferLineMovePrev<cr>";
+        options.desc = "Move buffer prev";
+      }
+      {
+        mode = "n";
+        key = "]B";
+        action = "<cmd>BufferLineMoveNext<cr>";
+        options.desc = "Move buffer next";
+      }
       # snacks notification keymaps
-      { mode = "n"; key = "<leader>n"; action.__raw = ''
+      {
+        mode = "n";
+        key = "<leader>n";
+        action.__raw = ''
           function()
             if Snacks.config.picker and Snacks.config.picker.enabled then
               Snacks.picker.notifications()
@@ -79,8 +137,15 @@
               Snacks.notifier.show_history()
             end
           end
-        ''; options.desc = "Notification History"; }
-      { mode = "n"; key = "<leader>un"; action.__raw = "function() Snacks.notifier.hide() end"; options.desc = "Dismiss All Notifications"; }
+        '';
+        options.desc = "Notification History";
+      }
+      {
+        mode = "n";
+        key = "<leader>un";
+        action.__raw = "function() Snacks.notifier.hide() end";
+        options.desc = "Dismiss All Notifications";
+      }
     ];
 
     plugins.lualine = {
@@ -257,8 +322,16 @@
         options = {
           theme = "auto";
           globalstatus = true;
-          section_separators = { left = ""; right = ""; };
-          disabled_filetypes.statusline = [ "dashboard" "alpha" "ministarter" "snacks_dashboard" ];
+          section_separators = {
+            left = "";
+            right = "";
+          };
+          disabled_filetypes.statusline = [
+            "dashboard"
+            "alpha"
+            "ministarter"
+            "snacks_dashboard"
+          ];
         };
         sections = {
           lualine_a = [ "mode" ];
@@ -274,7 +347,15 @@
                 hint = " ";
               };
             }
-            { __unkeyed-1 = "filetype"; icon_only = true; separator = ""; padding = { left = 1; right = 0; }; }
+            {
+              __unkeyed-1 = "filetype";
+              icon_only = true;
+              separator = "";
+              padding = {
+                left = 1;
+                right = 0;
+              };
+            }
             { __raw = "LualineUtil.pretty_path()"; }
             { __raw = "LualineUtil.trouble_symbols()"; }
           ];
@@ -317,14 +398,30 @@
             }
           ];
           lualine_y = [
-            { __unkeyed-1 = "progress"; separator = " "; padding = { left = 1; right = 0; }; }
-            { __unkeyed-1 = "location"; padding = { left = 0; right = 1; }; }
+            {
+              __unkeyed-1 = "progress";
+              separator = " ";
+              padding = {
+                left = 1;
+                right = 0;
+              };
+            }
+            {
+              __unkeyed-1 = "location";
+              padding = {
+                left = 0;
+                right = 1;
+              };
+            }
           ];
           lualine_z = [
             { __unkeyed-1.__raw = ''function() return " " .. os.date("%R") end''; }
           ];
         };
-        extensions = [ "lazy" "fzf" ];
+        extensions = [
+          "lazy"
+          "fzf"
+        ];
       };
     };
 
@@ -362,7 +459,9 @@
               event = "msg_show";
               find = "line %d+ of %d+";
             };
-            opts = { skip = true; };
+            opts = {
+              skip = true;
+            };
           }
         ];
         presets = {
@@ -378,28 +477,182 @@
       settings = {
         preset = "helix";
         spec = [
-          { __unkeyed-1 = "<leader><tab>"; group = "tabs"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>a"; group = "ai"; mode = [ "n" "v" ]; }
-          { __unkeyed-1 = "<leader>ao"; group = "opencode"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>b"; group = "buffer"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>c"; group = "code"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>d"; group = "debug"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>dp"; group = "profiler"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>f"; group = "file/find"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>g"; group = "git"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>gh"; group = "hunks"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>q"; group = "quit/session"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>s"; group = "search"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>t"; group = "toggle"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>u"; group = "ui"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>w"; group = "windows"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>x"; group = "diagnostics/quickfix"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "["; group = "prev"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "]"; group = "next"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "g"; group = "goto"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "gs"; group = "surround"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "<leader>sn"; group = "+noice"; mode = [ "n" "x" ]; }
-          { __unkeyed-1 = "z"; group = "fold"; mode = [ "n" "x" ]; }
+          {
+            __unkeyed-1 = "<leader><tab>";
+            group = "tabs";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>a";
+            group = "ai";
+            mode = [
+              "n"
+              "v"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>ao";
+            group = "opencode";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>b";
+            group = "buffer";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>c";
+            group = "code";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>d";
+            group = "debug";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>dp";
+            group = "profiler";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>f";
+            group = "file/find";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>g";
+            group = "git";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>gh";
+            group = "hunks";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>q";
+            group = "quit/session";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>s";
+            group = "search";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>t";
+            group = "toggle";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>u";
+            group = "ui";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>w";
+            group = "windows";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>x";
+            group = "diagnostics/quickfix";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "[";
+            group = "prev";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "]";
+            group = "next";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "g";
+            group = "goto";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "gs";
+            group = "surround";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "<leader>sn";
+            group = "+noice";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
+          {
+            __unkeyed-1 = "z";
+            group = "fold";
+            mode = [
+              "n"
+              "x"
+            ];
+          }
         ];
       };
     };
@@ -458,11 +711,20 @@
       modules = {
         icons = {
           file = {
-            ".keep" = { glyph = "󰊢"; hl = "MiniIconsGrey"; };
-            "devcontainer.json" = { glyph = ""; hl = "MiniIconsAzure"; };
+            ".keep" = {
+              glyph = "󰊢";
+              hl = "MiniIconsGrey";
+            };
+            "devcontainer.json" = {
+              glyph = "";
+              hl = "MiniIconsAzure";
+            };
           };
           filetype = {
-            dotenv = { glyph = ""; hl = "MiniIconsYellow"; };
+            dotenv = {
+              glyph = "";
+              hl = "MiniIconsYellow";
+            };
           };
         };
       };

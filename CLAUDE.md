@@ -24,12 +24,11 @@ This file provides essential information for agentic coding agents working in th
 
 ```
 nix/
-├── flake.nix              # Main system configuration entry point
+├── flake.nix              # Main system entry point (imports ./modules for home-manager)
 ├── darwin/                # System-level configuration
 │   └── homebrew/          # Homebrew integration (per-host)
-├── home/                  # Home-manager configuration
-└── modules/               # Modular configuration components
-    ├── hosts/             # User-specific configurations
+└── modules/               # Home-manager configuration (imported directly by the flake)
+    ├── hosts/             # Host-specific configurations ({hostname}.nix)
     ├── aerospace/         # Window manager configuration
     ├── catppuccin/        # Theme configuration
     ├── git/               # Git configuration
@@ -54,8 +53,8 @@ nix/
 
 ### Module Organization
 - Each major tool/program has its own directory under `modules/`
-- Host-specific configurations go in `modules/hosts/{username}.nix`
-- Shared configurations use the `modules/default.nix` pattern
+- Host-specific configurations go in `modules/hosts/{hostname}.nix`
+- Shared configurations use the `modules/default.nix` pattern (the home-manager entry point)
 - Use relative imports with `./` syntax for local modules
 
 ### Configuration Patterns
@@ -161,5 +160,5 @@ Serena is available as an MCP server providing semantic code tools. Prefer Seren
 - This is a declarative Nix Darwin system - all changes must be made through Nix
 - Manual edits to system files will be overwritten on next rebuild
 - Always backup before major changes
-- User configurations are in `modules/hosts/{username}.nix`
+- User configurations are in `modules/hosts/{hostname}.nix`
 - System-wide configurations are in `darwin/configuration.nix`

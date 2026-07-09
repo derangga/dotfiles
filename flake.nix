@@ -33,9 +33,20 @@
     let
       # Helper function to create configurations for different users
       mkDarwinConfig =
-        { hostname, username }:
+        {
+          hostname,
+          username,
+          terminal,
+        }:
         inputs.nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit self hostname username; };
+          specialArgs = {
+            inherit
+              self
+              hostname
+              username
+              terminal
+              ;
+          };
 
           modules = [
             ./darwin/configuration.nix
@@ -56,7 +67,7 @@
               home-manager.useUserPackages = true;
 
               home-manager.extraSpecialArgs = {
-                inherit hostname username;
+                inherit hostname username terminal;
                 inherit (inputs)
                   catppuccin
                   nixvim
@@ -64,10 +75,9 @@
                   llm-agents
                   serena
                   ;
-                modulesDir = ./modules;
               };
 
-              home-manager.users.${username} = import ./home/home.nix;
+              home-manager.users.${username} = import ./modules;
             }
           ];
         };
@@ -76,11 +86,13 @@
       darwinConfigurations."maclop" = mkDarwinConfig {
         hostname = "maclop";
         username = "derangga";
+        terminal = "ghostty";
       };
 
       darwinConfigurations."worklop" = mkDarwinConfig {
         hostname = "worklop";
         username = "sociolla";
+        terminal = "ghostty";
       };
     };
 }

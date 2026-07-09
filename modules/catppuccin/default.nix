@@ -1,28 +1,25 @@
-{ config, lib, ... }:
-let
-  cfg = {
-    enable = true;
-    flavor = "macchiato"; # latte, frappe, macchiato, mocha
-  };
-in
-
+{ terminal, lib, ... }:
 {
   catppuccin.enable = true;
   catppuccin.autoEnable = false;
+  catppuccin.flavor = "macchiato"; # latte, frappe, macchiato, mocha
 
-  catppuccin.bat = cfg;
-  catppuccin.btop = cfg;
-  catppuccin.fzf = cfg;
-  catppuccin.gh-dash = cfg // {
+  catppuccin.bat.enable = true;
+  catppuccin.btop.enable = true;
+  catppuccin.fzf.enable = true;
+  catppuccin.gh-dash = {
+    enable = true;
     accent = "blue";
   };
-  catppuccin.ghostty = lib.mkIf (config.terminal.use == "ghostty") cfg;
-  catppuccin.kitty = lib.mkIf (config.terminal.use == "kitty") cfg;
-  catppuccin.lazygit = cfg // {
+  catppuccin.ghostty.enable = lib.mkIf (terminal == "ghostty") true;
+  catppuccin.kitty.enable = lib.mkIf (terminal == "kitty") true;
+  catppuccin.lazygit = {
+    enable = true;
     accent = "blue";
   };
-  catppuccin.opencode = cfg;
-  catppuccin.tmux = cfg // {
+  catppuccin.opencode.enable = true;
+  catppuccin.tmux = {
+    enable = true;
     extraConfig = ''
       # Configure Catppuccin
       set -g @catppuccin_status_background "none"
@@ -72,13 +69,14 @@ in
       set -g window-status-current-style "bg=#{@thm_peach},fg=#{@thm_bg},bold"
     '';
   };
-  catppuccin.yazi = cfg // {
+  catppuccin.yazi = {
+    enable = true;
     accent = "blue";
   };
-  catppuccin.zed = cfg // {
+  catppuccin.zed = {
+    enable = true;
     accent = "blue";
-    icons = cfg;
+    icons.enable = true;
   };
-  catppuccin.zsh-syntax-highlighting = cfg;
-
+  catppuccin.zsh-syntax-highlighting.enable = true;
 }
