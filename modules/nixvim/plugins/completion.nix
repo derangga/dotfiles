@@ -12,8 +12,14 @@
         keymap = {
           preset = "enter";
           "<C-y>" = [ "select_and_accept" ];
-          "<Tab>" = [ "snippet_forward" "fallback" ];
-          "<S-Tab>" = [ "snippet_backward" "fallback" ];
+          "<Tab>" = [
+            "snippet_forward"
+            "fallback"
+          ];
+          "<S-Tab>" = [
+            "snippet_backward"
+            "fallback"
+          ];
         };
 
         snippets = {
@@ -45,7 +51,12 @@
         };
 
         sources = {
-          default = [ "lsp" "path" "snippets" "buffer" ];
+          default = [
+            "lsp"
+            "path"
+            "snippets"
+            "buffer"
+          ];
         };
 
         cmdline = {

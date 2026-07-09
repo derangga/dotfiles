@@ -26,6 +26,21 @@ Nix is a powerful package manager and system configuration tool that takes a uni
 
 By leveraging Nix Darwin for macOS, I get all these benefits while maintaining a native Mac experience.
 
+## Structure
+
+`flake.nix` builds one configuration per host. System level settings live under `darwin/`, and everything user level is home-manager config under `modules/`, with `modules/default.nix` as the entry point that the flake imports directly. Per host overrides live in `modules/hosts/{hostname}.nix`.
+
+```mermaid
+flowchart TD
+    flake["flake.nix<br/>mkDarwinConfig per host"]
+    flake --> darwin["darwin/configuration.nix<br/>system level"]
+    flake --> hm["home-manager"]
+    darwin --> brew["darwin/homebrew<br/>casks and brews per host"]
+    hm --> modules["modules/default.nix<br/>home-manager entry point"]
+    modules --> apps["per app modules<br/>terminal, git, aerospace, catppuccin, starship, ..."]
+    modules --> host["modules/hosts/{hostname}.nix<br/>host specific overrides"]
+```
+
 ## What's Inside (Home Manager)
 
 All the following applications are managed via home-manager and will be configured automatically on rebuild.
@@ -37,6 +52,8 @@ All the following applications are managed via home-manager and will be configur
 | Starship | Cross-shell prompt |
 | Kitty | GPU-accelerated terminal |
 | Ghostty | Fast terminal emulator |
+
+Kitty and Ghostty are both configured, but only one is active per host. The choice is a single `terminal` field in `flake.nix` (see the Configuration section) that drives both the Homebrew cask and the program config, so the two never drift apart.
 
 ### Development Tools
 | Application | Description |
@@ -55,7 +72,7 @@ Sourced from [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.nix)
 | Claude Code | Agentic coding tool from Anthropic |
 | OpenCode | AI coding assistant |
 | Beads | Issue/task tracker for AI coding agents |
-| RTK | Rust Token Killer — token-optimizing CLI proxy |
+| RTK | Rust Token Killer, a token-optimizing CLI proxy |
 | Serena | MCP server for semantic code navigation |
 
 ### CLI Utilities
@@ -105,23 +122,25 @@ git clone https://github.com/derangga/dotfiles.git nix
 
 ### Configuration
 
-1. Add your username and hostname inside `flake.nix`
+1. Add your username, hostname, and terminal inside `flake.nix`. The `terminal` field accepts `"ghostty"` or `"kitty"` and drives both the Homebrew cask and the program config.
 ```
 {
   darwinConfigurations."maclop" = mkDarwinConfig {
         hostname = "maclop";
         username = "derangga";
+        terminal = "ghostty";
       };
 
   # Add your hostname here, you can check by run whoami
   darwinConfigurations."foo" = mkDarwinConfig {
         hostname = "foo";
         username = "foobar";
+        terminal = "ghostty";
       };
 }
 ```
 
-2. Add a new file inside `./modules/hosts/{your_username}.nix`
+2. Add a new file inside `./modules/hosts/{hostname}.nix` (host files are keyed by hostname, not username)
 ```
 {
   pkgs,

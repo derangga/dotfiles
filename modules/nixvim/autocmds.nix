@@ -3,21 +3,43 @@
 {
   programs.nixvim = {
     autoGroups = {
-      nixvim_checktime = { clear = true; };
-      nixvim_highlight_yank = { clear = true; };
-      nixvim_resize_splits = { clear = true; };
-      nixvim_last_loc = { clear = true; };
-      nixvim_close_with_q = { clear = true; };
-      nixvim_man_unlisted = { clear = true; };
-      nixvim_wrap_spell = { clear = true; };
-      nixvim_json_conceal = { clear = true; };
-      nixvim_auto_create_dir = { clear = true; };
+      nixvim_checktime = {
+        clear = true;
+      };
+      nixvim_highlight_yank = {
+        clear = true;
+      };
+      nixvim_resize_splits = {
+        clear = true;
+      };
+      nixvim_last_loc = {
+        clear = true;
+      };
+      nixvim_close_with_q = {
+        clear = true;
+      };
+      nixvim_man_unlisted = {
+        clear = true;
+      };
+      nixvim_wrap_spell = {
+        clear = true;
+      };
+      nixvim_json_conceal = {
+        clear = true;
+      };
+      nixvim_auto_create_dir = {
+        clear = true;
+      };
     };
 
     autoCmd = [
       # Check if we need to reload the file when it changed
       {
-        event = [ "FocusGained" "TermClose" "TermLeave" ];
+        event = [
+          "FocusGained"
+          "TermClose"
+          "TermLeave"
+        ];
         group = "nixvim_checktime";
         callback.__raw = ''
           function()
@@ -128,7 +150,13 @@
       {
         event = "FileType";
         group = "nixvim_wrap_spell";
-        pattern = [ "text" "plaintex" "typst" "gitcommit" "markdown" ];
+        pattern = [
+          "text"
+          "plaintex"
+          "typst"
+          "gitcommit"
+          "markdown"
+        ];
         callback.__raw = ''
           function()
             vim.opt_local.wrap = true
@@ -141,7 +169,11 @@
       {
         event = "FileType";
         group = "nixvim_json_conceal";
-        pattern = [ "json" "jsonc" "json5" ];
+        pattern = [
+          "json"
+          "jsonc"
+          "json5"
+        ];
         callback.__raw = ''
           function()
             vim.opt_local.conceallevel = 0

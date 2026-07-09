@@ -1,24 +1,40 @@
 {
   pkgs,
   hostname,
+  username,
+  catppuccin,
+  nixvim,
   ...
 }:
 {
   imports = [
-    ./aerospace/config.nix
-    ./catppuccin/config.nix
-    ./git/config.nix
+    catppuccin.homeModules.catppuccin
+    nixvim.homeModules.nixvim
+
+    ./aerospace
+    ./catppuccin
+    ./git
     ./llm-agents
     ./terminal
     ./nixvim
-    ./presenterm/config.nix
-    ./starship/nosymbol.nix
+    ./presenterm
+    ./starship/no-version.nix
     ./sketchybar/config.nix
     ./hosts/${hostname}.nix
   ];
 
+  home.username = username;
+  home.homeDirectory = "/Users/${username}";
+  home.stateVersion = "26.05";
+
   home.packages = with pkgs; [
+    bun
+    cargo
+    fnm
+    go
     orbstack
+    rust-analyzer
+    rustc
     yaak
   ];
 
