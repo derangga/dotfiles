@@ -39,6 +39,19 @@
   ];
 
   programs = {
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      # keep Up as plain previous-command; atuin only owns Ctrl-R
+      flags = [ "--disable-up-arrow" ];
+      settings = {
+        style = "compact";
+        inline_height = 20;
+        filter_mode = "global";
+        search_mode = "fuzzy";
+      };
+    };
+
     bat = {
       enable = true;
     };
@@ -55,14 +68,6 @@
       enable = true;
       enableZshIntegration = true;
       icons = "always";
-    };
-
-    fzf = {
-      enable = true;
-      enableZshIntegration = true;
-      fileWidget.options = [
-        "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
-      ];
     };
 
     gh = {
@@ -140,7 +145,6 @@
         enable = true;
         plugins = [
           "git"
-          "fzf"
         ];
       };
 

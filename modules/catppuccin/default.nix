@@ -4,6 +4,10 @@
   catppuccin.autoEnable = false;
   catppuccin.flavor = "macchiato"; # latte, frappe, macchiato, mocha
 
+  catppuccin.atuin = {
+    enable = true;
+    accent = "blue";
+  };
   catppuccin.bat.enable = true;
   catppuccin.btop.enable = true;
   catppuccin.fzf.enable = true;
