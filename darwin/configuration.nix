@@ -17,10 +17,6 @@
   system.primaryUser = username;
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "pnpm-10.34.0" # used by vuels in nixvim
-  ];
-
   environment.systemPackages = with pkgs; [
     ffmpeg
     gnupg

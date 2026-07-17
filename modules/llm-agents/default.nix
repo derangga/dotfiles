@@ -53,12 +53,17 @@ in
   # Claude Code mutates ~/.claude.json at runtime, so it can't be a managed
   # symlink; patch the fff MCP entry in place on each activation instead.
   home.activation.configureFffMcp = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    claudeJson="$HOME/.claude.json"
-    [ -f "$claudeJson" ] || echo '{}' > "$claudeJson"
-    tmp=$(mktemp)
-    ${pkgs.jq}/bin/jq \
-      '.mcpServers.fff = {type: "stdio", command: "${fffMcpBin}", args: []}' \
-      "$claudeJson" > "$tmp" && $DRY_RUN_CMD mv "$tmp" "$claudeJson"
+    patch_fff() {
+      claudeJson="$1"
+      [ -f "$claudeJson" ] || echo '{}' > "$claudeJson"
+      tmp=$(mktemp)
+      ${pkgs.jq}/bin/jq \
+        '.mcpServers.fff = {type: "stdio", command: "${fffMcpBin}", args: []}' \
+        "$claudeJson" > "$tmp" && $DRY_RUN_CMD mv "$tmp" "$claudeJson"
+    }
+    patch_fff "$HOME/.claude.json"
+    # Second account (work) lives in its own config dir; patch it only if set up.
+    [ -d "$HOME/.claude-work" ] && patch_fff "$HOME/.claude-work/.claude.json"
   '';
 
   # Append the fff usage instruction to the global CLAUDE.md if not already set,
