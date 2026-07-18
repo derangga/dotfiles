@@ -35,7 +35,6 @@
     orbstack
     rust-analyzer
     rustc
-    yaak
   ];
 
   programs = {

@@ -5,6 +5,7 @@
 {
   home.packages = with pkgs; [
     pm2
+    yaak
   ];
 
   # Second Claude account (work) in its own config dir; merges into the
