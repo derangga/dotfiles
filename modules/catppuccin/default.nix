@@ -77,10 +77,5 @@
     enable = true;
     accent = "blue";
   };
-  catppuccin.zed = {
-    enable = true;
-    accent = "blue";
-    icons.enable = true;
-  };
   catppuccin.zsh-syntax-highlighting.enable = true;
 }

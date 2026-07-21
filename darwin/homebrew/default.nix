@@ -21,7 +21,6 @@
       "font-sf-mono"
       "font-sf-pro"
       "tailscale-app"
-      "zed"
     ];
   };
 }

@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   hostname,
   username,
@@ -106,21 +107,14 @@
       ];
     };
 
+    vscode = {
+      enable = true;
+    };
+
     yazi = {
       enable = true;
       enableZshIntegration = true;
       shellWrapperName = "y";
-    };
-
-    zed-editor = {
-      enable = true;
-      package = null;
-      userSettings = {
-        buffer_font_family = "JetBrainsMono Nerd Font Mono";
-        terminal = {
-          font_family = "JetBrainsMono Nerd Font Mono";
-        };
-      };
     };
 
     zoxide = {
@@ -158,7 +152,7 @@
       };
 
       initContent = ''
-        eval "$(fnm env --use-on-cd --shell zsh)"
+          eval "$(fnm env --use-on-cd --shell zsh)"
       '';
     };
 
