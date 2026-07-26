@@ -58,6 +58,7 @@
       updatetime = 300;
       virtualedit = "block";
       wildmode = "longest:full,full";
+      winborder = "rounded";
       winminwidth = 5;
       wrap = false;
     };
