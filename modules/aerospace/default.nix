@@ -5,6 +5,19 @@
     enable = true;
     launchd.enable = true;
     settings = {
+      config-version = 2;
+      persistent-workspaces = [
+        "1"
+        "2"
+        "3"
+        "4"
+        "5"
+        "6"
+        "7"
+        "8"
+        "9"
+      ];
+
       after-login-command = [ ];
       after-startup-command = [ ];
       start-at-login = true;
