@@ -17,10 +17,10 @@
     ];
 
     casks = [
+      "cloudflare-warp"
       "sf-symbols"
       "font-sf-mono"
       "font-sf-pro"
-      "tailscale-app"
     ];
   };
 }

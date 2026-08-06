@@ -33,6 +33,16 @@ in
     onboarding = false;
     theme.name = "catppuccin";
     ui.toast.delivery = "terminal";
+    ui.sidebar.agents.rows = [
+      [
+        "state_icon"
+        "workspace"
+      ]
+      [
+        "state_text"
+        "agent"
+      ]
+    ];
     keys = {
       rename_tab = "prefix+,";
       indexed = {
