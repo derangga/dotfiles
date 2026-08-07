@@ -43,9 +43,16 @@ lib.mkIf (terminal == "ghostty") (
       }
     '';
 
-    ghostWatch = pkgs.writers.writePython3Bin "ghost-watch" {
-      flakeIgnore = [ "E501" ];
-    } (builtins.readFile ./ghost-watch.py);
+    # Stdlib only, hence vendorHash = null -- no vendor dir, no network fetch.
+    ghostWatch = pkgs.buildGoModule {
+      pname = "ghost-watch";
+      version = "0";
+      src = ./script;
+      vendorHash = null;
+      # There are no go tests; the self-check is the check, and it is hermetic.
+      doCheck = false;
+      postInstall = "$out/bin/ghost-watch --selfcheck";
+    };
   in
   {
     home.packages = [ ghostWatch ];
