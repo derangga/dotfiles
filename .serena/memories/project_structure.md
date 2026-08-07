@@ -4,7 +4,7 @@
 nix/
 ├── flake.nix                      # Entry point; defines maclop + worklop darwinConfigurations
 ├── flake.lock
-├── home/home.nix                  # home-manager entry; imports modules/default.nix
+├── README.md                      # User-facing docs (app table, usage, config steps)
 ├── darwin/
 │   ├── configuration.nix          # System-level config (packages, fonts, defaults)
 │   ├── terminal.nix               # Terminal-related system config
@@ -15,30 +15,33 @@ nix/
 │           └── worklop.nix        # Work machine Homebrew casks/formulae
 └── modules/
     ├── default.nix                # Root home-manager module; imports all sub-modules + host config
-    ├── aerospace/config.nix       # Aerospace window manager
-    ├── catppuccin/config.nix      # Catppuccin theme settings
-    ├── git/config.nix             # Git config (per-hostname user.name)
-    ├── neovim/config.nix          # Neovim (LazyVim-based)
-    │   └── lazyvim/               # LazyVim Lua config (plugins, keymaps, etc.)
-    ├── presenterm/config.nix      # Presenterm + mermaid-cli; config.yaml + puppeteer.json
-    ├── sketchybar/config.nix      # Sketchybar menu bar (Lua-based config)
-    │   └── lua/                   # Full Lua sketchybar config (items, widgets, helpers)
+    ├── aerospace/                 # Aerospace window manager
+    ├── catppuccin/default.nix     # Catppuccin theme settings (per-app enable flags)
+    ├── ghost/                     # Ghostty face shader driven by herdr AI state; script/ (Go) + .glsl shader
+    ├── git/                       # Git config (per-hostname user.name)
+    ├── llm-agents/default.nix     # Claude Code, OpenCode, Beads, RTK, Serena, herdr, hunk, fff-mcp
+    ├── nixvim/                    # Neovim via nixvim flake (NOT LazyVim)
+    │   ├── plugins/                 # Plugin configurations (completion, lsp, ui, etc.)
+    │   └── docs/                    # Neovim docs
+    ├── presenterm/                 # Presenterm + mermaid-cli; config.yaml + puppeteer.json
+    ├── sketchybar/                 # Sketchybar menu bar (Lua-based config), config.nix + lua/
     ├── starship/
-    │   ├── nosymbol.nix           # Starship prompt (no-symbol variant)
-    │   └── powerline.nix          # Starship prompt (powerline variant)
+    │   ├── no-version.nix          # Starship prompt (active variant, imported in modules/default.nix)
+    │   └── powerline.nix           # Starship prompt (alternate variant, unused)
     ├── terminal/
-    │   ├── default.nix            # Terminal module entry
-    │   ├── ghostty.nix            # Ghostty terminal config
-    │   ├── kitty.nix              # Kitty terminal config
-    │   ├── options.nix            # Terminal options/selector
-    │   └── shaders/               # GLSL shaders for terminal eye candy
+    │   ├── default.nix             # Terminal module entry
+    │   ├── ghostty.nix             # Ghostty terminal config
+    │   ├── kitty.nix               # Kitty terminal config
+    │   ├── options.nix             # Terminal options/selector (driven by `terminal` specialArg)
+    │   └── shaders/                # GLSL shaders for terminal eye candy
     └── hosts/
-        ├── maclop.nix             # Personal: flutter, cocoapods, vscode, OBS catppuccin
-        └── worklop.nix            # Work: pm2
+        ├── maclop.nix              # Personal host overrides
+        └── worklop.nix             # Work host overrides
 ```
 
 ## modules/default.nix Programs (shared across hosts)
-bat, btop, claude-code, eza, fzf, gh, gh-dash, lazygit, opencode, tmux, yazi, zed-editor, zoxide, zsh (Oh-My-Zsh)
+atuin, bat, btop, eza, gh, gh-dash, lazygit, tmux, vscode, yazi, zoxide, zsh (Oh-My-Zsh)
+Plus imports: aerospace, catppuccin, ghost, git, llm-agents, terminal, nixvim, presenterm, starship/no-version.nix, sketchybar/config.nix, hosts/${hostname}.nix
 
 ## System Packages (darwin/configuration.nix)
-bun, cargo, fnm, ffmpeg, gnupg, go, mkalias, nixd, pnpm, rustc, rust-analyzer, tree, uv
+ffmpeg, gnupg, mkalias, tree

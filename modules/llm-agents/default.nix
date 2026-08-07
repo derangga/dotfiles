@@ -32,17 +32,22 @@ in
   xdg.configFile."herdr/config.toml".source = herdrToml.generate "herdr-config" {
     onboarding = false;
     theme.name = "catppuccin";
-    ui.toast.delivery = "terminal";
-    ui.sidebar.agents.rows = [
-      [
-        "state_icon"
-        "workspace"
-      ]
-      [
-        "state_text"
-        "agent"
-      ]
-    ];
+    ui = {
+      toast.delivery = "terminal";
+      sidebar = {
+        agents.rows = [
+          [
+            "state_icon"
+            "workspace"
+          ]
+          [
+            "state_text"
+            "agent"
+          ]
+        ];
+      };
+      sidebar_min_width = 24;
+    };
     keys = {
       rename_tab = "prefix+,";
       indexed = {

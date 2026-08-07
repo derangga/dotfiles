@@ -48,7 +48,7 @@ All the following applications are managed via home-manager and will be configur
 ### Shell & Terminal
 | Application | Description |
 |---|---|
-| Zsh + Oh My Zsh | Shell with git and fzf plugins |
+| Zsh + Oh My Zsh | Shell with git plugin; Atuin powers history search (Ctrl-R) |
 | Starship | Cross-shell prompt |
 | Kitty | GPU-accelerated terminal |
 | Ghostty | Fast terminal emulator |
@@ -78,10 +78,10 @@ Sourced from [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.nix)
 ### CLI Utilities
 | Application | Description |
 |---|---|
+| atuin | Shell history search (SQLite-backed, Ctrl-R) |
 | bat | `cat` clone with syntax highlighting |
 | btop | Resource monitor |
 | eza | Modern `ls` replacement |
-| fzf | Fuzzy finder |
 | yazi | Terminal file manager |
 | zoxide | Smarter `cd` with frecency-based navigation |
 | gh | GitHub CLI |

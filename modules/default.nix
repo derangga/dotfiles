@@ -14,6 +14,7 @@
 
     ./aerospace
     ./catppuccin
+    ./ghost
     ./git
     ./llm-agents
     ./terminal
