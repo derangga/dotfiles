@@ -1,4 +1,4 @@
-// Command ghost-watch drives a Ghostty face shader from herdr's Claude agent state.
+// Command ghost-watch drives a Ghostty face shader from herdr's agent state.
 //
 // Asks herdr what the focused pane is doing, and points Ghostty's custom-shader
 // at a matching pre-built variant when the answer changes.
@@ -40,7 +40,7 @@ import (
 
 // herdr's agent_status vocabulary is idle/working/blocked/done/unknown. It has
 // no error state, so the shader's red "worry" face goes unused. "blocked" means
-// Claude is sitting on a permission prompt, which is what the yellow
+// the agent is sitting on a permission prompt, which is what the yellow
 // question-mark face already means, so it lands there.
 var statusMap = map[string]string{
 	"idle":    "idle",
@@ -49,9 +49,18 @@ var statusMap = map[string]string{
 	"done":    "done",
 }
 
+// Every herdr integration normalises its own events down to the vocabulary
+// above before reporting (opencode's plugin maps active/busy/pending/retry/
+// running/streaming all onto "working"), so adding an agent is just naming it.
+// `herdr integration status` lists which ones are actually installed; an agent
+// without its integration reports "unknown" forever and shows no face.
+var agents = map[string]bool{
+	"claude":   true,
+	"opencode": true,
+}
+
 const (
-	agent = "claude"
-	off   = "off"
+	off = "off"
 
 	// herdr reports the terminal area's left edge in columns. Anything this
 	// small means the sidebar is collapsed, and the face -- pinned at a fixed
@@ -172,7 +181,7 @@ func currentState() (string, error) {
 	if err := decode(raw, &pane); err != nil {
 		return "", err
 	}
-	if pane.Pane.Agent != agent {
+	if !agents[pane.Pane.Agent] {
 		return off, nil
 	}
 	if state, ok := statusMap[pane.Pane.Status]; ok {
@@ -200,7 +209,7 @@ func ghosttyPIDs() []int {
 	}
 	var pids []int
 	// The header line is dropped for free: "PID" does not parse as an int.
-	for _, line := range strings.Split(string(out), "\n") {
+	for line := range strings.SplitSeq(string(out), "\n") {
 		fields := strings.Fields(line)
 		if len(fields) != 2 || fields[1] != "ghostty" {
 			continue
@@ -276,8 +285,9 @@ func selfcheck() {
 	panes := map[string]map[string]string{
 		"p1": {"agent": "claude", "agent_status": "working"},
 		"p2": {"agent": "claude", "agent_status": "blocked"},
-		"p3": {"agent": "opencode", "agent_status": "working"},
+		"p3": {"agent": "opencode", "agent_status": "idle"},
 		"p4": {},
+		"p5": {"agent": "codex", "agent_status": "working"},
 	}
 	var layout map[string]any
 
@@ -311,10 +321,13 @@ func selfcheck() {
 	// blocked is a permission prompt: the question-mark face.
 	focus("p2", 26)
 	want("thinking")
-	// Other agents and bare shells are off.
+	// opencode drives the same faces as claude.
 	focus("p3", 26)
-	want(off)
+	want("idle")
+	// Bare shells and agents we do not claim are off.
 	focus("p4", 26)
+	want(off)
+	focus("p5", 26)
 	want(off)
 	// Collapsed sidebar wins over everything.
 	focus("p1", 0)
