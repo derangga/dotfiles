@@ -1,4 +1,9 @@
-{ terminal, lib, ... }:
+{
+  config,
+  terminal,
+  lib,
+  ...
+}:
 lib.mkIf (terminal == "ghostty") {
   programs.ghostty = {
     enable = true;
@@ -8,6 +13,9 @@ lib.mkIf (terminal == "ghostty") {
       background-opacity = 0.94;
       background-blur = true;
       bold-is-bright = true;
+      # Optional include (?) of the runtime fragment ghost-watch rewrites; absent
+      # or empty means no face, leaving custom-shader below untouched.
+      config-file = "?${config.home.homeDirectory}/.local/state/ghost-in-the-machine/ghostty.conf";
       custom-shader = [
         "shaders/cursor_blaze_no_trail.glsl"
       ];

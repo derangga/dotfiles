@@ -1,0 +1,15 @@
+ghost-in-the-machine.glsl in this directory is vendored, unmodified, from
+pi-ghost-in-the-machine by Iury Souza:
+https://github.com/iurysza/pi-ghost-in-the-machine
+
+That shader is itself derived from claude-terminal-face by isoden:
+https://github.com/isoden/claude-terminal-face
+
+Both original works are distributed under the MIT License, as is this
+derivative. The FORCED_STATE and sidebar-placement constants are substituted at
+build time by ../ghost/default.nix rather than edited in place, so the vendored
+file matches upstream byte for byte.
+
+Everything else here is new: herdr socket subscription in place of both the Pi
+extension and the polling sidebar watcher, herdr's own agent_status as the
+state source in place of agent-side hooks, and Nix packaging.
