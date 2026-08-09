@@ -42,6 +42,12 @@ in
           installCargo = false;
           installRustc = false;
         };
+        sourcekit = {
+          enable = true;
+          package = null; # use Xcode's /usr/bin/sourcekit-lsp instead of nixpkgs'
+          # Defaults also claim c/cpp/objc/objcpp, which clangd already handles.
+          filetypes = [ "swift" ];
+        };
         sqls.enable = true;
         tailwindcss.enable = true;
         ts_ls = {
@@ -120,7 +126,17 @@ in
         local bufname = vim.api.nvim_buf_get_name(bufnr)
         local is_file = bufname == "" or bufname:match("^/") or bufname:match("^file://")
         if filetype ~= "vue" and is_file then
-          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          if client.name == "sourcekit" then
+            -- sourcekit-lsp times out (-32001) on the first inlayHint while SwiftPM
+            -- is still evaluating the package manifest. Enable once it is warm.
+            vim.defer_fn(function()
+              if vim.api.nvim_buf_is_valid(bufnr) then
+                vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+              end
+            end, 5000)
+          else
+            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          end
         end
       end
 

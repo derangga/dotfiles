@@ -25,6 +25,7 @@
         query
         regex
         rust
+        swift
         tsx
         typescript
         vim
