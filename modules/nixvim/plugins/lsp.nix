@@ -1,7 +1,25 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
   vueTsPluginPath = "${pkgs.vue-language-server}/lib/language-tools/packages/language-server";
+
+  # typescript@7 is the Go compiler: no tsserver.js, so vtsls cannot use it and
+  # tsserver plugins (@effect/language-service) do not apply. npm/bun install its
+  # binary as `tsc`, @typescript/native-preview as `tsgo`; getExePath.js is TS7-only.
+  tsgoBin = ''
+    local function tsgo_bin(root)
+      if not root then return nil end
+      if vim.uv.fs_stat(root .. "/node_modules/.bin/tsgo") then
+        return root .. "/node_modules/.bin/tsgo"
+      end
+      if vim.uv.fs_stat(root .. "/node_modules/typescript/lib/getExePath.js") then
+        return root .. "/node_modules/.bin/tsc"
+      end
+    end
+  '';
+  tsRoot = ''
+    vim.fs.root(bufnr, { "bun.lock", "package-lock.json", "pnpm-lock.yaml", "yarn.lock", "package.json", ".git" })
+  '';
 in
 {
   programs.nixvim = {
@@ -50,22 +68,52 @@ in
         };
         sqls.enable = true;
         tailwindcss.enable = true;
-        ts_ls = {
+        tsgo = {
+          enable = true;
+          package = null; # only ever the project's own binary, which may be effect-patched
+          extraOptions = {
+            cmd.__raw = ''
+              function(dispatchers, config)
+                ${tsgoBin}
+                return vim.lsp.rpc.start({ tsgo_bin(config.root_dir), "--lsp", "--stdio" }, dispatchers)
+              end
+            '';
+            root_dir.__raw = ''
+              function(bufnr, on_dir)
+                ${tsgoBin}
+                local root = ${tsRoot}
+                if root and tsgo_bin(root) then on_dir(root) end
+              end
+            '';
+          };
+        };
+        vtsls = {
           enable = true;
           extraOptions = {
-            init_options = {
-              plugins = lib.mkForce [
-                {
-                  name = "@vue/typescript-plugin";
-                  location = vueTsPluginPath;
-                  languages = [
-                    "vue"
-                    "javascript"
-                    "typescript"
-                  ];
-                }
-              ];
-            };
+            # TypeScript 7 projects are served by tsgo instead.
+            root_dir.__raw = ''
+              function(bufnr, on_dir)
+                ${tsgoBin}
+                local root = ${tsRoot}
+                if root and tsgo_bin(root) then return end
+                on_dir(root or vim.fn.getcwd())
+              end
+            '';
+          };
+          settings.vtsls = {
+            # tsserver only resolves plugins declared in a project's tsconfig
+            # (e.g. @effect/language-service) when it runs from the workspace's
+            # own node_modules; neither server passes --allowLocalPluginLoads.
+            autoUseWorkspaceTsdk = true;
+            tsserver.globalPlugins = [
+              {
+                name = "@vue/typescript-plugin";
+                location = vueTsPluginPath;
+                languages = [ "vue" ];
+                configNamespace = "typescript";
+                enableForWorkspaceTypeScriptVersions = true;
+              }
+            ];
           };
           filetypes = [
             "typescript"
@@ -77,6 +125,10 @@ in
         };
         vue_ls = {
           enable = true;
+          # The plugin above is declared by hand; nixvim's integrations would
+          # define the same globalPlugins list and conflict on eval.
+          tslsIntegration = false;
+          vtslsIntegration = false;
           extraOptions = {
             init_options = {
               typescript = {
@@ -179,6 +231,24 @@ in
             [vim.diagnostic.severity.HINT]  = " ",
           },
         },
+      })
+
+      -- Neovim never stops a client when its last buffer closes, so a session
+      -- that wanders between projects keeps a full tsserver heap per repo.
+      -- Only the expensive servers are worth the restart cost.
+      local idle_reap = { vtsls = true, eslint = true, tailwindcss = true, vue_ls = true }
+      vim.api.nvim_create_autocmd("LspDetach", {
+        desc = "Stop heavy language servers left with no open buffers",
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client or not idle_reap[client.name] then return end
+          vim.defer_fn(function()
+            if not client:is_stopped() and next(client.attached_buffers) == nil then
+              client:stop()
+              vim.notify("Stopped idle LSP: " .. client.name, vim.log.levels.INFO)
+            end
+          end, 10 * 60 * 1000)
+        end,
       })
     '';
   };
