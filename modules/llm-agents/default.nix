@@ -18,6 +18,7 @@ in
 {
   home.packages = [
     fffMcp
+    llmPkgs.agent-browser
     llmPkgs.beads
     llmPkgs.beads-viewer
     llmPkgs.claude-code
@@ -46,7 +47,7 @@ in
           ]
         ];
       };
-      sidebar_min_width = 24;
+      sidebar_min_width = 28;
     };
     keys = {
       rename_tab = "prefix+,";
