@@ -232,6 +232,24 @@ in
           },
         },
       })
+
+      -- Neovim never stops a client when its last buffer closes, so a session
+      -- that wanders between projects keeps a full tsserver heap per repo.
+      -- Only the expensive servers are worth the restart cost.
+      local idle_reap = { vtsls = true, eslint = true, tailwindcss = true, vue_ls = true }
+      vim.api.nvim_create_autocmd("LspDetach", {
+        desc = "Stop heavy language servers left with no open buffers",
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client or not idle_reap[client.name] then return end
+          vim.defer_fn(function()
+            if not client:is_stopped() and next(client.attached_buffers) == nil then
+              client:stop()
+              vim.notify("Stopped idle LSP: " .. client.name, vim.log.levels.INFO)
+            end
+          end, 10 * 60 * 1000)
+        end,
+      })
     '';
   };
 }
