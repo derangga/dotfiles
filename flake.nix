@@ -23,9 +23,6 @@
     # LLM Tools
     llm-agents.url = "github:numtide/llm-agents.nix";
     llm-agents.inputs.nixpkgs.follows = "nixpkgs";
-
-    serena.url = "git+https://github.com/oraios/serena";
-    serena.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -73,7 +70,6 @@
                   nixvim
                   fff-nvim
                   llm-agents
-                  serena
                   ;
               };
 

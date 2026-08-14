@@ -65,7 +65,7 @@ Kitty and Ghostty are both configured, but only one is active per host. The choi
 | Zed | Modern, high-performance code editor |
 
 ### AI / Agentic Tools
-Sourced from [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.nix) and [oraios/serena](https://github.com/oraios/serena) flake inputs (see `modules/llm-agents/default.nix`).
+Sourced from the [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.nix) flake input (see `modules/llm-agents/default.nix`).
 
 | Application | Description |
 |---|---|
@@ -73,7 +73,7 @@ Sourced from [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.nix)
 | OpenCode | AI coding assistant |
 | Beads | Issue/task tracker for AI coding agents |
 | RTK | Rust Token Killer, a token-optimizing CLI proxy |
-| Serena | MCP server for semantic code navigation |
+| codebase-memory-mcp | MCP server indexing a repo into a code knowledge graph |
 
 ### CLI Utilities
 | Application | Description |
@@ -177,19 +177,9 @@ sudo darwin-rebuild switch --flake ~/nix#foo
 
 ## Agentic Tools
 
-Agentic tooling (Claude Code, OpenCode, Beads, RTK, Serena) is declared in `modules/llm-agents/default.nix` and installed automatically on rebuild via the `llm-agents.nix` and `serena` flake inputs.
+Agentic tooling (Claude Code, OpenCode, Beads, RTK, codebase-memory-mcp) is declared in `modules/llm-agents/default.nix` and installed automatically on rebuild.
 
-To register Serena as an MCP server in Claude Code for semantic code navigation, run one of the following from inside the target project:
-
-```
-# Per-project (current repo only)
-claude mcp add serena -- serena start-mcp-server --context claude-code --project "$(pwd)"
-
-# Global (available in any project)
-claude mcp add --scope user serena -- serena start-mcp-server --context claude-code --project-from-cwd
-```
-
-See the [Serena docs](https://oraios.github.io/serena/02-usage/030_clients.html#claude-code) for additional tips (system prompt override, hooks) to keep agents from drifting away from Serena's tools in long sessions.
+`codebase-memory-mcp` is wired per-project rather than globally — see `modules/llm-agents/docs/mcp-integration.md` for the `.mcp.json` / `opencode.json` blocks, and `docs/quick-start.md` for manual CLI use.
 
 ## Resources
 - [Nix store](https://search.nixos.org/packages?channel=25.11&)

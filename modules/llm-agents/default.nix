@@ -3,31 +3,29 @@
   lib,
   fff-nvim,
   llm-agents,
-  serena,
   ...
 }:
 let
   system = pkgs.stdenv.hostPlatform.system;
   fffMcp = fff-nvim.packages.${system}.fff-mcp;
   llmPkgs = llm-agents.packages.${system};
-  serenaPkgs = serena.packages.${system};
   herdrToml = pkgs.formats.toml { };
   hunkToml = pkgs.formats.toml { };
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
+  codebaseMemoryMcp = pkgs.callPackage ./codebase-memory-mcp.nix { };
 in
 {
   home.packages = [
+    codebaseMemoryMcp
     fffMcp
     llmPkgs.agent-browser
     llmPkgs.beads
     llmPkgs.beads-viewer
     llmPkgs.claude-code
-    llmPkgs.gitnexus
     llmPkgs.herdr
     llmPkgs.hunk
     llmPkgs.opencode
     llmPkgs.rtk
-    serenaPkgs.default
   ];
 
   xdg.configFile."herdr/config.toml".source = herdrToml.generate "herdr-config" {
