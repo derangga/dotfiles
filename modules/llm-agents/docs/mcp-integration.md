@@ -6,15 +6,16 @@ purpose: the graph is per-repository, so each project opts in.
 
 ## Binary path
 
-Use the per-user profile path, not a `/nix/store/...` path — it stays valid
-across rebuilds:
+Use the bare command name, not a `/nix/store/...` path — it stays valid
+across rebuilds and across machines/usernames, since nix-darwin puts
+`/etc/profiles/per-user/<username>/bin` on `$PATH`:
 
 ```
-/etc/profiles/per-user/<username>/bin/codebase-memory-mcp
+codebase-memory-mcp
 ```
 
-`<username>` is `derangga` on `maclop`, `sociolla` on `worklop`. Confirm with
-`which codebase-memory-mcp`.
+Confirm it resolves with `which codebase-memory-mcp` (full path looks like
+`/etc/profiles/per-user/<username>/bin/codebase-memory-mcp`).
 
 ## Claude Code
 
@@ -25,7 +26,7 @@ Create `.mcp.json` in the project root:
   "mcpServers": {
     "codebase-memory": {
       "type": "stdio",
-      "command": "/etc/profiles/per-user/sociolla/bin/codebase-memory-mcp",
+      "command": "codebase-memory-mcp",
       "args": []
     }
   }
@@ -53,7 +54,7 @@ Create `opencode.json` in the project root (same shape as the global
   "mcp": {
     "codebase-memory": {
       "type": "local",
-      "command": ["/etc/profiles/per-user/sociolla/bin/codebase-memory-mcp"],
+      "command": ["codebase-memory-mcp"],
       "enabled": true
     }
   }
