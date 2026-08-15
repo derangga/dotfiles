@@ -1,7 +1,7 @@
 { hostname, ... }:
 let
   gitUserName = {
-    maclop = "derangga";
+    maclop = "meynisa";
     worklop = "Dimas Rangga";
   };
 in

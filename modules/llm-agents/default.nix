@@ -45,7 +45,7 @@ in
           ]
         ];
       };
-      sidebar_min_width = 28;
+      sidebar_min_width = 32;
     };
     keys = {
       rename_tab = "prefix+,";
