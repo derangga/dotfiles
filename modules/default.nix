@@ -92,12 +92,16 @@
       enable = true;
       customPaneNavigationAndResize = true;
       escapeTime = 10;
+      terminal = "tmux-256color";
       extraConfig = ''
         # enable extended keys (CSI encoding) for proper modifier support
         # allows shift+enter, ctrl+shift+<key>, etc. to work correctly in apps
         # also this config fix opencode behavior inside tmux
         set -s extended-keys on
         set -as terminal-features "xterm*:extkeys"
+
+        # truecolor passthrough: outer TERM is xterm-ghostty / xterm-kitty
+        set -as terminal-features "xterm*:RGB"
       '';
       focusEvents = true;
       keyMode = "vi";
