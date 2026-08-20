@@ -13,6 +13,19 @@ let
   hunkToml = pkgs.formats.toml { };
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
   codebaseMemoryMcp = pkgs.callPackage ./codebase-memory-mcp.nix { };
+
+  herdrNav = pkgs.writeShellApplication {
+    name = "herdr-nav";
+    runtimeInputs = [ pkgs.jq ];
+    text = builtins.readFile ./herdr-nav.sh;
+  };
+
+  navKey = dir: key: {
+    inherit key;
+    type = "shell";
+    command = "${herdrNav}/bin/herdr-nav ${dir}";
+    description = "navigate ${dir} (vim/herdr)";
+  };
 in
 {
   home.packages = [
@@ -54,6 +67,12 @@ in
         tabs = "ctrl";
         agents = "alt";
       };
+      command = [
+        (navKey "left" "ctrl+h")
+        (navKey "down" "ctrl+j")
+        (navKey "up" "ctrl+k")
+        (navKey "right" "ctrl+l")
+      ];
     };
   };
 
