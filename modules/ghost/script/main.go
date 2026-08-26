@@ -57,6 +57,7 @@ var statusMap = map[string]string{
 var agents = map[string]bool{
 	"claude":   true,
 	"opencode": true,
+	"pi":       true,
 }
 
 const (
@@ -198,9 +199,9 @@ func decode(raw json.RawMessage, into any) error {
 	return json.Unmarshal(raw, into)
 }
 
-// ghosttyPIDs returns Ghostty PIDs. pi used `pgrep -x ghostty`; ps is used here
-// because pgrep failed to match anything at all during testing on this machine
-// while ps worked everywhere.
+// ghosttyPIDs returns Ghostty PIDs. The original script used `pgrep -x
+// ghostty`; ps is used here because pgrep failed to match anything at all
+// during testing on this machine while ps worked everywhere.
 func ghosttyPIDs() []int {
 	out, err := exec.Command(psPath, "-Ao", "pid,ucomm").Output()
 	if err != nil {
@@ -224,9 +225,9 @@ func ghosttyPIDs() []int {
 func reloadGhostty() {
 	pids := ghosttyPIDs()
 	if len(pids) == 0 {
-		// Loud on purpose. pi swallowed this with `|| true`, which makes a
-		// reload that never fires look identical to a working install that
-		// happens to do nothing.
+		// Loud on purpose. The original script swallowed this with `|| true`,
+		// which makes a reload that never fires look identical to a working
+		// install that happens to do nothing.
 		logf("no ghostty process found; shader not reloaded")
 		return
 	}
@@ -286,8 +287,9 @@ func selfcheck() {
 		"p1": {"agent": "claude", "agent_status": "working"},
 		"p2": {"agent": "claude", "agent_status": "blocked"},
 		"p3": {"agent": "opencode", "agent_status": "idle"},
-		"p4": {},
-		"p5": {"agent": "codex", "agent_status": "working"},
+		"p4": {"agent": "pi", "agent_status": "working"},
+		"p5": {},
+		"p6": {"agent": "codex", "agent_status": "working"},
 	}
 	var layout map[string]any
 
@@ -321,13 +323,15 @@ func selfcheck() {
 	// blocked is a permission prompt: the question-mark face.
 	focus("p2", 26)
 	want("thinking")
-	// opencode drives the same faces as claude.
+	// opencode and pi drive the same faces as claude.
 	focus("p3", 26)
 	want("idle")
-	// Bare shells and agents we do not claim are off.
 	focus("p4", 26)
-	want(off)
+	want("working")
+	// Bare shells and agents we do not claim are off.
 	focus("p5", 26)
+	want(off)
+	focus("p6", 26)
 	want(off)
 	// Collapsed sidebar wins over everything.
 	focus("p1", 0)

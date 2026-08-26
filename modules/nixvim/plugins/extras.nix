@@ -5,7 +5,7 @@
     plugins.tmux-navigator = {
       enable = true;
       # Our own <C-hjkl> maps below cover tmux too, via TmuxNavigate*.
-      settings.no_mappings = true;
+      settings.no_mappings = 1;
     };
 
     extraPlugins = with pkgs.vimPlugins; [

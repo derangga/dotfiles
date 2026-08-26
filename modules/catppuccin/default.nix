@@ -77,5 +77,4 @@
     enable = true;
     accent = "blue";
   };
-  catppuccin.zsh-syntax-highlighting.enable = true;
 }
