@@ -12,6 +12,7 @@
         bash
         c
         css
+        dart
         diff
         go
         html

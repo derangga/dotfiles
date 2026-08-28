@@ -18,6 +18,7 @@
     ./finder.nix
     ./ai.nix
     ./dap.nix
+    ./flutter.nix
     ./completion.nix
   ];
 }
