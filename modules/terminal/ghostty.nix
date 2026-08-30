@@ -21,7 +21,6 @@ lib.mkIf (terminal == "ghostty") {
       ];
       font-family = "Kode Mono";
       font-feature = "liga,calt,dlig";
-      keybind = "shift+enter=text:\\x1b\\r";
       macos-option-as-alt = true;
       macos-window-shadow = false;
       macos-titlebar-style = "hidden";
