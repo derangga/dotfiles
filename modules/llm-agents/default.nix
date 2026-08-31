@@ -83,6 +83,26 @@ in
     vcs = "git";
   };
 
+  # opencode config is static (never mutated at runtime, unlike ~/.claude.json),
+  # so it can be managed declaratively as a symlink.
+  xdg.configFile."opencode/opencode.jsonc".text = ''
+    {
+      "$schema": "https://opencode.ai/config.json",
+      "lsp": true,
+      "mcp": {
+        "fff": {
+          "type": "local",
+          "command": ["${fffMcpBin}"],
+          "enabled": true
+        }
+      }
+    }
+  '';
+
+  xdg.configFile."opencode/AGENTS.md".text = ''
+    For any file search or grep in the current git-indexed directory, use fff mcp tools instead of grep/glob.
+  '';
+
   # Claude Code mutates ~/.claude.json at runtime, so it can't be a managed
   # symlink; patch the fff MCP entry in place on each activation instead.
   home.activation.configureFffMcp = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
