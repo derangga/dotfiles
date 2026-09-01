@@ -77,4 +77,9 @@
     enable = true;
     accent = "blue";
   };
+  catppuccin.zed = {
+    enable = true;
+    accent = "blue";
+    icons.enable = true;
+  };
 }
