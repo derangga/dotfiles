@@ -2,6 +2,7 @@
   pkgs,
   lib,
   fff-nvim,
+  herdr-annotate,
   llm-agents,
   ...
 }:
@@ -13,6 +14,7 @@ let
   hunkToml = pkgs.formats.toml { };
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
   codebaseMemoryMcp = pkgs.callPackage ./codebase-memory-mcp.nix { };
+  herdrAnnotate = pkgs.callPackage ./herdr-annotate.nix { src = herdr-annotate; };
 
   herdrNav = pkgs.writeShellApplication {
     name = "herdr-nav";
@@ -25,6 +27,12 @@ let
     type = "shell";
     command = "${herdrNav}/bin/herdr-nav ${dir}";
     description = "navigate ${dir} (vim/herdr)";
+  };
+
+  pluginKey = key: command: description: {
+    inherit key description;
+    type = "plugin_action";
+    command = "annotate.${command}";
   };
 in
 {
@@ -39,7 +47,15 @@ in
     llmPkgs.hunk
     llmPkgs.opencode
     llmPkgs.rtk
+    herdrAnnotate
   ];
+
+  home.file.".agents/skills/plannotator-tui/SKILL.md".source =
+    "${herdrAnnotate}/skills/plannotator-tui/SKILL.md";
+
+  home.activation.linkHerdrAnnotate = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD ${llmPkgs.herdr}/bin/herdr plugin link ${herdrAnnotate}
+  '';
 
   xdg.configFile."herdr/config.toml".source = herdrToml.generate "herdr-config" {
     onboarding = false;
@@ -72,6 +88,11 @@ in
         (navKey "down" "ctrl+j")
         (navKey "up" "ctrl+k")
         (navKey "right" "ctrl+l")
+        (pluginKey "prefix+a" "capture" "annotate text")
+        (pluginKey "prefix+shift+a" "copy-context" "copy annotations as context")
+        (pluginKey "prefix+m" "manage" "manage annotations")
+        (pluginKey "prefix+o" "open" "review documents in this folder")
+        (pluginKey "prefix+shift+o" "last" "review the agent's last reply")
       ];
     };
   };
