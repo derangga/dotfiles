@@ -142,6 +142,7 @@
         alt-tab = "workspace-back-and-forth";
         alt-shift-tab = "move-workspace-to-monitor --wrap-around next";
 
+        alt-f = "layout floating tiling";
         alt-shift-semicolon = "mode service";
       };
 
