@@ -63,11 +63,6 @@ var agents = map[string]bool{
 const (
 	off = "off"
 
-	// herdr reports the terminal area's left edge in columns. Anything this
-	// small means the sidebar is collapsed, and the face -- pinned at a fixed
-	// pixel offset inside the sidebar -- would otherwise sit on terminal text.
-	collapsedX = 4
-
 	pollInterval  = 250 * time.Millisecond
 	retryInterval = 2 * time.Second
 	dialTimeout   = 2 * time.Second
@@ -153,17 +148,17 @@ func currentState() (string, error) {
 	var layout struct {
 		Layout struct {
 			FocusedPaneID string `json:"focused_pane_id"`
-			Area          *struct {
-				X *float64 `json:"x"`
-			} `json:"area"`
 		} `json:"layout"`
 	}
 	if err := decode(raw, &layout); err != nil {
 		return "", err
 	}
-	if a := layout.Layout.Area; a != nil && a.X != nil && *a.X <= collapsedX {
-		return off, nil
-	}
+	// ponytail: the face is drawn even when the sidebar is collapsed, where it
+	// lands on terminal text. Until herdr 0.9.0 this checked layout.area.x for a
+	// sidebar-sized left offset, but 0.9.0 moved the UI into each client and the
+	// server now reports tab-local coordinates -- area.x is always 0, so that
+	// check pinned every state to "off". Nothing in the API exposes sidebar
+	// geometry any more. Restore the check if herdr grows a client-state query.
 	paneID := layout.Layout.FocusedPaneID
 	if paneID == "" {
 		return off, nil
@@ -305,8 +300,8 @@ func selfcheck() {
 		return json.Marshal(payload)
 	}
 
-	focus := func(paneID string, x float64) {
-		layout = map[string]any{"focused_pane_id": paneID, "area": map[string]any{"x": x}}
+	focus := func(paneID string) {
+		layout = map[string]any{"focused_pane_id": paneID}
 	}
 	want := func(expected string) {
 		got, err := currentState()
@@ -318,31 +313,27 @@ func selfcheck() {
 		}
 	}
 
-	focus("p1", 26)
+	focus("p1")
 	want("working")
 	// blocked is a permission prompt: the question-mark face.
-	focus("p2", 26)
+	focus("p2")
 	want("thinking")
 	// opencode and pi drive the same faces as claude.
-	focus("p3", 26)
+	focus("p3")
 	want("idle")
-	focus("p4", 26)
+	focus("p4")
 	want("working")
 	// Bare shells and agents we do not claim are off.
-	focus("p5", 26)
+	focus("p5")
 	want(off)
-	focus("p6", 26)
+	focus("p6")
 	want(off)
-	// Collapsed sidebar wins over everything.
-	focus("p1", 0)
-	want(off)
-	focus("p1", 26)
-	want("working")
 	// An unknown status is not a face.
+	focus("p1")
 	panes["p1"]["agent_status"] = "unknown"
 	want(off)
 	// No focused pane at all.
-	focus("", 26)
+	focus("")
 	want(off)
 
 	fmt.Println("selfcheck ok")

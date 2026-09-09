@@ -10,10 +10,14 @@ lib.mkIf (terminal == "ghostty") (
     stateDir = "${config.home.homeDirectory}/.local/state/ghost-in-the-machine";
 
     # Face placement. The shader centres the face inside herdr's sidebar, so
-    # sidebarCols must match herdr's own sidebar_width (see session.json) or the
-    # face drifts out over terminal text. cellWidth is upstream's value for
-    # their font; retune by eye with `ghost-watch idle`.
-    sidebarCols = 26;
+    # sidebarCols must match the sidebar's rendered width or the face drifts out
+    # over terminal text. herdr 0.9.0 stopped reporting sidebar geometry over the
+    # API and stopped persisting it in session.json, so this tracks the
+    # ui.sidebar_min_width set in modules/llm-agents by hand. herdr auto-scales
+    # the sidebar to fit workspace names, so long names push it wider than this.
+    # cellWidth is upstream's value for their font; retune by eye with
+    # `ghost-watch idle`.
+    sidebarCols = 32;
     cellWidth = 16;
 
     variants = pkgs.runCommand "ghost-variants" { } ''
