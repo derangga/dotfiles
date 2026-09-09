@@ -17,16 +17,17 @@ let
   herdrAnnotate = pkgs.callPackage ./herdr-annotate.nix { src = herdr-annotate; };
 
   piPackages = [
-    "npm:pi-ask-popup"
-    "npm:pi-status-widget"
     "npm:@narumitw/pi-plan-mode"
     "npm:pi-mcp-adapter"
     "npm:@ff-labs/pi-fff"
     "npm:pi-lens"
-    "npm:pi-catppuccin-themes"
-    "npm:pi-unslop-rules"
-    "npm:pi-broodmother"
     "npm:donsetch"
+    "npm:pi-ask-popup"
+    "npm:pi-broodmother"
+    "npm:pi-catppuccin-themes"
+    "npm:pi-status-widget"
+    "npm:pi-todo-agent"
+    "npm:pi-unslop-rules"
   ];
 
   # Map an `npm:` pi package spec to its install dir under ~/.pi/agent/npm.
