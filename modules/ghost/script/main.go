@@ -36,6 +36,7 @@ import (
 	"strings"
 	"syscall"
 	"time"
+	"unsafe"
 )
 
 // herdr's agent_status vocabulary is idle/working/blocked/done/unknown. It has
@@ -63,6 +64,12 @@ var agents = map[string]bool{
 const (
 	off = "off"
 
+	// A collapsed sidebar is not zero-width: ui.sidebar_collapsed_mode
+	// defaults to "compact", which leaves a 4-column status rail. Expanded it
+	// is ui.sidebar_min_width or wider, 18 columns at herdr's own default, so
+	// anything narrower than this is a collapsed rail.
+	minSidebarCols = 12
+
 	pollInterval  = 250 * time.Millisecond
 	retryInterval = 2 * time.Second
 	dialTimeout   = 2 * time.Second
@@ -75,7 +82,8 @@ var (
 	psPath     = env("GHOST_PS", "/bin/ps")
 
 	// Swapped out by selfcheck.
-	request = herdrRequest
+	request     = herdrRequest
+	sidebarCols = herdrSidebarCols
 )
 
 func home() string {
@@ -148,17 +156,23 @@ func currentState() (string, error) {
 	var layout struct {
 		Layout struct {
 			FocusedPaneID string `json:"focused_pane_id"`
+			Area          struct {
+				Width int `json:"width"`
+			} `json:"area"`
 		} `json:"layout"`
 	}
 	if err := decode(raw, &layout); err != nil {
 		return "", err
 	}
-	// ponytail: the face is drawn even when the sidebar is collapsed, where it
-	// lands on terminal text. Until herdr 0.9.0 this checked layout.area.x for a
-	// sidebar-sized left offset, but 0.9.0 moved the UI into each client and the
-	// server now reports tab-local coordinates -- area.x is always 0, so that
-	// check pinned every state to "off". Nothing in the API exposes sidebar
-	// geometry any more. Restore the check if herdr grows a client-state query.
+	// No sidebar, no face: collapsed, it would land on terminal text. Until
+	// herdr 0.9.0 this read a sidebar-sized left offset off layout.area.x, but
+	// 0.9.0 moved the UI into each client and the server now reports tab-local
+	// coordinates, so area.x is always 0. area.width still excludes the
+	// sidebar, so subtracting it from the client's own terminal width measures
+	// the sidebar directly.
+	if sidebarCols(layout.Layout.Area.Width) < minSidebarCols {
+		return off, nil
+	}
 	paneID := layout.Layout.FocusedPaneID
 	if paneID == "" {
 		return off, nil
@@ -192,6 +206,73 @@ func decode(raw json.RawMessage, into any) error {
 		return nil
 	}
 	return json.Unmarshal(raw, into)
+}
+
+// herdrSidebarCols measures herdr's sidebar, given the width the server
+// reports for the pane area of the focused tab. The client's terminal is the
+// whole Ghostty window, sidebar included, so the difference is the sidebar.
+//
+// The tty is cached because this runs every poll and it practically never
+// changes; a re-resolve is only worth a process spawn when the cached device is
+// gone or measures narrower than the panes it is supposed to contain.
+func herdrSidebarCols(paneCols int) int {
+	cols := ttyCols(clientTTY)
+	if cols < paneCols {
+		clientTTY = findClientTTY()
+		cols = ttyCols(clientTTY)
+	}
+	return cols - paneCols
+}
+
+var clientTTY string
+
+// findClientTTY returns the widest tty owned by a herdr process. Widest wins
+// because `herdr <subcommand>` run inside a pane is also a herdr process, on a
+// tty that can only be narrower than the window its client draws.
+func findClientTTY() string {
+	out, err := exec.Command(psPath, "-Ao", "tty,ucomm").Output()
+	if err != nil {
+		logf("ps failed: %v", err)
+		return ""
+	}
+	device, widest := "", 0
+	for line := range strings.SplitSeq(string(out), "\n") {
+		// The server has no tty, which ps prints as "??" -- not a device path,
+		// and openable by nobody.
+		fields := strings.Fields(line)
+		if len(fields) != 2 || fields[1] != "herdr" || fields[0] == "??" {
+			continue
+		}
+		candidate := "/dev/" + fields[0]
+		if cols := ttyCols(candidate); cols > widest {
+			device, widest = candidate, cols
+		}
+	}
+	return device
+}
+
+// ttyCols reads a terminal's width in columns, or 0 if it cannot. An ioctl
+// rather than `stty -f`, because this is on the poll path and forking four
+// times a second to read one number is silly.
+func ttyCols(device string) int {
+	if device == "" {
+		return 0
+	}
+	file, err := os.OpenFile(device, os.O_RDONLY|syscall.O_NOCTTY, 0)
+	if err != nil {
+		return 0
+	}
+	defer file.Close()
+	var size struct{ rows, cols, xpixel, ypixel uint16 }
+	if _, _, errno := syscall.Syscall(
+		syscall.SYS_IOCTL,
+		file.Fd(),
+		syscall.TIOCGWINSZ,
+		uintptr(unsafe.Pointer(&size)),
+	); errno != 0 {
+		return 0
+	}
+	return int(size.cols)
 }
 
 // ghosttyPIDs returns Ghostty PIDs. The original script used `pgrep -x
@@ -287,9 +368,20 @@ func selfcheck() {
 		"p6": {"agent": "codex", "agent_status": "working"},
 	}
 	var layout map[string]any
+	// Measured on herdr 0.9.0: a 185-column window with the sidebar expanded to
+	// ui.sidebar_min_width = 32 reports a 153-column pane area, and collapsing
+	// it to the compact rail reports 181.
+	const window = 185
+	sidebar := 32
 
-	real := request
-	defer func() { request = real }()
+	realRequest, realSidebar := request, sidebarCols
+	defer func() { request, sidebarCols = realRequest, realSidebar }()
+	sidebarCols = func(cols int) int {
+		if cols != window-sidebar {
+			panic(fmt.Sprintf("pane area %d does not match a %d-column sidebar", cols, sidebar))
+		}
+		return sidebar
+	}
 	request = func(method string, params map[string]string) (json.RawMessage, error) {
 		var payload any
 		if method == "pane.layout" {
@@ -301,7 +393,10 @@ func selfcheck() {
 	}
 
 	focus := func(paneID string) {
-		layout = map[string]any{"focused_pane_id": paneID}
+		layout = map[string]any{
+			"focused_pane_id": paneID,
+			"area":            map[string]any{"x": 0, "y": 0, "width": window - sidebar, "height": 55},
+		}
 	}
 	want := func(expected string) {
 		got, err := currentState()
@@ -335,6 +430,16 @@ func selfcheck() {
 	// No focused pane at all.
 	focus("")
 	want(off)
+	// A collapsed sidebar is no face, whatever the agent is doing: the shader
+	// draws it over the leftmost columns, which are terminal text once the
+	// sidebar is gone.
+	panes["p1"]["agent_status"] = "working"
+	sidebar = 4
+	focus("p1")
+	want(off)
+	sidebar = 32
+	focus("p1")
+	want("working")
 
 	fmt.Println("selfcheck ok")
 }
