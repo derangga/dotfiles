@@ -15,6 +15,26 @@
   ];
 
   system.primaryUser = username;
+
+  # Installs vendor completions and keeps macOS path_helper from reordering
+  # nix paths behind /usr/bin. Registering fish as a permissible login shell
+  # is separate: environment.shells is what writes /etc/shells, and chsh
+  # rejects anything missing from it.
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
+
+  # Stands in for a manual chsh so a new machine needs no extra step. This runs
+  # before /run/current-system is relinked, so on a first activation that path
+  # still points at the previous generation; dscl stores the string without
+  # checking it, and the symlink is correct by the time a terminal opens.
+  system.activationScripts.postActivation.text = pkgs.lib.mkIf config.programs.fish.enable ''
+    loginShell=/run/current-system/sw/bin/fish
+    currentShell=$(dscl . -read /Users/${username} UserShell 2>/dev/null || true)
+    if [[ "''${currentShell#UserShell: }" != "$loginShell" ]]; then
+      echo "setting login shell for ${username} to fish..." >&2
+      dscl . -create /Users/${username} UserShell "$loginShell"
+    fi
+  '';
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [

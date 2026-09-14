@@ -7,7 +7,7 @@
 lib.mkIf (terminal == "ghostty") {
   programs.ghostty = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     package = null;
     settings = {
       background-opacity = 0.94;

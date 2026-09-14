@@ -48,7 +48,7 @@ All the following applications are managed via home-manager and will be configur
 ### Shell & Terminal
 | Application | Description |
 |---|---|
-| Zsh + Oh My Zsh | Shell with git plugin; Atuin powers history search (Ctrl-R) |
+| Fish | Shell with built-in completion, autosuggestion and syntax highlighting; Atuin powers history search (Ctrl-R) |
 | Starship | Cross-shell prompt |
 | Kitty | GPU-accelerated terminal |
 | Ghostty | Fast terminal emulator |
@@ -150,20 +150,16 @@ git clone https://github.com/derangga/dotfiles.git nix
 {
   home.packages = with pkgs; [ ];
 
-  programs.zsh = {
+  programs.fish = {
     enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
 
-    oh-my-zsh.enable = true;
-
-    shellAliases = {
+    shellAbbrs = {
       drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
       ngc = "nix-collect-garbage -d";
     };
 
-    initContent = ''
-      export EDITOR=nvim
+    interactiveShellInit = ''
+      set -gx EDITOR nvim
     '';
   };
 

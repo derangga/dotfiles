@@ -8,7 +8,7 @@
     yaak
   ];
 
-  # Second Claude account (work) in its own config dir; merges into the
-  # shared zsh aliases from ../default.nix.
-  programs.zsh.shellAliases.claude-work = "CLAUDE_CONFIG_DIR=~/.claude-work claude";
+  # Second Claude account (work) in its own config dir. A function, not an
+  # abbreviation: abbrs only expand while typing in an interactive shell.
+  programs.fish.functions.claude-work = "CLAUDE_CONFIG_DIR=$HOME/.claude-work claude $argv";
 }

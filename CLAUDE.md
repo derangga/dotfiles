@@ -131,7 +131,7 @@ programs.program-name = {
 ### Development Environment
 - **Editor**: Neovim configured via nixvim (declarative Nix; see `modules/nixvim/`)
 - **Git**: lazygit for interface
-- **Shell**: Zsh with Oh My Zsh
+- **Shell**: Fish
 - **File management**: yazi, eza, fzf
 
 ## Testing Strategy

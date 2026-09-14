@@ -41,7 +41,7 @@
   programs = {
     atuin = {
       enable = true;
-      enableZshIntegration = true;
+      enableFishIntegration = true;
       # keep Up as plain previous-command; atuin only owns Ctrl-R
       flags = [ "--disable-up-arrow" ];
       settings = {
@@ -66,8 +66,28 @@
     eza = {
       colors = "always";
       enable = true;
-      enableZshIntegration = true;
+      enableFishIntegration = true;
       icons = "always";
+    };
+
+    fish = {
+      enable = true;
+
+      shellAbbrs = {
+        drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
+        drl = "sudo darwin-rebuild --list-generations";
+        ngc = "nix-collect-garbage -d";
+        agstart = "brew services start aerogesture";
+        agstop = "brew services stop aerogesture";
+        agrestart = "brew services restart aerogesture";
+      };
+
+      # lg is deliberately absent: programs.lazygit's fish integration defines
+      # it as a function that cds to lazygit's exit directory.
+      interactiveShellInit = ''
+        set -g fish_greeting
+        fnm env --use-on-cd --shell fish | source
+      '';
     };
 
     gh = {
@@ -83,8 +103,13 @@
 
     lazygit = {
       enable = true;
-      enableZshIntegration = true;
+      enableFishIntegration = true;
     };
+
+    # fish turns this on to back `man` completions with apropos, but
+    # home.stateVersion 26.05 leaves programs.man.package null on darwin, so
+    # there is no mandb to build the cache and the option only warns.
+    man.generateCaches = false;
 
     tmux = {
       baseIndex = 1;
@@ -113,7 +138,7 @@
 
     yazi = {
       enable = true;
-      enableZshIntegration = true;
+      enableFishIntegration = true;
       shellWrapperName = "y";
     };
 
@@ -130,43 +155,10 @@
 
     zoxide = {
       enable = true;
-      enableZshIntegration = true;
+      enableFishIntegration = true;
       # replacing cd with zoxide
       options = [ "--cmd cd" ];
     };
-
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-
-      history = {
-        ignoreAllDups = true;
-        saveNoDups = true;
-      };
-
-      oh-my-zsh = {
-        enable = true;
-        plugins = [
-          "git"
-        ];
-      };
-
-      shellAliases = {
-        drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
-        drl = "sudo darwin-rebuild --list-generations";
-        ngc = "nix-collect-garbage -d";
-        lg = "lazygit";
-        agstart = "brew services start aerogesture";
-        agstop = "brew services stop aerogesture";
-        agrestart = "brew services restart aerogesture";
-      };
-
-      initContent = ''
-        eval "$(fnm env --use-on-cd --shell zsh)"
-      '';
-    };
-
   };
 
   services.jankyborders = {

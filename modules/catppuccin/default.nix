@@ -10,7 +10,7 @@
   };
   catppuccin.bat.enable = true;
   catppuccin.btop.enable = true;
-  catppuccin.fzf.enable = true;
+  catppuccin.fish.enable = true;
   catppuccin.gh-dash = {
     enable = true;
     accent = "blue";
