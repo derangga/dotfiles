@@ -49,7 +49,10 @@
         inner.vertical = 10;
         outer.left = 8;
         outer.bottom = 8;
-        outer.top = 12;
+        outer.top = [
+          { monitor."built-in" = 12; }
+          50
+        ];
         outer.right = 8;
       };
 
