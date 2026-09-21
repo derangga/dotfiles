@@ -68,7 +68,6 @@ in
                 llm-agents
                 ;
               hostname = host.name;
-              username = user.userName;
               inherit (host) terminal;
             };
           };
