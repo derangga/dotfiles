@@ -5,6 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
+    den.url = "github:denful/den/v0.18.0";
+
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -31,70 +33,15 @@
   };
 
   outputs =
-    inputs@{ self, ... }:
+    inputs:
     let
-      # Helper function to create configurations for different users
-      mkDarwinConfig =
-        {
-          hostname,
-          username,
-          terminal,
-        }:
-        inputs.nix-darwin.lib.darwinSystem {
-          specialArgs = {
-            inherit
-              self
-              hostname
-              username
-              terminal
-              ;
-          };
-
-          modules = [
-            ./darwin/configuration.nix
-
-            inputs.nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = username;
-                autoMigrate = true;
-              };
-            }
-
-            inputs.home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-
-              home-manager.extraSpecialArgs = {
-                inherit hostname username terminal;
-                inherit (inputs)
-                  catppuccin
-                  nixvim
-                  fff-nvim
-                  herdr-annotate
-                  llm-agents
-                  ;
-              };
-
-              home-manager.users.${username} = import ./modules;
-            }
-          ];
-        };
+      den =
+        (inputs.nixpkgs.lib.evalModules {
+          modules = [ ./den.nix ];
+          specialArgs.inputs = inputs;
+        }).config;
     in
     {
-      darwinConfigurations."maclop" = mkDarwinConfig {
-        hostname = "maclop";
-        username = "derangga";
-        terminal = "ghostty";
-      };
-
-      darwinConfigurations."worklop" = mkDarwinConfig {
-        hostname = "worklop";
-        username = "sociolla";
-        terminal = "ghostty";
-      };
+      inherit (den.flake) darwinConfigurations;
     };
 }

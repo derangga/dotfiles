@@ -28,17 +28,22 @@ By leveraging Nix Darwin for macOS, I get all these benefits while maintaining a
 
 ## Structure
 
-`flake.nix` builds one configuration per host. System level settings live under `darwin/`, and everything user level is home-manager config under `modules/`, with `modules/default.nix` as the entry point that the flake imports directly. Per host overrides live in `modules/hosts/{hostname}.nix`.
+`flake.nix` is thin: it evaluates `den.nix` and re-exports the `darwinConfigurations` that [den](https://github.com/denful/den) builds. `den.nix` declares each host and its user as entities, and holds the per user config.
+
+System level settings live under `darwin/`, and everything user level is home-manager config under `modules/`, with `modules/default.nix` as the entry point.
+
+Per user overrides live in a den aspect named after the user. An aspect can carry both halves of a feature at once, so a user's Homebrew casks and their home-manager config sit in the same block instead of in two separate trees.
 
 ```mermaid
 flowchart TD
-    flake["flake.nix<br/>mkDarwinConfig per host"]
-    flake --> darwin["darwin/configuration.nix<br/>system level"]
-    flake --> hm["home-manager"]
-    darwin --> brew["darwin/homebrew<br/>casks and brews per host"]
+    flake["flake.nix<br/>evalModules to den.flake"]
+    flake --> den["den.nix<br/>hosts, users, aspects"]
+    den --> darwin["darwin/configuration.nix<br/>system level"]
+    den --> hm["home-manager"]
+    den --> user["den.aspects.{username}<br/>per user, system and home together"]
+    darwin --> brew["darwin/homebrew<br/>shared casks and brews"]
     hm --> modules["modules/default.nix<br/>home-manager entry point"]
     modules --> apps["per app modules<br/>terminal, git, aerospace, catppuccin, starship, ..."]
-    modules --> host["modules/hosts/{hostname}.nix<br/>host specific overrides"]
 ```
 
 ## What's Inside (Home Manager)
@@ -53,12 +58,12 @@ All the following applications are managed via home-manager and will be configur
 | Kitty | GPU-accelerated terminal |
 | Ghostty | Fast terminal emulator |
 
-Kitty and Ghostty are both configured, but only one is active per host. The choice is a single `terminal` field in `flake.nix` (see the Configuration section) that drives both the Homebrew cask and the program config, so the two never drift apart.
+Kitty and Ghostty are both configured, but only one is active per host. The choice is a single `terminal` field on the host in `den.nix` (see the Configuration section) that drives both the Homebrew cask and the program config, so the two never drift apart.
 
 ### Development Tools
 | Application | Description |
 |---|---|
-| Neovim (LazyVim) | Text editor with LazyVim config |
+| Neovim (nixvim) | Text editor, configured declaratively in `modules/nixvim/` |
 | Git | Version control |
 | Lazygit | Terminal UI for Git |
 | tmux | Terminal multiplexer |
@@ -71,9 +76,16 @@ Sourced from the [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.
 |---|---|
 | Claude Code | Agentic coding tool from Anthropic |
 | OpenCode | AI coding assistant |
+| pi | Agent CLI, with its plugin set declared alongside it |
+| herdr | Terminal UI for running and watching coding agents |
+| herdr-annotate | Plannotator plugin for herdr, linked on activation |
+| hunk | Diff review tool, also set as git's pager |
 | Beads | Issue/task tracker for AI coding agents |
+| beads-viewer | Web viewer for a beads database |
+| agent-browser | Browser automation for agents |
 | RTK | Rust Token Killer, a token-optimizing CLI proxy |
 | codebase-memory-mcp | MCP server indexing a repo into a code knowledge graph |
+| fff-mcp | MCP server exposing the fff frecency-ranked file finder |
 
 ### CLI Utilities
 | Application | Description |
@@ -85,7 +97,6 @@ Sourced from the [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.
 | yazi | Terminal file manager |
 | zoxide | Smarter `cd` with frecency-based navigation |
 | gh | GitHub CLI |
-| gh-dash | GitHub dashboard in terminal |
 | presenterm | Terminal slideshow presentation tool |
 
 ### Desktop & UI
@@ -122,49 +133,47 @@ git clone https://github.com/derangga/dotfiles.git nix
 
 ### Configuration
 
-1. Add your username, hostname, and terminal inside `flake.nix`. The `terminal` field accepts `"ghostty"` or `"kitty"` and drives both the Homebrew cask and the program config.
-```
-{
-  darwinConfigurations."maclop" = mkDarwinConfig {
-        hostname = "maclop";
-        username = "derangga";
-        terminal = "ghostty";
-      };
+1. Add your host inside `den.hosts.aarch64-darwin` in `den.nix`. The `terminal` field accepts `"ghostty"` or `"kitty"` and drives both the Homebrew cask and the program config. The `instantiate` override is what hands `hostname`, `username` and `terminal` to the modules that read them.
+```nix
+den.hosts.aarch64-darwin = {
+  # existing hosts ...
 
-  # Add your hostname here, you can check by run whoami
-  darwinConfigurations."foo" = mkDarwinConfig {
-        hostname = "foo";
-        username = "foobar";
-        terminal = "ghostty";
-      };
-}
-```
-
-2. Add a new file inside `./modules/hosts/{hostname}.nix` (host files are keyed by hostname, not username)
-```
-{
-  pkgs,
-  hostname,
-  ...
-}:
-{
-  home.packages = with pkgs; [ ];
-
-  programs.fish = {
-    enable = true;
-
-    shellAbbrs = {
-      drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
-      ngc = "nix-collect-garbage -d";
+  # Add your hostname here, you can check by running hostname
+  foo = {
+    terminal = "ghostty";
+    users.foobar = { };
+    instantiate = mkDarwin {
+      hostname = "foo";
+      username = "foobar";
+      terminal = "ghostty";
     };
-
-    interactiveShellInit = ''
-      set -gx EDITOR nvim
-    '';
   };
-
-}
+};
 ```
+
+2. Add an aspect named after the user. den resolves `den.aspects.{username}` for that user on its own, so nothing wires the two together. One aspect holds both the system half and the home-manager half.
+```nix
+den.aspects.foobar = {
+  includes = [
+    den.batteries.define-user
+    den.batteries.primary-user
+  ];
+
+  # system half: casks only this user wants
+  darwin.homebrew.casks = [ "obs" ];
+
+  # home-manager half
+  homeManager =
+    { pkgs, ... }:
+    {
+      home.packages = with pkgs; [ ];
+    };
+};
+```
+
+The `define-user` battery creates the account and sets `home.username` and `home.homeDirectory`. The `primary-user` battery sets `system.primaryUser`. Neither needs to be written by hand.
+
+Shared home-manager config, including the `drb` and `ngc` abbreviations, lives in `modules/default.nix` and applies to every user.
 
 3. Now you can build it. Since this is a first time you can't use the alias yet
 ```
@@ -173,9 +182,11 @@ sudo darwin-rebuild switch --flake ~/nix#foo
 
 ## Agentic Tools
 
-Agentic tooling (Claude Code, OpenCode, Beads, RTK, codebase-memory-mcp) is declared in `modules/llm-agents/default.nix` and installed automatically on rebuild.
+Everything in the table above is declared in `modules/llm-agents/default.nix` and installed automatically on rebuild.
 
-`codebase-memory-mcp` is wired per-project rather than globally — see `modules/llm-agents/docs/mcp-integration.md` for the `.mcp.json` / `opencode.json` blocks, and `docs/quick-start.md` for manual CLI use.
+`codebase-memory-mcp` is wired per-project rather than globally — see `modules/llm-agents/docs/codebase-memory/mcp-integration.md` for the `.mcp.json` / `opencode.json` blocks, and `modules/llm-agents/docs/codebase-memory/quick-start.md` for manual CLI use.
+
+`herdr` gets its config and keybindings from the same module, and `herdr-annotate` is linked into it by a home-manager activation hook — see `modules/llm-agents/docs/herdr-plannotator-quickstart.md`.
 
 ## Resources
 - [Nix store](https://search.nixos.org/packages?channel=25.11&)

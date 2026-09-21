@@ -11,10 +11,6 @@
   catppuccin.bat.enable = true;
   catppuccin.btop.enable = true;
   catppuccin.fish.enable = true;
-  catppuccin.gh-dash = {
-    enable = true;
-    accent = "blue";
-  };
   catppuccin.ghostty.enable = lib.mkIf (terminal == "ghostty") true;
   catppuccin.kitty.enable = lib.mkIf (terminal == "kitty") true;
   catppuccin.lazygit = {

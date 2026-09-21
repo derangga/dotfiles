@@ -86,6 +86,22 @@
         "type": "github"
       }
     },
+    "den": {
+      "locked": {
+        "lastModified": 1781621963,
+        "narHash": "sha256-8Mntz200pNVIF2l8twpdc4wvEFqzrlkICz2tvkfwz0s=",
+        "owner": "denful",
+        "repo": "den",
+        "rev": "5df0987658d6e44268abba953406480e9f066928",
+        "type": "github"
+      },
+      "original": {
+        "owner": "denful",
+        "ref": "v0.18.0",
+        "repo": "den",
+        "type": "github"
+      }
+    },
     "fff-nvim": {
       "inputs": {
         "crane": "crane",
@@ -97,11 +113,11 @@
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1789359957,
-        "narHash": "sha256-CiN5TTa6KYtEOwsJaV+aMxh7QDdcnoooYT/rOVBHb2w=",
+        "lastModified": 1789948227,
+        "narHash": "sha256-IQz0YsgNAJOKAx9/m9lA8I/zZkHU8s9erRqjgrC9IC0=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "4083ea04d30537aaa653a2189616ab6b4ff19810",
+        "rev": "c1ec5f3ceb20471f09cb3c5fbdd8bf1775cfb1b1",
         "type": "github"
       },
       "original": {
@@ -233,11 +249,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1789535734,
-        "narHash": "sha256-56CO4AuizC/1s7w0U+FSAGo8rXBYs+8YXKEz9mcca/0=",
+        "lastModified": 1789946673,
+        "narHash": "sha256-9BpnOfkILzC9iY5CyMQrcLDwErvoUcOwjQifBeNdHtk=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "bf74a12e8ec079637913289e245d9055d5cfc95b",
+        "rev": "9606bbb1ecdbac10f1b92dacbf2694b58ff8c997",
         "type": "github"
       },
       "original": {
@@ -326,6 +342,7 @@
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
+        "den": "den",
         "fff-nvim": "fff-nvim",
         "herdr-annotate": "herdr-annotate",
         "home-manager": "home-manager",

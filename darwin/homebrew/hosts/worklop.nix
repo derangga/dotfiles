@@ -1,8 +1,0 @@
-{ ... }:
-{
-  homebrew = {
-    # taps = [ ];
-    # brews = [ ];
-    # casks = [ ];
-  };
-}
