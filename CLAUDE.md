@@ -24,11 +24,11 @@ This file provides essential information for agentic coding agents working in th
 
 ```
 nix/
-├── flake.nix              # Main system entry point (imports ./modules for home-manager)
+├── flake.nix              # Thin: evaluates den.nix, re-exports den.flake.darwinConfigurations
+├── den.nix                # den entities and aspects: hosts, users, per-user config
 ├── darwin/                # System-level configuration
-│   └── homebrew/          # Homebrew integration (per-host)
-└── modules/               # Home-manager configuration (imported directly by the flake)
-    ├── hosts/             # Host-specific configurations ({hostname}.nix)
+│   └── homebrew/          # Homebrew integration (shared taps, brews, casks)
+└── modules/               # Home-manager configuration (imported by den.schema.user.includes)
     ├── aerospace/         # Window manager configuration
     ├── catppuccin/        # Theme configuration
     ├── git/               # Git configuration
@@ -53,9 +53,15 @@ nix/
 
 ### Module Organization
 - Each major tool/program has its own directory under `modules/`
-- Host-specific configurations go in `modules/hosts/{hostname}.nix`
+- Host and user specific configuration goes in `den.nix` as a den aspect named after the host or user
 - Shared configurations use the `modules/default.nix` pattern (the home-manager entry point)
 - Use relative imports with `./` syntax for local modules
+
+### den
+The flake builds through [den](https://github.com/denful/den), pinned to `v0.18.0`. Three things to know before editing `den.nix`:
+- den calls `instantiate` with `{ modules = [ ... ]; }` and no `specialArgs`. The `mkDarwin` override in `den.nix` re-adds `self`, `hostname`, `username` and `terminal`, and points at the `nix-darwin` input rather than the `darwin` name den defaults to
+- `useGlobalPkgs` and `useUserPackages` default to `false` in den and are set explicitly in `den.schema.host.includes`. Removing them makes home-manager build its own nixpkgs, silently
+- The `user-shell` and `hostname` batteries are deliberately unused. At v0.18.0 `user-shell` omits `environment.shells` on darwin, and `hostname` would start managing a machine name nothing managed before
 
 ### Configuration Patterns
 
@@ -146,5 +152,7 @@ programs.program-name = {
 - This is a declarative Nix Darwin system - all changes must be made through Nix
 - Manual edits to system files will be overwritten on next rebuild
 - Always backup before major changes
-- User configurations are in `modules/hosts/{hostname}.nix`
+- Per-user configuration is in `den.nix` under `den.aspects.{username}`, covering both the system and home-manager halves
+- Shared home-manager configuration is in `modules/`
 - System-wide configurations are in `darwin/configuration.nix`
+- A new directory under `modules/` must be added to the `imports` list in `modules/default.nix`; a new host or user is added in `den.nix`

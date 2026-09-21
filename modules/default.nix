@@ -93,10 +93,6 @@
       };
     };
 
-    gh-dash = {
-      enable = true;
-    };
-
     lazygit = {
       enable = true;
       enableFishIntegration = true;
