@@ -2,7 +2,6 @@
   pkgs,
   config,
   username,
-  hostname,
   self,
   ...
 }:
@@ -10,11 +9,8 @@
 {
   imports = [
     ./homebrew/default.nix
-    ./homebrew/hosts/${hostname}.nix
     ./terminal.nix
   ];
-
-  system.primaryUser = username;
 
   # Installs vendor completions and keeps macOS path_helper from reordering
   # nix paths behind /usr/bin. Registering fish as a permissible login shell
@@ -49,11 +45,6 @@
     nerd-fonts.jetbrains-mono
     sketchybar-app-font
   ];
-
-  users.users.${username} = {
-    name = username;
-    home = "/Users/${username}";
-  };
 
   nix.settings.experimental-features = "nix-command flakes";
   nix.optimise.automatic = true;

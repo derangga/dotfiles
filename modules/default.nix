@@ -1,7 +1,6 @@
 {
   pkgs,
   hostname,
-  username,
   catppuccin,
   nixvim,
   ...
@@ -21,11 +20,8 @@
     ./presenterm
     ./starship/no-version.nix
     ./sketchybar/config.nix
-    ./hosts/${hostname}.nix
   ];
 
-  home.username = username;
-  home.homeDirectory = "/Users/${username}";
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
