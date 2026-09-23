@@ -9,24 +9,24 @@ let
     {
       aarch64-darwin = {
         name = "aarch64-apple-darwin";
-        hash = "sha256-CW0MWr2oYsFzrHN5xgb4kJdo9DRYMzrHBr1u3gQkyLc=";
+        hash = "sha256-eciAG6usXNJXA0A2U2u89Rp7TNjQa0N/HoVxNxRSHrA=";
       };
       x86_64-darwin = {
         name = "x86_64-apple-darwin";
-        hash = "sha256-ysoUurI13uJkF7+mtJ/nC3v2uYWvnqStTNa6JPVs7DE=";
+        hash = "sha256-Nu8FZmwGbbfDJ1nI1u6+YiNxF7iHSIGEY/oqz5TvWDQ=";
       };
     }
     .${stdenvNoCC.hostPlatform.system}
       or (throw "herdr-annotate: unsupported system ${stdenvNoCC.hostPlatform.system}");
 
   plannotatorTui = fetchurl {
-    url = "https://github.com/plannotator/plannotator-tui/releases/download/v0.6.0/plannotator-tui-${target.name}";
+    url = "https://github.com/plannotator/plannotator-tui/releases/download/v0.9.2/plannotator-tui-${target.name}";
     inherit (target) hash;
   };
 in
 stdenvNoCC.mkDerivation {
   pname = "herdr-annotate";
-  version = "0.3.0";
+  version = "0.5.0";
   inherit src;
 
   dontBuild = true;
