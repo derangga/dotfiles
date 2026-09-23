@@ -98,6 +98,8 @@ in
         ];
       };
       sidebar_min_width = 32;
+      sidebar_start_collapsed = true;
+      sidebar_collapsed_mode = "hidden";
     };
     keys = {
       rename_tab = "prefix+,";
