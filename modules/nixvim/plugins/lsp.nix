@@ -173,7 +173,7 @@ in
       map("n", "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, "LSP Workspace Symbols")
 
       -- Enable inlay hints (exclude vue and non-file buffers like diffview://)
-      if client:supports_method("textDocument/inlayHint") then
+      if client:supports_method("textDocument/inlayHint") and vim.g.inlay_hints ~= false then
         local filetype = vim.bo[bufnr].filetype
         local bufname = vim.api.nvim_buf_get_name(bufnr)
         local is_file = bufname == "" or bufname:match("^/") or bufname:match("^file://")

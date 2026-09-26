@@ -523,7 +523,15 @@
       Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
       Snacks.toggle.zen():map("<leader>uz")
       if vim.lsp.inlay_hint then
-        Snacks.toggle.inlay_hints():map("<leader>uh")
+        -- Snacks' own toggle is buffer-local, so the next file re-enables hints.
+        Snacks.toggle({
+          name = "Inlay Hints",
+          get = function() return vim.g.inlay_hints ~= false end,
+          set = function(state)
+            vim.g.inlay_hints = state
+            vim.lsp.inlay_hint.enable(state)
+          end,
+        }):map("<leader>uh")
       end
 
       -- notifications
