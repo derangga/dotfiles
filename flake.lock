@@ -113,11 +113,11 @@
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1789967898,
-        "narHash": "sha256-BfpmEfW9bX19CRxWDm3ikPiIGSL06yfV2WlRnc0dZCU=",
+        "lastModified": 1790552599,
+        "narHash": "sha256-dR/sAV/ELTdkn2li4TE5w81jKe+Sj/lk4D4URVbsy5Y=",
         "owner": "dmtrKovalenko",
         "repo": "fff.nvim",
-        "rev": "e3f694a2e4f82bb755418e8d305dcff779c59c27",
+        "rev": "89c19270ea2dfc20829a7429f72022571558093e",
         "type": "github"
       },
       "original": {
@@ -249,11 +249,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1790395844,
-        "narHash": "sha256-7KXa84sgRvaVHY38UseR0cPkADX2CXZWgB1r+fyd5+Y=",
+        "lastModified": 1790742402,
+        "narHash": "sha256-BH2MPF9aV+8oe7CDBd7ArMvh9aloGqwClLQmKOx+f5w=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "3748ed1ee9d82204931bbab66acf19830e71315f",
+        "rev": "4c6c983a825c35b12375d88c59f2b4038dfccf21",
         "type": "github"
       },
       "original": {

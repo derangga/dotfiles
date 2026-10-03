@@ -17,11 +17,9 @@ let
   herdrAnnotate = pkgs.callPackage ./herdr-annotate.nix { src = herdr-annotate; };
 
   piPackages = [
-    "npm:@narumitw/pi-plan-mode"
-    "npm:pi-mcp-adapter"
     "npm:@ff-labs/pi-fff"
-    "npm:pi-lens"
     "npm:donsetch"
+    "npm:pi-lens"
     "npm:pi-ask-popup"
     "npm:pi-broodmother"
     "npm:pi-catppuccin-themes"
