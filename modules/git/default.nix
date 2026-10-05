@@ -1,15 +1,18 @@
 { hostname, ... }:
 let
-  gitUserName = {
-    maclop = "derangga";
-    worklop = "Dimas Rangga";
+  gitUser = {
+    maclop.name = "derangga";
+    worklop = {
+      name = "Dimas Rangga";
+      email = "dimas.armando@sociolla.com";
+    };
   };
 in
 {
   programs.git = {
     enable = true;
     settings = {
-      user.name = gitUserName.${hostname};
+      user = gitUser.${hostname};
       core = {
         pager = "hunk pager";
       };

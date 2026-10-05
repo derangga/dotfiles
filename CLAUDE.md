@@ -13,7 +13,7 @@ This file provides essential information for agentic coding agents working in th
 
 ### Common Aliases (defined in user configs)
 - `drb`: Shortcut for `sudo darwin-rebuild switch --flake ~/nix#{hostname}`
-- `ngc`: Shortcut for `nix-collect-garbage -d`
+- `ngc`: Shortcut for `sudo nix-collect-garbage -d`
 - `lg`: `lazygit`
 
 ### Nix Formatting

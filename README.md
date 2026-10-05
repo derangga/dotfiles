@@ -133,20 +133,15 @@ git clone https://github.com/derangga/dotfiles.git nix
 
 ### Configuration
 
-1. Add your host inside `den.hosts.aarch64-darwin` in `den.nix`. The `terminal` field accepts `"ghostty"` or `"kitty"` and drives both the Homebrew cask and the program config. The `instantiate` override is what hands `hostname`, `username` and `terminal` to the modules that read them.
+1. Add your host to the `den.hosts.aarch64-darwin` list in `den.nix`. `terminal` is optional (default `"ghostty"`, or `"kitty"`) and drives both the Homebrew cask and the program config. `mkHost` writes the host entity and the `instantiate` override from these values, which is how `hostname`, `username` and `terminal` reach the modules that read them.
 ```nix
-den.hosts.aarch64-darwin = {
+den.hosts.aarch64-darwin = lib.mapAttrs mkHost {
   # existing hosts ...
 
   # Add your hostname here, you can check by running hostname
   foo = {
-    terminal = "ghostty";
-    users.foobar = { };
-    instantiate = mkDarwin {
-      hostname = "foo";
-      username = "foobar";
-      terminal = "ghostty";
-    };
+    username = "foobar";
+    # terminal = "kitty";
   };
 };
 ```

@@ -43,5 +43,6 @@
     in
     {
       inherit (den.flake) darwinConfigurations;
+      formatter.aarch64-darwin = inputs.nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
     };
 }

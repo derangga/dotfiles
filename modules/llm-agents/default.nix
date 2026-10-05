@@ -10,8 +10,7 @@ let
   system = pkgs.stdenv.hostPlatform.system;
   fffMcp = fff-nvim.packages.${system}.fff-mcp;
   llmPkgs = llm-agents.packages.${system};
-  herdrToml = pkgs.formats.toml { };
-  hunkToml = pkgs.formats.toml { };
+  toml = pkgs.formats.toml { };
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
   codebaseMemoryMcp = pkgs.callPackage ./codebase-memory-mcp.nix { };
   herdrAnnotate = pkgs.callPackage ./herdr-annotate.nix { src = herdr-annotate; };
@@ -78,7 +77,7 @@ in
     $DRY_RUN_CMD ${llmPkgs.herdr}/bin/herdr plugin link ${herdrAnnotate}
   '';
 
-  xdg.configFile."herdr/config.toml".source = herdrToml.generate "herdr-config" {
+  xdg.configFile."herdr/config.toml".source = toml.generate "herdr-config" {
     onboarding = false;
     theme.name = "catppuccin";
     ui = {
@@ -120,7 +119,7 @@ in
     };
   };
 
-  xdg.configFile."hunk/config.toml".source = hunkToml.generate "hunk-config" {
+  xdg.configFile."hunk/config.toml".source = toml.generate "hunk-config" {
     agent_notes = true;
     theme = "catppuccin-macchiato";
     mode = "auto";
@@ -132,7 +131,7 @@ in
   home.activation.configureFffMcp = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     patch_fff() {
       claudeJson="$1"
-      [ -f "$claudeJson" ] || echo '{}' > "$claudeJson"
+      [ -f "$claudeJson" ] || [[ -v DRY_RUN ]] || echo '{}' > "$claudeJson"
       tmp=$(mktemp)
       ${pkgs.jq}/bin/jq \
         '.mcpServers.fff = {type: "stdio", command: "${fffMcpBin}", args: []}' \
@@ -150,7 +149,7 @@ in
   home.activation.ensurePiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     settings="$HOME/.pi/agent/settings.json"
     $DRY_RUN_CMD mkdir -p "$(dirname "$settings")"
-    if [ ! -f "$settings" ]; then
+    if [ ! -f "$settings" ] && [[ ! -v DRY_RUN ]]; then
       echo '{"packages": []}' > "$settings"
     fi
     ensurePiPackage() {
@@ -177,11 +176,15 @@ in
   # Append the fff usage instruction to the global CLAUDE.md if not already set,
   # preserving the existing content (e.g. the @RTK.md include).
   home.activation.configureFffClaudeMd = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    claudeMd="$HOME/.claude/CLAUDE.md"
     line="For any file search or grep in the current git-indexed directory, use fff mcp tools."
-    $DRY_RUN_CMD mkdir -p "$(dirname "$claudeMd")"
-    touch "$claudeMd"
-    ${pkgs.gnugrep}/bin/grep -qF "$line" "$claudeMd" || \
-      printf '\n%s\n' "$line" >> "$claudeMd"
+    patch_md() {
+      claudeMd="$1/CLAUDE.md"
+      $DRY_RUN_CMD mkdir -p "$1"
+      $DRY_RUN_CMD touch "$claudeMd"
+      ${pkgs.gnugrep}/bin/grep -qF "$line" "$claudeMd" 2>/dev/null || [[ -v DRY_RUN ]] || \
+        printf '\n%s\n' "$line" >> "$claudeMd"
+    }
+    patch_md "$HOME/.claude"
+    [ -d "$HOME/.claude-work" ] && patch_md "$HOME/.claude-work"
   '';
 }

@@ -20,8 +20,6 @@
 
     extraPackages = with pkgs; [
       fd
-      gcc
-      lua
       nixfmt
       nixd
       ripgrep
