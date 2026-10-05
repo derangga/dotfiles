@@ -2,10 +2,7 @@
 let
   gitUser = {
     maclop.name = "derangga";
-    worklop = {
-      name = "Dimas Rangga";
-      email = "dimas.armando@sociolla.com";
-    };
+    worklop.name = "Dimas Rangga";
   };
 in
 {
