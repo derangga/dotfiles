@@ -14,7 +14,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v16
 
       - name: Check formatting
-        run: git ls-files '*.nix' | xargs nix run nixpkgs#nixfmt -- --check
+        run: nix fmt -- --ci
 
       - name: Evaluate host configurations
         run: |

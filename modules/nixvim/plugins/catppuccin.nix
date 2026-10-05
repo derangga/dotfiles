@@ -15,7 +15,6 @@
           diffview = true;
           flash = true;
           gitsigns = true;
-          headlines = true;
           lsp_trouble = true;
           markdown = true;
           mini = {
@@ -38,7 +37,6 @@
           render_markdown = true;
           semantic_tokens = true;
           snacks = true;
-          telescope.enabled = true;
           treesitter = true;
           treesitter_context = true;
           ts_rainbow = false;

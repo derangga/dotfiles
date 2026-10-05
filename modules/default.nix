@@ -72,7 +72,7 @@
       shellAbbrs = {
         drb = "sudo darwin-rebuild switch --flake ~/nix#${hostname}";
         drl = "sudo darwin-rebuild --list-generations";
-        ngc = "nix-collect-garbage -d";
+        ngc = "sudo nix-collect-garbage -d";
         agstart = "brew services start aerogesture";
         agstop = "brew services stop aerogesture";
         agrestart = "brew services restart aerogesture";

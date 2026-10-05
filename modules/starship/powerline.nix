@@ -1,9 +1,9 @@
 { lib, ... }:
 {
-  # enable catppuccin powerline require add configuration at ../catppuccin/config.nix
+  # The palette colours (red, peach, ...) need catppuccin.starship.enable in ../catppuccin/default.nix
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       format = lib.concatStrings [
         "[░▒▓█](red)"

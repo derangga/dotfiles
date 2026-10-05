@@ -25,6 +25,20 @@ let
         };
       }
     );
+
+  # The host attrs and the instantiate call take their values from here, since
+  # instantiate cannot read the host entity it belongs to.
+  mkHost =
+    hostname:
+    {
+      username,
+      terminal ? "ghostty",
+    }:
+    {
+      inherit terminal;
+      users.${username} = { };
+      instantiate = mkDarwin { inherit hostname username terminal; };
+    };
 in
 {
   imports = [ inputs.den.flakeModule ];
@@ -80,26 +94,9 @@ in
     { homeManager.imports = [ ./modules ]; }
   ];
 
-  den.hosts.aarch64-darwin = {
-    maclop = {
-      terminal = "ghostty";
-      users.derangga = { };
-      instantiate = mkDarwin {
-        hostname = "maclop";
-        username = "derangga";
-        terminal = "ghostty";
-      };
-    };
-
-    worklop = {
-      terminal = "ghostty";
-      users.sociolla = { };
-      instantiate = mkDarwin {
-        hostname = "worklop";
-        username = "sociolla";
-        terminal = "ghostty";
-      };
-    };
+  den.hosts.aarch64-darwin = lib.mapAttrs mkHost {
+    maclop.username = "derangga";
+    worklop.username = "sociolla";
   };
 
   den.aspects.derangga = {
