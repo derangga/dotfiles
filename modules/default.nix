@@ -32,6 +32,7 @@
     orbstack
     rust-analyzer
     rustc
+    rustfmt
   ];
 
   programs = {
