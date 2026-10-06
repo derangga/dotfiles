@@ -78,7 +78,6 @@ in
                 catppuccin
                 nixvim
                 fff-nvim
-                herdr-annotate
                 llm-agents
                 ;
               hostname = host.name;

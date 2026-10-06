@@ -25,11 +25,6 @@
     # LLM Tools
     llm-agents.url = "github:numtide/llm-agents.nix";
     llm-agents.inputs.nixpkgs.follows = "nixpkgs";
-
-    herdr-annotate = {
-      url = "github:plannotator/herdr-annotate";
-      flake = false;
-    };
   };
 
   outputs =

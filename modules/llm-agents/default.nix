@@ -2,7 +2,6 @@
   pkgs,
   lib,
   fff-nvim,
-  herdr-annotate,
   llm-agents,
   ...
 }:
@@ -13,7 +12,12 @@ let
   toml = pkgs.formats.toml { };
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
   codebaseMemoryMcp = pkgs.callPackage ./codebase-memory-mcp.nix { };
-  herdrAnnotate = pkgs.callPackage ./herdr-annotate.nix { src = herdr-annotate; };
+  herdrReview = pkgs.callPackage ./herdr-review.nix { };
+  # Only the binary goes on PATH, not the plugin tree with its README.md and manifest.
+  herdrReviewBin = pkgs.runCommandLocal "herdr-review-bin" { } ''
+    mkdir -p $out/bin
+    ln -s ${herdrReview}/bin/herdr-review $out/bin/herdr-review
+  '';
 
   piPackages = [
     "npm:@ff-labs/pi-fff"
@@ -48,10 +52,10 @@ let
     description = "navigate ${dir} (vim/herdr)";
   };
 
-  pluginKey = key: command: description: {
+  pluginKey = plugin: key: command: description: {
     inherit key description;
     type = "plugin_action";
-    command = "annotate.${command}";
+    command = "${plugin}.${command}";
   };
 in
 {
@@ -63,18 +67,17 @@ in
     llmPkgs.beads-viewer
     llmPkgs.claude-code
     llmPkgs.herdr
-    llmPkgs.hunk
     llmPkgs.opencode
     llmPkgs.pi
     llmPkgs.rtk
-    herdrAnnotate
+    herdrReviewBin
   ];
 
-  home.file.".agents/skills/plannotator-tui/SKILL.md".source =
-    "${herdrAnnotate}/skills/plannotator-tui/SKILL.md";
+  home.file.".agents/skills/herdr-review/SKILL.md".source =
+    "${herdrReview}/skills/herdr-review/SKILL.md";
 
-  home.activation.linkHerdrAnnotate = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    $DRY_RUN_CMD ${llmPkgs.herdr}/bin/herdr plugin link ${herdrAnnotate}
+  home.activation.linkHerdrReview = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD ${llmPkgs.herdr}/bin/herdr plugin link ${herdrReview}
   '';
 
   xdg.configFile."herdr/config.toml".source = toml.generate "herdr-config" {
@@ -110,20 +113,11 @@ in
         (navKey "down" "ctrl+j")
         (navKey "up" "ctrl+k")
         (navKey "right" "ctrl+l")
-        (pluginKey "prefix+a" "capture" "annotate text")
-        (pluginKey "prefix+shift+a" "copy-context" "copy annotations as context")
-        (pluginKey "prefix+m" "manage" "manage annotations")
-        (pluginKey "prefix+o" "open" "review documents in this folder")
-        (pluginKey "prefix+shift+o" "last" "review the agent's last reply")
+        (pluginKey "review" "prefix+i" "open" "review the diff")
+        (pluginKey "review" "prefix+shift+i" "send" "send review comments to the agent")
+        (pluginKey "review" "prefix+o" "message" "review the agent's last message")
       ];
     };
-  };
-
-  xdg.configFile."hunk/config.toml".source = toml.generate "hunk-config" {
-    agent_notes = true;
-    theme = "catppuccin-macchiato";
-    mode = "auto";
-    vcs = "git";
   };
 
   # Claude Code mutates ~/.claude.json at runtime, so it can't be a managed

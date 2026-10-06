@@ -202,22 +202,6 @@
         "type": "github"
       }
     },
-    "herdr-annotate": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790025074,
-        "narHash": "sha256-ra+iX1QrsaPe0lmbJ+FOxMp2YWP1YsvPUHPoB3HgOqY=",
-        "owner": "plannotator",
-        "repo": "herdr-annotate",
-        "rev": "d02b0b42cf1955a3b206959659f1833622f213b8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "plannotator",
-        "repo": "herdr-annotate",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -344,7 +328,6 @@
         "catppuccin": "catppuccin",
         "den": "den",
         "fff-nvim": "fff-nvim",
-        "herdr-annotate": "herdr-annotate",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "nix-darwin": "nix-darwin",
