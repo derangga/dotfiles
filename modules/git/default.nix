@@ -10,9 +10,6 @@ in
     enable = true;
     settings = {
       user = gitUser.${hostname};
-      core = {
-        pager = "hunk pager";
-      };
     };
   };
 }
