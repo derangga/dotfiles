@@ -87,6 +87,14 @@
       '';
     };
 
+    fzf = {
+      enable = true;
+      enableFishIntegration = true;
+      # atuin owns Ctrl-R; fzf keeps Ctrl-T and Alt-C
+      historyWidget.command = "";
+      fileWidget.options = [ "--preview 'bat --color=always --style=numbers --line-range=:200 {}'" ];
+    };
+
     gh = {
       enable = true;
       settings = {
@@ -114,7 +122,6 @@
       extraConfig = ''
         # enable extended keys (CSI encoding) for proper modifier support
         # allows shift+enter, ctrl+shift+<key>, etc. to work correctly in apps
-        # also this config fix opencode behavior inside tmux
         set -s extended-keys on
         set -as terminal-features "xterm*:extkeys"
 

@@ -92,7 +92,7 @@ codebase-memory-mcp --ui=true --port=9749   # persists ui_enabled/ui_port, then 
 
 (Stored in `~/.cache/codebase-memory-mcp/config.json`. `--ui=false` turns it off.)
 
-Open <http://localhost:9749> while Claude Code or opencode has `codebase-memory`
+Open <http://localhost:9749> while Claude Code has `codebase-memory`
 connected. Close every such session and the daemon stops — the port goes away
 with it (`daemon.runtime_stopping reason=last_committed_client_disconnected`).
 

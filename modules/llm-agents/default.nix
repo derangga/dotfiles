@@ -19,26 +19,6 @@ let
     ln -s ${herdrReview}/bin/herdr-review $out/bin/herdr-review
   '';
 
-  piPackages = [
-    "npm:@ff-labs/pi-fff"
-    "npm:donsetch"
-    "npm:pi-lens"
-    "npm:pi-ask-popup"
-    "npm:pi-broodmother"
-    "npm:pi-catppuccin-themes"
-    "npm:pi-status-widget"
-    "npm:pi-todo-agent"
-    "npm:pi-unslop-rules"
-  ];
-
-  # Map an `npm:` pi package spec to its install dir under ~/.pi/agent/npm.
-  piPackageName =
-    spec:
-    let
-      m = builtins.match "((@[^/]+/)?[^@/]+)(@.+)?" spec;
-    in
-    if m == null then spec else builtins.head m;
-
   herdrNav = pkgs.writeShellApplication {
     name = "herdr-nav";
     runtimeInputs = [ pkgs.jq ];
@@ -67,8 +47,6 @@ in
     llmPkgs.beads-viewer
     llmPkgs.claude-code
     llmPkgs.herdr
-    llmPkgs.opencode
-    llmPkgs.pi
     llmPkgs.rtk
     herdrReviewBin
   ];
@@ -134,37 +112,6 @@ in
     patch_fff "$HOME/.claude.json"
     # Second account (work) lives in its own config dir; patch it only if set up.
     [ -d "$HOME/.claude-work" ] && patch_fff "$HOME/.claude-work/.claude.json"
-  '';
-
-  # Pi manages ~/.pi/agent/settings.json at runtime (pi install/config mutates
-  # it), so it can't be a managed symlink; ensure the desired packages are
-  # present and installed on each activation instead. Entries already in
-  # settings.json (e.g. added manually via `pi install`) are preserved.
-  home.activation.ensurePiPackages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    settings="$HOME/.pi/agent/settings.json"
-    $DRY_RUN_CMD mkdir -p "$(dirname "$settings")"
-    if [ ! -f "$settings" ] && [[ ! -v DRY_RUN ]]; then
-      echo '{"packages": []}' > "$settings"
-    fi
-    ensurePiPackage() {
-      pkg="$1"
-      dir="$2"
-      if ! ${pkgs.jq}/bin/jq -e --arg pkg "$pkg" '.packages // [] | index($pkg) != null' "$settings" > /dev/null 2>&1; then
-        tmp=$(mktemp)
-        ${pkgs.jq}/bin/jq --arg pkg "$pkg" '.packages = ((.packages // []) + [$pkg] | unique)' "$settings" > "$tmp" \
-          && $DRY_RUN_CMD mv "$tmp" "$settings"
-      fi
-      # Only hit the network when the package dir is missing; this also heals
-      # a fresh machine where settings.json exists but ~/.pi/agent/npm/ is empty.
-      if [ ! -d "$dir" ]; then
-        $DRY_RUN_CMD ${llmPkgs.pi}/bin/pi install "$pkg" > /dev/null || \
-          echo "warning: pi install $pkg failed (offline?); pi will retry on next launch" >&2
-      fi
-    }
-    ${lib.concatMapStringsSep "\n    " (
-      pkg:
-      "ensurePiPackage ${lib.escapeShellArg pkg} \"$HOME/.pi/agent/npm/node_modules/${piPackageName (lib.removePrefix "npm:" pkg)}\""
-    ) piPackages}
   '';
 
   # Append the fff usage instruction to the global CLAUDE.md if not already set,

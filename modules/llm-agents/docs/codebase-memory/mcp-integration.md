@@ -43,27 +43,6 @@ Create `.mcp.json` in the project root:
 If a repo should not share the config, put the same block in
 `~/.claude.json` under `projects.<abs-path>.mcpServers` instead.
 
-## opencode
-
-Create `opencode.json` in the project root (same shape as the global
-`~/.config/opencode/opencode.jsonc`):
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "codebase-memory": {
-      "type": "local",
-      "command": ["codebase-memory-mcp"],
-      "enabled": true
-    }
-  }
-}
-```
-
-Project config is merged over the global one, so this adds the server for this
-repo only.
-
 ## Optional per-project files
 
 | File | Purpose |

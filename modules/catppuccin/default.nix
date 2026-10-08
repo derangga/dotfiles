@@ -1,81 +1,83 @@
 { terminal, lib, ... }:
 {
-  catppuccin.enable = true;
-  catppuccin.autoEnable = false;
-  catppuccin.flavor = "macchiato"; # latte, frappe, macchiato, mocha
-
-  catppuccin.atuin = {
+  catppuccin = {
     enable = true;
-    accent = "blue";
-  };
-  catppuccin.bat.enable = true;
-  catppuccin.btop.enable = true;
-  catppuccin.fish.enable = true;
-  catppuccin.ghostty.enable = lib.mkIf (terminal == "ghostty") true;
-  catppuccin.kitty.enable = lib.mkIf (terminal == "kitty") true;
-  catppuccin.lazygit = {
-    enable = true;
-    accent = "blue";
-  };
-  catppuccin.opencode.enable = true;
-  catppuccin.tmux = {
-    enable = true;
-    extraConfig = ''
-      # Configure Catppuccin
-      set -g @catppuccin_status_background "none"
-      set -g @catppuccin_window_status_style "none"
-      set -g @catppuccin_pane_status_enabled "off"
-      set -g @catppuccin_pane_border_status "off"
+    autoEnable = false;
+    flavor = "macchiato"; # latte, frappe, macchiato, mocha
 
-      # status left look and feel
-      set -g status-left-length 100
-      set -g status-left ""
+    atuin = {
+      enable = true;
+      accent = "blue";
+    };
+    bat.enable = true;
+    btop.enable = true;
+    fish.enable = true;
+    fzf.enable = true;
+    ghostty.enable = lib.mkIf (terminal == "ghostty") true;
+    kitty.enable = lib.mkIf (terminal == "kitty") true;
+    lazygit = {
+      enable = true;
+      accent = "blue";
+    };
+    tmux = {
+      enable = true;
+      extraConfig = ''
+        # Configure Catppuccin
+        set -g @catppuccin_status_background "none"
+        set -g @catppuccin_window_status_style "none"
+        set -g @catppuccin_pane_status_enabled "off"
+        set -g @catppuccin_pane_border_status "off"
 
-      # status right look and feel
-      set -g status-right-length 100
-      set -g status-right ""
-      set -ga status-right "#[fg=#{@thm_yellow}]#{?window_zoomed_flag,  zoom ,}"
-      set -ga status-right "#[fg=#{@thm_overlay_0},none]#{?window_zoomed_flag,│,}"
-      set -ga status-right "#[fg=#{@thm_maroon}]  #{pane_current_command} "
-      set -ga status-right "#[fg=#{@thm_overlay_0},none]│"
-      set -ga status-right "#[fg=#{@thm_blue}]  #{=/-32/...:#{s|$USER|~|:#{b:pane_current_path}}} "
-      set -ga status-right "#[fg=#{@thm_overlay_0},none]│"
-      set -ga status-right "#{?client_prefix,#{#[bg=#{@thm_blue},fg=#{@thm_bg},bold]  #[none,bg=#{@thm_bg},fg=#{@thm_bg}]#S },#{#[fg=#{@thm_green}]  #S }}"
+        # status left look and feel
+        set -g status-left-length 100
+        set -g status-left ""
 
-      # Configure Tmux tab
-      set -g status-position top
-      set -g status-style "bg=#{@thm_bg}"
-      set -g status-justify "left"
+        # status right look and feel
+        set -g status-right-length 100
+        set -g status-right ""
+        set -ga status-right "#[fg=#{@thm_yellow}]#{?window_zoomed_flag,  zoom ,}"
+        set -ga status-right "#[fg=#{@thm_overlay_0},none]#{?window_zoomed_flag,│,}"
+        set -ga status-right "#[fg=#{@thm_maroon}]  #{pane_current_command} "
+        set -ga status-right "#[fg=#{@thm_overlay_0},none]│"
+        set -ga status-right "#[fg=#{@thm_blue}]  #{=/-32/...:#{s|$USER|~|:#{b:pane_current_path}}} "
+        set -ga status-right "#[fg=#{@thm_overlay_0},none]│"
+        set -ga status-right "#{?client_prefix,#{#[bg=#{@thm_blue},fg=#{@thm_bg},bold]  #[none,bg=#{@thm_bg},fg=#{@thm_bg}]#S },#{#[fg=#{@thm_green}]  #S }}"
 
-      # pane border look and feel
-      setw -g pane-border-status top
-      setw -g pane-border-format ""
-      setw -g pane-active-border-style "bg=#{@thm_bg},fg=#{@thm_overlay_0}"
-      setw -g pane-border-style "bg=#{@thm_bg},fg=#{@thm_surface_0}"
-      setw -g pane-border-lines single
+        # Configure Tmux tab
+        set -g status-position top
+        set -g status-style "bg=#{@thm_bg}"
+        set -g status-justify "left"
 
-      # window look and feel
-      set -wg automatic-rename on
-      set -g automatic-rename-format "Window"
+        # pane border look and feel
+        setw -g pane-border-status top
+        setw -g pane-border-format ""
+        setw -g pane-active-border-style "bg=#{@thm_bg},fg=#{@thm_overlay_0}"
+        setw -g pane-border-style "bg=#{@thm_bg},fg=#{@thm_surface_0}"
+        setw -g pane-border-lines single
 
-      set -g window-status-format " #I#{?#{!=:#{window_name},Window},: #W,} "
-      set -g window-status-style "fg=#{@thm_rosewater}"
-      set -g window-status-last-style "fg=#{@thm_peach}"
-      set -g window-status-activity-style "bg=#{@thm_red},fg=#{@thm_bg}"
-      set -g window-status-bell-style "bg=#{@thm_red},fg=#{@thm_bg},bold"
-      set -gF window-status-separator "#[bg=#{@thm_bg},fg=#{@thm_overlay_0}]│"
+        # window look and feel
+        set -wg automatic-rename on
+        set -g automatic-rename-format "Window"
 
-      set -g window-status-current-format " #I#{?#{!=:#{window_name},Window},: #W,} "
-      set -g window-status-current-style "bg=#{@thm_peach},fg=#{@thm_bg},bold"
-    '';
-  };
-  catppuccin.yazi = {
-    enable = true;
-    accent = "blue";
-  };
-  catppuccin.zed = {
-    enable = true;
-    accent = "blue";
-    icons.enable = true;
+        set -g window-status-format " #I#{?#{!=:#{window_name},Window},: #W,} "
+        set -g window-status-style "fg=#{@thm_rosewater}"
+        set -g window-status-last-style "fg=#{@thm_peach}"
+        set -g window-status-activity-style "bg=#{@thm_red},fg=#{@thm_bg}"
+        set -g window-status-bell-style "bg=#{@thm_red},fg=#{@thm_bg},bold"
+        set -gF window-status-separator "#[bg=#{@thm_bg},fg=#{@thm_overlay_0}]│"
+
+        set -g window-status-current-format " #I#{?#{!=:#{window_name},Window},: #W,} "
+        set -g window-status-current-style "bg=#{@thm_peach},fg=#{@thm_bg},bold"
+      '';
+    };
+    yazi = {
+      enable = true;
+      accent = "blue";
+    };
+    zed = {
+      enable = true;
+      accent = "blue";
+      icons.enable = true;
+    };
   };
 }
