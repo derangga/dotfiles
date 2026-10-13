@@ -10,7 +10,6 @@
     catppuccin.homeModules.catppuccin
     nixvim.homeModules.nixvim
 
-    ./aerospace
     ./catppuccin
     ./ghost
     ./git
@@ -19,7 +18,6 @@
     ./nixvim
     ./presenterm
     ./starship/no-version.nix
-    ./sketchybar/config.nix
   ];
 
   home.stateVersion = "26.05";
@@ -158,16 +156,6 @@
       enableFishIntegration = true;
       # replacing cd with zoxide
       options = [ "--cmd cd" ];
-    };
-  };
-
-  services.jankyborders = {
-    enable = true;
-    settings = {
-      style = "round";
-      width = 4.0;
-      active_color = "0xff7dc4e4";
-      inactive_color = "0xffcad3f5";
     };
   };
 }

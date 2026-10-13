@@ -155,4 +155,5 @@ programs.program-name = {
 - Per-user configuration is in `den.nix` under `den.aspects.{username}`, covering both the system and home-manager halves
 - Shared home-manager configuration is in `modules/`
 - System-wide configurations are in `darwin/configuration.nix`
+- `modules/aerospace`, `modules/sketchybar`, `services.jankyborders`, the `sketchybar-app-font` font and `_HIHideMenuBar = true` are maclop-only (`den.aspects.derangga`). worklop sets `_HIHideMenuBar = false` explicitly
 - A new directory under `modules/` must be added to the `imports` list in `modules/default.nix`; a new host or user is added in `den.nix`
