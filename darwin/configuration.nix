@@ -42,7 +42,6 @@
   fonts.packages = with pkgs; [
     kode-mono
     nerd-fonts.jetbrains-mono
-    sketchybar-app-font
   ];
 
   nix.settings.experimental-features = "nix-command flakes";
@@ -66,7 +65,6 @@
   system.defaults = {
     dock.autohide = true;
     controlcenter.Bluetooth = false;
-    NSGlobalDomain._HIHideMenuBar = true;
   };
   system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;

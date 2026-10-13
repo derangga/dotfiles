@@ -43,7 +43,7 @@ flowchart TD
     den --> user["den.aspects.{username}<br/>per user, system and home together"]
     darwin --> brew["darwin/homebrew<br/>shared casks and brews"]
     hm --> modules["modules/default.nix<br/>home-manager entry point"]
-    modules --> apps["per app modules<br/>terminal, git, aerospace, catppuccin, starship, ..."]
+    modules --> apps["per app modules<br/>terminal, git, catppuccin, starship, ..."]
 ```
 
 ## What's Inside (Home Manager)
@@ -100,6 +100,8 @@ Sourced from the [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.
 | presenterm | Terminal slideshow presentation tool |
 
 ### Desktop & UI
+Aerospace, Sketchybar and JankyBorders are enabled on maclop only. worklop keeps the stock macOS menu bar.
+
 | Application | Description |
 |---|---|
 | Aerospace | Tiling window manager |

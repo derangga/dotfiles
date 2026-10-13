@@ -104,12 +104,33 @@ in
       den.batteries.primary-user
     ];
 
-    darwin.homebrew.casks = [ "obs" ];
+    darwin =
+      { pkgs, ... }:
+      {
+        homebrew.casks = [ "obs" ];
+        fonts.packages = [ pkgs.sketchybar-app-font ];
+        system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+      };
 
     homeManager =
       { pkgs, ... }:
       {
+        imports = [
+          ./modules/aerospace
+          ./modules/sketchybar/config.nix
+        ];
+
         catppuccin.obs.enable = true;
+
+        services.jankyborders = {
+          enable = true;
+          settings = {
+            style = "round";
+            width = 4.0;
+            active_color = "0xff7dc4e4";
+            inactive_color = "0xffcad3f5";
+          };
+        };
 
         programs.vscode = {
           enable = true;
@@ -126,6 +147,10 @@ in
       den.batteries.define-user
       den.batteries.primary-user
     ];
+
+    # No sketchybar here, so the menu bar stays visible. Explicit false because
+    # removing the key would leave the previously written `true` in place.
+    darwin.system.defaults.NSGlobalDomain._HIHideMenuBar = false;
 
     homeManager =
       { pkgs, ... }:
