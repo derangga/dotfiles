@@ -75,8 +75,6 @@ Sourced from the [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.
 | Application | Description |
 |---|---|
 | Claude Code | Agentic coding tool from Anthropic |
-| OpenCode | AI coding assistant |
-| pi | Agent CLI, with its plugin set declared alongside it |
 | herdr | Terminal UI for running and watching coding agents |
 | herdr-review | Diff review plugin for herdr, linked on activation (`prefix+i` opens, `prefix+shift+i` sends, `prefix+o` reviews the agent's last message) |
 | hunk | Diff review tool, also set as git's pager |
@@ -181,7 +179,7 @@ sudo darwin-rebuild switch --flake ~/nix#foo
 
 Everything in the table above is declared in `modules/llm-agents/default.nix` and installed automatically on rebuild.
 
-`codebase-memory-mcp` is wired per-project rather than globally — see `modules/llm-agents/docs/codebase-memory/mcp-integration.md` for the `.mcp.json` / `opencode.json` blocks, and `modules/llm-agents/docs/codebase-memory/quick-start.md` for manual CLI use.
+`codebase-memory-mcp` is wired per-project rather than globally — see `modules/llm-agents/docs/codebase-memory/mcp-integration.md` for the `.mcp.json` block, and `modules/llm-agents/docs/codebase-memory/quick-start.md` for manual CLI use.
 
 `herdr` gets its config and keybindings from the same module, and `herdr-review` is linked into it by a home-manager activation hook — see its [README](https://github.com/derangga/herdr-review-annotate#readme) for the keys.
 

@@ -11,7 +11,6 @@
 
     brews = [
       "mole"
-      "derangga/formulae/aerogesture"
       "derangga/formulae/phunter"
     ];
 
