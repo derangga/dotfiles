@@ -65,7 +65,7 @@ in
         darwin = {
           nix-homebrew = {
             enable = true;
-            enableRosetta = true;
+            enableRosetta = false;
             user = user.userName;
             autoMigrate = true;
           };
@@ -107,9 +107,17 @@ in
     darwin =
       { pkgs, ... }:
       {
+        homebrew.brews = [ "derangga/formulae/aerogesture" ];
         homebrew.casks = [ "obs" ];
         fonts.packages = [ pkgs.sketchybar-app-font ];
-        system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+
+        # sketchybar draws in the menu bar's place. macOS 27 ignores
+        # _HIHideMenuBar and reads AutoHideMenuBarOption, where 0 is "Always"
+        # in System Settings > Menu Bar. Both stay for older macOS.
+        system.defaults = {
+          NSGlobalDomain._HIHideMenuBar = true;
+          CustomUserPreferences."com.apple.controlcenter".AutoHideMenuBarOption = 0;
+        };
       };
 
     homeManager =
@@ -132,6 +140,12 @@ in
           };
         };
 
+        programs.fish.shellAbbrs = {
+          agstart = "brew services start aerogesture";
+          agstop = "brew services stop aerogesture";
+          agrestart = "brew services restart aerogesture";
+        };
+
         programs.vscode = {
           enable = true;
         };
@@ -148,13 +162,19 @@ in
       den.batteries.primary-user
     ];
 
-    # No sketchybar here, so the menu bar stays visible. Explicit false because
-    # removing the key would leave the previously written `true` in place.
-    darwin.system.defaults.NSGlobalDomain._HIHideMenuBar = false;
+    # The menu bar stays visible; the OmniWM workspace bar sits in its left
+    # half. Explicit because removing the keys leaves the last written value.
+    # 2 is what this host had before it was ever changed, not a mapped name.
+    darwin.system.defaults = {
+      NSGlobalDomain._HIHideMenuBar = false;
+      CustomUserPreferences."com.apple.controlcenter".AutoHideMenuBarOption = 2;
+    };
 
     homeManager =
       { pkgs, ... }:
       {
+        imports = [ ./modules/omniwm ];
+
         home.packages = with pkgs; [
           pm2
           yaak
