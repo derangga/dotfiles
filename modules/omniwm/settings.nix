@@ -218,7 +218,7 @@ in
       0.5
       0.6666666666666666
     ];
-    defaultContainerPrimarySpan = 0.5;
+    defaultContainerPrimarySpan = 1.0;
     edgeGaps = false;
     infiniteLoop = false;
     resizeStepPercent = 5;
