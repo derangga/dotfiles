@@ -47,12 +47,18 @@ in
     llmPkgs.beads-viewer
     llmPkgs.claude-code
     llmPkgs.herdr
+    llmPkgs.opencode2
+    llmPkgs.plannotator
     llmPkgs.rtk
     herdrReviewBin
   ];
 
   home.file.".agents/skills/herdr-review/SKILL.md".source =
     "${herdrReview}/skills/herdr-review/SKILL.md";
+
+  home.file.".agents/skills/plan-playbook/SKILL.md".source = ./plan-playbook/SKILL.md;
+  home.file.".claude/skills/plan-playbook/SKILL.md".source = ./plan-playbook/SKILL.md;
+  home.file.".claude-work/skills/plan-playbook/SKILL.md".source = ./plan-playbook/SKILL.md;
 
   home.activation.linkHerdrReview = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     $DRY_RUN_CMD ${llmPkgs.herdr}/bin/herdr plugin link ${herdrReview}
@@ -114,16 +120,17 @@ in
     [ -d "$HOME/.claude-work" ] && patch_fff "$HOME/.claude-work/.claude.json"
   '';
 
-  # Append the fff usage instruction to the global CLAUDE.md if not already set,
-  # preserving the existing content (e.g. the @RTK.md include).
-  home.activation.configureFffClaudeMd = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    line="For any file search or grep in the current git-indexed directory, use fff mcp tools."
+  # Append claude-md/CLAUDE.md to each global CLAUDE.md once, preserving the
+  # existing content (e.g. the @RTK.md include). Skipped when the first line is already present.
+  home.activation.configureClaudeMd = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    src=${./claude-md/CLAUDE.md}
+    marker="$(head -n 1 "$src")"
     patch_md() {
       claudeMd="$1/CLAUDE.md"
       $DRY_RUN_CMD mkdir -p "$1"
       $DRY_RUN_CMD touch "$claudeMd"
-      ${pkgs.gnugrep}/bin/grep -qF "$line" "$claudeMd" 2>/dev/null || [[ -v DRY_RUN ]] || \
-        printf '\n%s\n' "$line" >> "$claudeMd"
+      ${pkgs.gnugrep}/bin/grep -qxF "$marker" "$claudeMd" 2>/dev/null || [[ -v DRY_RUN ]] || \
+        { printf '\n'; cat "$src"; } >> "$claudeMd"
     }
     patch_md "$HOME/.claude"
     [ -d "$HOME/.claude-work" ] && patch_md "$HOME/.claude-work"
