@@ -53,6 +53,10 @@ in
     herdrReviewBin
   ];
 
+  # llm-agents' claude-code wrapper defaults CLAUDE_CODE_CERT_STORE to "system", whose macOS store
+  # fails to verify api.anthropic.com (UNABLE_TO_GET_ISSUER_CERT_LOCALLY); hand it nixpkgs' cacert.
+  home.sessionVariables.NODE_EXTRA_CA_CERTS = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+
   home.file.".agents/skills/herdr-review/SKILL.md".source =
     "${herdrReview}/skills/herdr-review/SKILL.md";
 
