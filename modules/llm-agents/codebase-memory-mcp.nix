@@ -4,15 +4,15 @@
   fetchurl,
 }:
 let
-  version = "0.10.8";
+  version = "0.12.1";
   srcs = {
     aarch64-darwin = {
       arch = "darwin-arm64";
-      sha256 = "9bd840dfb3ec7eaef4f310382057adaa5b0e904df883104d03ffcf39836afd07";
+      sha256 = "9bfcbe38414b47969a3e1d1c1999f5357409387c86fa3d24221b5458267660d2";
     };
     x86_64-darwin = {
       arch = "darwin-amd64";
-      sha256 = "2b193085410af3801634a522f4b17dcd6699695e015a068393c87817c1d260d4";
+      sha256 = "ca6e64397a8ae80cec898a8205a6aa16750ac798acc05a0c3ed983837944a581";
     };
   };
   release =
