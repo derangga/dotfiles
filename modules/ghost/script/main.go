@@ -318,8 +318,7 @@ func writeFragment(state string) error {
 	if err := os.MkdirAll(filepath.Dir(fragment), 0o755); err != nil {
 		return err
 	}
-	// OFF is empty of shader directives, so Ghostty is left with whatever the
-	// main config sets (cursor_blaze) and nothing of ours.
+	// OFF is empty of shader directives, so Ghostty runs no custom shader at all.
 	text := "# ghost-in-the-machine: off\n"
 	if state != off {
 		text = fmt.Sprintf("custom-shader = %s\n", filepath.Join(variants, state+".glsl"))

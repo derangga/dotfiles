@@ -14,11 +14,8 @@ lib.mkIf (terminal == "ghostty") {
       background-blur = true;
       bold-is-bright = true;
       # Optional include (?) of the runtime fragment ghost-watch rewrites; absent
-      # or empty means no face, leaving custom-shader below untouched.
+      # or empty means no face and no custom shader.
       config-file = "?${config.home.homeDirectory}/.local/state/ghost-in-the-machine/ghostty.conf";
-      custom-shader = [
-        "shaders/cursor_blaze_no_trail.glsl"
-      ];
       font-family = "Kode Mono";
       font-feature = "liga,calt,dlig";
       macos-option-as-alt = true;
