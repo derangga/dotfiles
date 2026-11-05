@@ -13,7 +13,6 @@ let
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
   codebaseMemoryMcp = pkgs.callPackage ./codebase-memory-mcp.nix { };
   herdrReview = pkgs.callPackage ./herdr-review.nix { };
-  lightpanda = pkgs.callPackage ./lightpanda.nix { };
   # Only the binary goes on PATH, not the plugin tree with its README.md and manifest.
   herdrReviewBin = pkgs.runCommandLocal "herdr-review-bin" { } ''
     mkdir -p $out/bin
@@ -43,7 +42,6 @@ in
   home.packages = [
     codebaseMemoryMcp
     fffMcp
-    lightpanda
     llmPkgs.agent-browser
     llmPkgs.beads
     llmPkgs.beads-viewer

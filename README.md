@@ -77,7 +77,6 @@ Sourced from the [numtide/llm-agents.nix](https://github.com/numtide/llm-agents.
 | Claude Code | Agentic coding tool from Anthropic |
 | herdr | Terminal UI for running and watching coding agents |
 | herdr-review | Diff review plugin for herdr, linked on activation (`prefix+i` opens, `prefix+shift+i` sends, `prefix+o` reviews the agent's last message) |
-| hunk | Diff review tool, also set as git's pager |
 | Beads | Issue/task tracker for AI coding agents |
 | beads-viewer | Web viewer for a beads database |
 | agent-browser | Browser automation for agents |
