@@ -162,9 +162,9 @@ in
       den.batteries.primary-user
     ];
 
-    # The menu bar stays visible; the OmniWM workspace bar sits in its left
-    # half. Explicit because removing the keys leaves the last written value.
-    # 2 is what this host had before it was ever changed, not a mapped name.
+    # The menu bar stays visible; the OmniWM workspace bar is a hidden strip on
+    # the right edge. Explicit because removing the keys leaves the last written
+    # value. 2 is what this host had before it was ever changed, not a mapped name.
     darwin.system.defaults = {
       NSGlobalDomain._HIHideMenuBar = false;
       CustomUserPreferences."com.apple.controlcenter".AutoHideMenuBarOption = 2;

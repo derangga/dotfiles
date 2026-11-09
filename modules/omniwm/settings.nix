@@ -1,4 +1,4 @@
-# OmniWM's settings.toml, schema v4. The whole file is rejected when a required
+# OmniWM's settings.toml, schema v5. The whole file is rejected when a required
 # key is missing, so every section below is complete, defaults included. The
 # Settings window writes to the same file and the next switch overwrites it.
 { lib }:
@@ -48,10 +48,10 @@ let
     raiseAllFloatingWindows = "Option+Shift+R";
     toggleColumnTabbed = "Option+T";
 
-    "setContainerPrimarySpan.decrease10Percent" = "Option+Shift+Minus";
-    "setContainerPrimarySpan.increase10Percent" = "Option+Shift+Equal";
-    "setWindowSecondarySpan.decrease10Percent" = "Option+Minus";
-    "setWindowSecondarySpan.increase10Percent" = "Option+Equal";
+    "resizeContainerPrimarySpan.shrink" = "Option+Shift+Minus";
+    "resizeContainerPrimarySpan.grow" = "Option+Shift+Equal";
+    "resizeWindowSecondarySpan.shrink" = "Option+Minus";
+    "resizeWindowSecondarySpan.grow" = "Option+Equal";
     toggleContainerFullPrimarySpan = "Option+Return";
     expandContainerToAvailablePrimarySpan = "Control+Option+F";
     resetWindowSecondarySpan = "Control+Option+R";
@@ -274,7 +274,7 @@ in
     arrangements = [ ];
     mode = "macOS";
   };
-  schemaVersion = 4;
+  schemaVersion = 5;
   scratchpads = {
     labels = { };
   };
@@ -283,6 +283,15 @@ in
     showIcon = true;
     showWorkspaceName = false;
     useWorkspaceId = false;
+  };
+  # The switcher only listens on Command+Tab and Option+Tab. Option+Tab stays
+  # workspaceBackAndForth; S inside the switcher flips to all workspaces.
+  windowSwitcher = {
+    enabled = true;
+    scope = "activeWorkspace";
+    commandTab = "activeWorkspace";
+    optionTab = "disabled";
+    showFooter = true;
   };
   workspaceBar = {
     autoHide = true;
