@@ -10,6 +10,18 @@ let
   fffMcp = fff-nvim.packages.${system}.fff-mcp;
   llmPkgs = llm-agents.packages.${system};
   toml = pkgs.formats.toml { };
+  # 0.28.58 added packages/system, whose deps bun cannot resolve offline. Hoist them to the root workspace
+  # like the other deps in upstream's script. Drop this once llm-agents' fix-bun-offline-install.py lists them.
+  plannotator = llmPkgs.plannotator.overrideAttrs (old: {
+    postPatch = ''
+      ${lib.getExe pkgs.python3} ${
+        pkgs.runCommandLocal "fix-bun-offline-install.py" { } ''
+          sed 's|^HOISTED = {|HOISTED = {\n    "@fontsource-variable/geist-mono",\n    "@fontsource-variable/inter",\n    "@types/react",\n    "@types/react-dom",\n    "react",\n    "react-dom",\n    "yaml",|' \
+            ${llm-agents}/packages/plannotator/fix-bun-offline-install.py > $out
+        ''
+      }
+    '';
+  });
   fffMcpBin = "${fffMcp}/bin/fff-mcp";
   codebaseMemoryMcp = pkgs.callPackage ./codebase-memory-mcp.nix { };
   herdrReview = pkgs.callPackage ./herdr-review.nix { };
@@ -48,7 +60,7 @@ in
     llmPkgs.claude-code
     llmPkgs.herdr
     llmPkgs.opencode2
-    llmPkgs.plannotator
+    plannotator
     llmPkgs.rtk
     herdrReviewBin
   ];

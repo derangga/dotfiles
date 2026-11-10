@@ -177,7 +177,6 @@ in
 
         home.packages = with pkgs; [
           pm2
-          yaak
         ];
 
         # Second Claude account (work) in its own config dir. A function, not an

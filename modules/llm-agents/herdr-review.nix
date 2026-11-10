@@ -5,17 +5,17 @@
   stdenvNoCC,
 }:
 let
-  version = "0.5.0";
+  version = "0.6.0";
 
   target =
     {
       aarch64-darwin = {
         name = "aarch64-apple-darwin";
-        hash = "sha256-flMNtPcvoZ7jKst8WLlYhWn8J58stOHWDzsT/fKq4hc=";
+        hash = "sha256-W9tCO/Co1BPyH5wLFzL9nvxHy1Qu19L24Gf0LBaqXTQ=";
       };
       x86_64-darwin = {
         name = "x86_64-apple-darwin";
-        hash = "sha256-Gd90374D3V0vjywJvWgoZ17ppQ0yPFH2tg1/kWjtggA=";
+        hash = "sha256-xr1utRQ1fdeFltMRL3T0n/RslfxetNnw446mwrbDf2c=";
       };
     }
     .${stdenvNoCC.hostPlatform.system}
@@ -34,7 +34,7 @@ stdenvNoCC.mkDerivation {
     owner = "derangga";
     repo = "herdr-review-annotate";
     rev = "v${version}";
-    hash = "sha256-FwyJeoFi8CNV6WP9OPU+vll6RKyE1KjxQjtnILCOsBQ=";
+    hash = "sha256-Y6C7mQrPRCKsepQy0a7RCmBN+TeCeXJxqixHlMxumtk=";
   };
 
   dontBuild = true;
