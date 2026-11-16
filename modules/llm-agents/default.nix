@@ -59,7 +59,6 @@ in
     llmPkgs.beads-viewer
     llmPkgs.claude-code
     llmPkgs.herdr
-    llmPkgs.opencode2
     plannotator
     llmPkgs.rtk
     herdrReviewBin

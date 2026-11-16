@@ -55,10 +55,9 @@ All the following applications are managed via home-manager and will be configur
 |---|---|
 | Fish | Shell with built-in completion, autosuggestion and syntax highlighting; Atuin powers history search (Ctrl-R) |
 | Starship | Cross-shell prompt |
-| Kitty | GPU-accelerated terminal |
 | Ghostty | Fast terminal emulator |
 
-Kitty and Ghostty are both configured, but only one is active per host. The choice is a single `terminal` field on the host in `den.nix` (see the Configuration section) that drives both the Homebrew cask and the program config, so the two never drift apart.
+Ghostty is the terminal. A single `terminal` field on the host in `den.nix` (see the Configuration section) drives both the Homebrew cask and the program config, so the two never drift apart.
 
 ### Development Tools
 | Application | Description |
@@ -132,7 +131,7 @@ git clone https://github.com/derangga/dotfiles.git nix
 
 ### Configuration
 
-1. Add your host to the `den.hosts.aarch64-darwin` list in `den.nix`. `terminal` is optional (default `"ghostty"`, or `"kitty"`) and drives both the Homebrew cask and the program config. `mkHost` writes the host entity and the `instantiate` override from these values, which is how `hostname`, `username` and `terminal` reach the modules that read them.
+1. Add your host to the `den.hosts.aarch64-darwin` list in `den.nix`. `terminal` is optional (default `"ghostty"`) and drives both the Homebrew cask and the program config. `mkHost` writes the host entity and the `instantiate` override from these values, which is how `hostname`, `username` and `terminal` reach the modules that read them.
 ```nix
 den.hosts.aarch64-darwin = lib.mapAttrs mkHost {
   # existing hosts ...
@@ -140,7 +139,6 @@ den.hosts.aarch64-darwin = lib.mapAttrs mkHost {
   # Add your hostname here, you can check by running hostname
   foo = {
     username = "foobar";
-    # terminal = "kitty";
   };
 };
 ```

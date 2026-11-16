@@ -1,0 +1,15 @@
+{
+  "zoom": 1,
+  "sounds": {
+    "enabled": true
+  },
+  "minimum_contrast": 1,
+  "theme": {
+    "light": "catppuccin-macchiato",
+    "dark": "catppuccin-macchiato"
+  },
+  "font": "Kode Mono",
+  "font_ligatures": true,
+  "option_as_alt": "on",
+  "pane_scrollbars": false
+}

@@ -14,7 +14,6 @@
     fish.enable = true;
     fzf.enable = true;
     ghostty.enable = lib.mkIf (terminal == "ghostty") true;
-    kitty.enable = lib.mkIf (terminal == "kitty") true;
     lazygit = {
       enable = true;
       accent = "blue";

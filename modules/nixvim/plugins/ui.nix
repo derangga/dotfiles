@@ -495,14 +495,6 @@
             ];
           }
           {
-            __unkeyed-1 = "<leader>ao";
-            group = "opencode";
-            mode = [
-              "n"
-              "x"
-            ];
-          }
-          {
             __unkeyed-1 = "<leader>b";
             group = "buffer";
             mode = [

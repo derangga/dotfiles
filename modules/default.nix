@@ -13,6 +13,7 @@
     ./catppuccin
     ./ghost
     ./git
+    ./herdr-app
     ./llm-agents
     ./terminal
     ./nixvim
@@ -120,7 +121,7 @@
         set -s extended-keys on
         set -as terminal-features "xterm*:extkeys"
 
-        # truecolor passthrough: outer TERM is xterm-ghostty / xterm-kitty
+        # truecolor passthrough: outer TERM is xterm-ghostty
         set -as terminal-features "xterm*:RGB"
       '';
       focusEvents = true;

@@ -4,7 +4,6 @@
   programs.nixvim = {
     extraPlugins = with pkgs.vimPlugins; [
       claudecode-nvim
-      opencode-nvim
     ];
 
     extraConfigLua = ''
@@ -55,19 +54,6 @@
       })
       vim.keymap.set("n", "<leader>aa", claude_cmd("ClaudeCodeDiffAccept"), { desc = "Accept diff" })
       vim.keymap.set("n", "<leader>ad", claude_cmd("ClaudeCodeDiffDeny"), { desc = "Deny diff" })
-
-      -- opencode.nvim
-      vim.o.autoread = true
-
-      vim.keymap.set({ "n", "x" }, "<leader>aoa", function()
-        require("opencode").ask("@this: ", { submit = true })
-      end, { desc = "Ask opencode…" })
-      vim.keymap.set({ "n", "x" }, "<leader>aox", function()
-        require("opencode").select()
-      end, { desc = "Execute opencode action…" })
-      vim.keymap.set({ "n", "t" }, "<leader>aot", function()
-        require("opencode").toggle()
-      end, { desc = "Toggle opencode" })
     '';
   };
 }
