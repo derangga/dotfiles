@@ -30,11 +30,12 @@ stdenvNoCC.mkDerivation {
   pname = "herdr-review";
   inherit version;
 
+  # Source is pinned to a commit past v0.6.0 for the mod's `underline` prop; the binary is still the 0.6.0 release.
   src = fetchFromGitHub {
     owner = "derangga";
     repo = "herdr-review-annotate";
-    rev = "v${version}";
-    hash = "sha256-Y6C7mQrPRCKsepQy0a7RCmBN+TeCeXJxqixHlMxumtk=";
+    rev = "17ffd37259237e81abc6874e44ab72d6ca84d459";
+    hash = "sha256-CEIiVKA4r9ByI7T4m5YpC/XccSNhAvCZWsCu2Ocpyy8=";
   };
 
   dontBuild = true;
