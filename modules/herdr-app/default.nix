@@ -3,15 +3,16 @@ let
   herdrReview = pkgs.callPackage ../llm-agents/herdr-review.nix { };
   release = "${herdrReview}/herdr-app-mod";
   mod = "${release}/dist/mods/herdr-review";
-  # No releases yet, so pinned to a commit. Bump rev and hash to update.
-  beads = "${
+  # No releases yet, so pinned to a commit. Bump rev and hash to update. Holds the beads mod, the paddock layout
+  # and the paddock-* mods, built from TypeScript in that repo.
+  herdrMods = "${
     pkgs.fetchFromGitHub {
       owner = "derangga";
-      repo = "herdr-beads-ui";
-      rev = "4f5f2ef479720786225c80bc14124a8c8483c8d7";
-      hash = "sha256-yN46B93+R0yG1wb1A8S0QBWaSln9QST4hNep4+dLyXs=";
+      repo = "herdr-mods";
+      rev = "5b9fa2cda40f078b64aae2374d41ae22c1f6b2bd";
+      hash = "sha256-SPTq2M+N4E9R62FGU4/sq0AmYC6sVaFeRgsEBe65r0E=";
     }
-  }/herdr-app/mods/beads";
+  }/herdr-app";
 in
 {
   # herdr-app watches these files and rewrites some siblings itself (shared.json, view.json), so they
@@ -24,15 +25,12 @@ in
     put ${./settings.json} settings.json
     put ${./keys.json} keys.json
     put ${./catppuccin-macchiato.json} themes/catppuccin-macchiato.json
-    # Upstream herdr-review layout plus a beads-toggle block in the tab bar.
-    put ${./herdr-review-layout.json} layouts/herdr-review.json
-    # Clones of Herdr's agents and workspace-chrome mods (herdr-app 0.1.16) that fold the sidebar to 44px
-    # instead of 76px. Herdr restores its own mods on every start, so only clones can change this.
-    (cd ${./mods} && find . -type f) | while read -r f; do put "${./mods}/$f" "mods/$f"; done
-
-    for f in ${beads}/icons/*.svg; do put "$f" "mods/beads/icons/$(basename "$f")"; done
-    put ${beads}/mod.json mods/beads/mod.json
-    put ${beads}/main.js mods/beads/main.js
+    # Paddock layout with review and beads toggles in the tab bar. Select it in herdr-app; shared.json is not managed.
+    put ${herdrMods}/layouts/paddock.json layouts/paddock.json
+    put ${herdrMods}/layouts/paddock.svg layouts/paddock.svg
+    # beads and the paddock-* clones of Herdr's mods (herdr-app 0.1.16). Herdr restores its own mods on every
+    # start, so only clones can change them.
+    (cd ${herdrMods}/mods && find . -type f) | while read -r f; do put "${herdrMods}/mods/$f" "mods/$f"; done
 
     for f in ${mod}/icons/*.svg; do put "$f" "mods/herdr-review/icons/$(basename "$f")"; done
     put ${mod}/mod.json mods/herdr-review/mod.json
